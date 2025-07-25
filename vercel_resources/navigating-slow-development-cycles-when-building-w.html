@@ -1,0 +1,94 @@
+Title: Navigating slow development cycles
+
+URL Source: https://vercel.com/resources/navigating-slow-development-cycles-when-building-web-apps
+
+Published Time: 2023-11-08T21:44:49.937Z
+
+Markdown Content:
+Building sites and apps is a complex process that, if not efficiently managed, can lead to slow development cycles.
+
+**This lack of rapid delivery hinders a competitive edge while a slower time-to-market impedes the ability to meet user expectations.**
+
+Here, we examine four common challenges and propose solutions to expedite your development process.
+
+[Challenge 1: Dependency-prone workflow](https://vercel.com/resources/navigating-slow-development-cycles-when-building-web-apps#challenge-1-dependency-prone-workflow)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+A significant challenge in the traditional software development lifecycle is managing dependency-prone workflows, specifically between and within teams.
+
+A classic example of this is the handling of staging environments. Staging environments act as a testing ground for new software or features before they are moved to production. However, their management often leads to communication hurdles and bottlenecks. A quick glance into any engineering organization's Slack reveals a constant stream of questions around who's handling the staging environment.
+
+This often occurs when there is a single staging environment shared amongst multiple teams. The constant juggling of responsibilities and the lack of clear ownership can result in a chaotic environment, leading to inevitable delays and inefficiencies.
+
+[Solution: Adopt serverless CI/CD and preview environments](https://vercel.com/resources/navigating-slow-development-cycles-when-building-web-apps#solution-adopt-serverless-ci/cd-and-preview-environments)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Picture this: you're a developer working on a new feature. With every git-push, a fully functioning Preview Deployment springs to life, ready for you to observe your feature in action.
+
+This isn't a dream, it's serverless CI/CD.
+
+In this approach, every PR gets an isolated, evergreen environment, ready to be QA'd and tested. Instead of sharing infrastructure and jostling for a line in the queue, _each developer_ can build, test, and ship in their own workflow—no queues, no delays.
+
+[Challenge 2: Wrangling changes in monolithic stacks](https://vercel.com/resources/navigating-slow-development-cycles-when-building-web-apps#challenge-2-wrangling-changes-in-monolithic-stacks)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Bottlenecks occur when a codebase's components are inextricably interwoven—because you can't ship changes incrementally.
+
+The complexity often stems from simultaneously having to merge numerous backend and frontend changes. The constant addition and modification of code increases the intricacy of the codebase, decreasing the development team's velocity. Devs will often find themselves spending an inordinate amount of time attempting to understand and navigate through the labyrinth of code.
+
+When apps are built monolithically, changes in the app UI or data fetching methods can result in a restructure of the entire application. There is little opportunity to "ship small." Instead of allowing for fast updates to customer-facing UI, developers are often stuck in long cycles of _large_ changes. This results in devs spending their time gathering context and working to prevent risk—or worse—firefighting the most recent outage or miscue.
+
+[Solution: Go composable](https://vercel.com/resources/navigating-slow-development-cycles-when-building-web-apps#solution-go-composable)
+----------------------------------------------------------------------------------------------------------------------------------------
+
+A decoupled architecture allows teams to move at their own pace of change. The frontend UI (and compute that powers it) can get updated, redesigned, and refactored without changing the backend logic that it's speaking to.
+
+This separation reduces the complexity of the codebase by isolating backend and frontend changes. It allows developers to work independently on their respective tasks without having to constantly navigate through the intricate labyrinth of combined code—or waiting for other teams to unblock their progress.
+
+Moreover, it can also lead to more efficient coding practices. For instance, frontend developers can use frontend-specific testing tools to ensure the quality of their work, and backend developers can do the same with backend-specific tools. Then, they can also carry out end-to-end testing to ensure those systems work together seamlessly.
+
+Embracing decoupled frontend development can lead to faster development cycles, better code organization, and improved developer productivity.
+
+[Challenge 3: Long debugging cycles](https://vercel.com/resources/navigating-slow-development-cycles-when-building-web-apps#challenge-3-long-debugging-cycles)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Finding and debugging errors is incredibly time consuming, especially in cases of custom or closed-source frontend frameworks, or an inability to test locally on production infrastructure.
+
+This means that developers may spend significant time fixing bugs that could have been detected early in the development cycle.
+
+In the case of custom or closed-source frameworks and libraries, tracking down and understanding errors may also result in a slowdown of the dev process. This can lead to slow progress and reactive firefighting from teams. To make it worse, devs are more likely to introduce regression bugs when making changes or adding new features. These bugs can be challenging to catch and fix, leading to a less stable application.
+
+[Solution: Opt for tooling that prioritizes early error reporting and debugging](https://vercel.com/resources/navigating-slow-development-cycles-when-building-web-apps#solution-opt-for-tooling-that-prioritizes-early-error-reporting-and-debugging)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Automated testing tools can significantly speed up the process by identifying bugs and issues early. These tools allow teams to run a suite of tests automatically, ensuring the integrity of the code at all times.
+
+Integrate automated tests into your frontend workflow to handle errors gracefully, identify performance bottlenecks, and create a culture of shipping confidently within your team.
+
+[Challenge 4: Poor collaboration among teams](https://vercel.com/resources/navigating-slow-development-cycles-when-building-web-apps#challenge-4-poor-collaboration-among-teams)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Working in silos causes employees to lose 12 hours per week chasing down the information they need ([_Source_](https://venturebeat.com/data-infrastructure/report-data-silos-cause-employees-to-lose-12-hours-a-week-chasing-data/)_: Forrester "The Crisis of Fractured Organizations," 2022_), and ultimately damaging the end user experience.
+
+Frontend development often requires close coordination with backend developers, designers, and other teams—including marketing, legal, partnerships, and more. A lack of collaboration can isolate the frontend team, leading to communication and integration issues—and ultimately the end user’s experience.
+
+For example, frontend developers are responsible for the user interface and user experience. A lack of collaboration with designers and user experience experts can result in suboptimal user interfaces and experiences.
+
+[Solution: Utilize collaborative tools](https://vercel.com/resources/navigating-slow-development-cycles-when-building-web-apps#solution-utilize-collaborative-tools)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Tools that facilitate real-time collaboration, version control, and issue tracking can greatly enhance team productivity. These tools can help keep everyone on the same page and ensure a unified vision.
+
+Collaborative brainstorming and idea-sharing can lead to more creative and innovative solutions and a better reflection of your brand.
+
+[Summary](https://vercel.com/resources/navigating-slow-development-cycles-when-building-web-apps#summary)
+---------------------------------------------------------------------------------------------------------
+
+In conclusion, boost developer velocity by addressing these challenges and implementing these solutions:
+
+*   Implement serverless CI/CD
+*   Go composable
+*   Opt for tooling that prioritizes early error reporting and debugging
+*   Take advantage of collaboration tools
+
+In doing so, you can significantly accelerate development cycles and deliver faster, more effective results.

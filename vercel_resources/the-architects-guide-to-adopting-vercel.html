@@ -1,0 +1,101 @@
+Title: The architect's guide to adopting Vercel — Vercel
+
+URL Source: https://vercel.com/resources/the-architects-guide-to-adopting-vercel
+
+Markdown Content:
+[The frontend cloud](https://vercel.com/resources/successful-frontend-cloud-adoption-implementation-roi) allows your developers to utilize best-of-breed tools to build great web experiences. You can clean up your workflow, iterate faster, and achieve world-class performance with Vercel to deliver more value to users. Companies like [Loom](https://vercel.com/blog/loom-headless-with-nextjs), The Washington Post, and cal.com have told us they’re shipping faster than ever before—and their users are noticing the excellent experiences they’re building.
+
+> ![Image 1](https://images.ctfassets.net/e5382hct74si/1JHj1XlHQib9G90ss905Lm/20666551a02e3045560b2d35fe445034/tatiana_mac_loom_headshot.jfif)
+> 
+> 
+> ![Image 2](https://images.ctfassets.net/e5382hct74si/1JHj1XlHQib9G90ss905Lm/20666551a02e3045560b2d35fe445034/tatiana_mac_loom_headshot.jfif)
+> 
+> 
+> Deploying our Next.js sites onto Vercel is so helpful because I can test what my site will look like in production and solicit feedback through comments from my team every step of the way. I can know at a specific moment in time: "what did that UI look like?" And when you're debugging, I can have a link from a month ago, two weeks ago. That is such a valuable tool to have at my disposal.
+> 
+> 
+> Tatiana Mac Senior Software Engineer [Loom](https://www.loom.com/)
+
+[Forward thinking companies are adopting Next.js](https://vercel.com/resources/the-architects-guide-to-adopting-vercel#forward-thinking-companies-are-adopting-next.js)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The frontend cloud has become the industry standard for the fastest way to build stable software for high-velocity frontend teams. And, every day, we help developers with migrations from legacy systems (including some of the past decade’s most popular frontend technologies) to Next.js.
+
+![Image 3: Vercel is experienced with migrations from other React technologies to Next.js.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F2wVAYnHRdOWfDtwp8I0DAG%2Fa5ec2ad183cf4de1e8f29263eacdfc35%2FVercel_InlineGraphic_1920xVariable.png&w=3840&q=75)
+
+![Image 4: Vercel is experienced with migrations from other React technologies to Next.js.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F2wVAYnHRdOWfDtwp8I0DAG%2Fa5ec2ad183cf4de1e8f29263eacdfc35%2FVercel_InlineGraphic_1920xVariable.png&w=3840&q=75)
+
+Vercel and Next.js are built to work headlessly with your existing data sources while you build an amazing frontend, ensuring you can leverage what already makes your business great while improving on the presentation of your core content.
+
+In this e-book, we’ll take a look at key things to look forward to while you’re migrating, strategies for making the move, and ways to manage risk while you’re working on your migration.
+
+[Benefits of your new frontend toolkit](https://vercel.com/resources/the-architects-guide-to-adopting-vercel#benefits-of-your-new-frontend-toolkit)
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Vercel’s best-in-class frontend cloud is equipped with the essentials for improving iteration velocity. To get the most out of your adoption, it’s important to understand why you’re making this choice and the advantages you’ll find.
+
+*   **Security:** Build with security as a default. [Vercel Secure Compute](https://vercel.com/docs/security/secure-compute) dedicates an IP address to your Vercel workloads and Vercel Firewall allows you to quickly block IP addresses for extra power on top of Vercel's automatic DDoS migitation.
+*   **Functions:**[Serverless](https://vercel.com/docs/concepts/functions/serverless-functions) and [Edge Functions](https://vercel.com/docs/concepts/functions/edge-functions) let you decrease cost, improve uptime, and provide instant auto-scaling to your frontend. When you deploy Next.js ([or any of our 40+ supported frameworks](https://vercel.com/docs/frameworks#list-of-supported-frameworks)) on Vercel, your developers will enjoy a completely seamless experience, finding the same behavior of Next.js on their local machines when compared to their preview and production deployments.
+*   **Caching:** Next.js on Vercel automatically combines the best that Next.js has to offer with the benefits of serverless architectures. Through[Framework Defined Infrastructure](https://vercel.com/blog/framework-defined-infrastructure), developers are able to configure caching behavior more easily than ever before, including the latest innovations in frontend caching like Incremental Static Regeneration.
+*   **Observability:** First-party, built-in tooling to gain insights about what’s going on in your frontend cloud. Query, visualize, and quantify the traffic to your Vercel project to find opportunities to optimize bandwidth, errors, and performance with [Monitoring and Logging](https://vercel.com/docs/concepts/observability).
+
+[Strategies for incremental adoption](https://vercel.com/resources/the-architects-guide-to-adopting-vercel#strategies-for-incremental-adoption)
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+To manage the risks associated with any software migration, it’s a great idea to make small, reversible changes to your system over time so [you can quickly roll back to previous, working versions](https://vercel.com/docs/concepts/deployments/instant-rollback) in case something goes wrong. We encourage you to adopt the frontend cloud slowly, ensuring that your confidence stays high no matter what phase of adoption you are at.
+
+To achieve this, we'll create a plan to run a combination of your current system alongside your new Vercel frontend to get started. When you begin, you may only have a few pages being served by Vercel, slowly adding to your new Next.js application over time.
+
+As we’ve worked with our customers over the years, we’ve found two common strategies for incremental adoption.
+
+### [Point your domain at Vercel with your existing server as a fallback](https://vercel.com/resources/the-architects-guide-to-adopting-vercel#point-your-domain-at-vercel-with-your-existing-server-as-a-fallback)
+
+One approach is to make Vercel the initial entrypoint for your domain. For application paths that have been built in your Next.js application, Vercel will serve your newly crafted page. When a path is requested that hasn’t been built in your new application yet, your application will seamlessly fallback to your existing server and serve a response from there.
+
+`module.exports = {  async rewrites() {    return {      fallback: [        {          source: '/:path*',          destination: `https://my-old-site.com/:path*`,        },      ],    }  },};`
+
+Setting fallback paths for any route not available in our application.
+
+With these rewrites in place, the original request’s path, headers, and cookies will be preserved and passed on to your existing server solution. If you want to configure rewrites at a more granular level, [check out the Next.js documentation on rewrites](https://nextjs.org/docs/app/api-reference/next-config-js/rewrites).
+
+### [Specify a subpath for your Vercel application](https://vercel.com/resources/the-architects-guide-to-adopting-vercel#specify-a-subpath-for-your-vercel-application)
+
+As another option, you can choose to continue using your existing resources as the main entrypoint to your application and use Vercel on a subpath within your larger application setup.
+
+Depending on your current system, you may need to configure a rewrite or reverse proxy to point at Vercel. With that in place, we will need to make sure we tell Next.js about this routing context.
+
+Luckily, this is easy to do using [the `basePath` property in your `next.config.js` file](https://nextjs.org/docs/app/api-reference/next-config-js/basePath):
+
+`module.exports = {  basePath: '/docs',};`
+
+Setting a base path for the entire Next.js application.
+
+With this flag set, Next.js will be able to properly route it’s requests as a sub-path of your domain.
+
+[Manage risk while you're adopting Vercel](https://vercel.com/resources/the-architects-guide-to-adopting-vercel#manage-risk-while-you're-adopting-vercel)
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+You’ve done your homework, carefully crafted a plan, and you're ready to start using Vercel's workflow tooling. Our tools are built to give you confidence but, to be fully prepared for a production migration, we need to be responsible engineers and ensure we are safely rolling out your new technology with "escape hatches" for if something unexpected happens.
+
+### [Using Next.js Middleware and Vercel Edge Config](https://vercel.com/resources/the-architects-guide-to-adopting-vercel#using-next.js-middleware-and-vercel-edge-config)
+
+The first strategy we recommend is to use Vercel Edge Config. With this tool, we’ll add a zero latency flag, passing all requests back to your original server. Depending on the complexity you desire, you can build a flexible routing architecture based on this approach through the power of [Vercel Edge Middleware](https://vercel.com/docs/concepts/functions/edge-middleware).
+
+`import { NextRequest, NextResponse } from 'next/server'import { get } from '@vercel/edge-config'export const config = {  matcher: ['/:path*'], // URL to match}export async function middleware(req: NextRequest) {  try {    // Check whether new version should should be shown    const isNewVersionActive = await get<boolean>('isNewVersionActive')    // If is in the new version not active we rewrite to the legacy server URL    if (!isNewVersionActive) {      req.nextUrl.pathname = `/new-path`       return NextResponse.rewrite(req.nextUrl)    }  } catch (error) {    console.error(error)  }}`
+
+Using a flag to create a safety switch for the new application.
+
+We find that companies adopting Vercel only want to keep this flag option around through the first few steps of their migration. Once teams begin working in the frontend cloud, they develop confidence and new levels of productivity quickly through the stability of their new system. Additionally, you'll notice new levels of communication and feedback, and how your new performance gains move your business metrics since [milliseconds make millions](https://web.dev/milliseconds-make-millions/).
+
+### [Using cookies to serve specific pages from Vercel](https://vercel.com/resources/the-architects-guide-to-adopting-vercel#using-cookies-to-serve-specific-pages-from-vercel)
+
+Another strategy is to use use cookies to redirect traffic from your servers to a Vercel-hosted page. This strategy is great for incrementally introducing traffic to your Vercel application, letting you do percentage-based and canary-based rollouts.
+
+Depending on your current setup, the implementation for this approach can vary in complexity. You'll be trading that complexity for more granular control over how traffic is being routed for your application and we typically only recommend this approach for customers with high-risk requirements.
+
+[Next steps](https://vercel.com/resources/the-architects-guide-to-adopting-vercel#next-steps)
+---------------------------------------------------------------------------------------------
+
+Through our teams of Solutions Engineers, we’re prepared to partner with you on your adoption of new tooling. We've written here about the most common patterns we've seen with our customers but we’re ready to help you handle the rough edges and intricacies of your existing system so you can breathe new life into your teams’ projects.
+
+We’ll help you to build trust in your frontend cloud while continually, incrementally ensuring you deliver more value to your users. If you haven’t already, [get in touch with one of our experts today](https://www.notion.so/How-We-Started-Our-Rust-Porting-Effort-9897e09ab42549d28657d91956b87cce?pvs=21) to begin your frontend cloud journey.

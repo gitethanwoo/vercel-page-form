@@ -1,0 +1,160 @@
+Title: Turborepo: The future of efficient monorepo builds. — Vercel
+
+URL Source: https://vercel.com/resources/monorepos-ebook
+
+Markdown Content:
+Apr. 12th, 2023
+
+Improve build speed and developer velocity with monorepos
+---------------------------------------------------------
+
+Unlock the full potential of your monorepos with Turborepo. Experience fast, efficient builds and improved developer collaboration.
+
+[What are monorepos?](https://vercel.com/resources/monorepos-ebook#what-are-monorepos)
+--------------------------------------------------------------------------------------
+
+Championed by Google and Meta, monorepos are codebases that can contain multiple projects in a single code repository. This kind of architecture enables teams to use multiple programming languages and frameworks all in one space.
+
+For frontend teams, monorepos can improve collaboration, transparency, and overall productivity through code sharing, discoverability, and standardization. While monorepos offer several workflow benefits to developers, they present challenges, too—especially for smaller teams who can't afford to build, maintain, and/or configure sophisticated build systems large organizations have.
+
+In this brief, we’re going to explore those challenges and show how your team can overcome them with Turborepo, a high performance build system that makes monorepos accessible to everyone.
+
+[Why do teams use monorepos?](https://vercel.com/resources/monorepos-ebook#why-do-teams-use-monorepos)
+------------------------------------------------------------------------------------------------------
+
+Monorepos can contribute to a better, more efficient workflow. From faster development to easier collaboration, they enable developers to ship with confidence. Let’s start with shared code and visibility. Monorepos allow a team to centralize around a single source of truth so it’s easier to search, share, and reuse code across systems, applications, libraries, and utilities. As code reuse and visibility improves, so does code consistency. Monorepos support atomic changes, or the ability to update multiple projects in a single commit. This also helps ensure consistency across products and features, and prevents the pain of trying to coordinate commits across your entire codebase.
+
+![Image 1: Group 786 (1).png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F37pUQzNvLXy9alwZ1OGZoL%2Ff2c94618643c1f7ae23edba813fbe9db%2FGroup_786__1_.png&w=828&q=75)
+
+![Image 2: Group 10762.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F2e67Z1PVtp22nHdAJnC6Xt%2F753050181ecb7bf1ab5b9cfd08d3135e%2FGroup_10762.png&w=828&q=75)
+
+Co-locating your code, issues, pull requests, deployment, automation, testing, and more reduces context switching and noise. **What does this mean for your team’s productivity?** Everything from onboarding new hires to shipping new features gets a whole lot faster.
+
+[If monorepos are so great, why doesn’t everyone use them?](https://vercel.com/resources/monorepos-ebook#if-monorepos-are-so-great,-why-doesn%E2%80%99t-everyone-use-them)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+For all the benefits of monorepos, they aren't without challenges. While some larger organizations have the budget and resources to overcome these challenges, leaner teams often feel this architecture is out of reach.
+
+**With the right tools, anyone can unlock the power of monorepos.**
+
+![Image 3](https://images.ctfassets.net/e5382hct74si/2iANF6a42b3pHeL99LF5zE/a37ce3af18cf0c28dc199cbc93a885e1/T0KMZSMTM-U9SJDUCEQ-a9af72f58d89-512.jpg)
+
+#### Makeswift - Miguel Oller
+
+> CI/CD times went from 20 minutes to 8 minutes once we started using Turborepo.
+
+Miguel Oller
+
+[Monorepo challenges](https://vercel.com/resources/monorepos-ebook#monorepo-challenges)
+---------------------------------------------------------------------------------------
+
+### [Speed](https://vercel.com/resources/monorepos-ebook#speed)
+
+Ask a developer their biggest headache about monorepos and they'll tell you that they need constant maintenance, break often, and often result in painfully slow builds. With so many interdependencies and packages, builds take too many steps and can bring iteration to a standstill. And with any change, the entire monorepo has to be rebuilt. (You no longer have the benefit of being able to build one small piece of the application.) When it comes to caching builds, that’s equally as painful. Constant reruns waste time and resources. Ideally, your developers would only execute work that hasn’t been done before. This process of only building what’s changed is called **incremental builds**.
+
+To do that, your team needs to write automation that knows and understands your codebase at a deeper dependency and task level. What’s more, they then have to maintain it. The end result: instead of focusing on your product, developers must also create and maintain an additional build system.
+
+**This is where the appeal of monorepos fades. Developers feel like they’re fighting—and responsible for maintaining—a system that should be making their lives easier.**
+
+### [Orchestration](https://vercel.com/resources/monorepos-ebook#orchestration)
+
+Another significant challenge with monorepos is when it comes time to schedule tasks. Consider testing: developers report that testing is one of their main hurdles to shipping faster. However, testing is particularly complicated with monorepos because both test and often build/compile tasks must be completed in the right order to ensure that all dependencies are built from source and available at the correct time. Like builds, testing an entire codebase takes time. The same concept of incrementalism applies: **If you’re only testing for one small change, you only want that change to be tested and re-deployed. You also want to know that change won't negatively impact other applications in your monorepo. Easily said—not so easily done.**
+
+For example, say you change some copy and forget to update the snapshot test. The test suite fails and the entire thing has to be rerun. In the case of monorepos, it’s a trivial change that ends up taking a lot of time to fix. Identifying and rerunning the right test, at the right time, and confirming it won’t impact other tasks or code requires high levels of orchestration and dependency analysis.
+
+### [Complexity](https://vercel.com/resources/monorepos-ebook#complexity)
+
+Monorepos are complicated. There’s a lot to manage and—equally—a lot that can go wrong. Mapping what works for a single package or application to multiple packages and applications is an enormously complex task that’s not always obvious or well documented. It also requires custom coordination and automation scripts to get it to work correctly. Even if you have a tool that allows you to run a script across different packages, the existing tooling often isn't flexible when a one-off package needs to do something a little differently.
+
+**It’s either all or nothing. Instead of focusing on building and shipping the product, this lack of standardization leaves developers continuously configuring and piecing together solutions—which then also need to be maintained.** Your team needs a tool that is flexible to meet new needs or different configurations without forcing them to start from scratch.
+
+### [Shipping takes too long](https://vercel.com/resources/monorepos-ebook#shipping-takes-too-long)
+
+After speaking with many development teams, one thing became clear—deployments are simply slower than they should be with monorepos. Teams are installing and often building more than what's needed with each change. The benefits of monorepos are almost within reach, but developers continue to struggle to solve for challenges like speed, orchestration, and complexity.
+
+If your team has gone down this path, you’ve probably explored different solutions like finding a tool or building one in house. Even so, you’re still seeing builds take 30 minutes. Or maybe you’ve investigated Bazel and Buck (complex build systems from Google and Meta respectively). But the enormous constraints on your codebase seem risky, especially when the migration would pull your team away from shipping your product.
+
+[**Monorepos shouldn't move this slowly…Introducing: Turborepo**](https://vercel.com/resources/monorepos-ebook#[object-object])
+-------------------------------------------------------------------------------------------------------------------------------
+
+Turborepo is a high-performance build system for JavaScript and TypeScript codebases that abstracts away the complex configuration needed for monorepos, giving you a world-class development experience without the maintenance burden. Turborepo makes monorepos accessible—with a high-performance build system you can add in a day, not weeks or months.
+
+![Image 4: Something.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4V0DVkwgyPVqeI9z83b4Lr%2F7b6ada2105eca6eeb976dcfdb9d077da%2FSomething.png&w=3840&q=75)
+
+![Image 5: Something.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4V0DVkwgyPVqeI9z83b4Lr%2F7b6ada2105eca6eeb976dcfdb9d077da%2FSomething.png&w=3840&q=75)
+
+[The Turborepo solution](https://vercel.com/resources/monorepos-ebook#the-turborepo-solution)
+---------------------------------------------------------------------------------------------
+
+![Image 6: Group 10764.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F5DIOsDgG13cqXlSX2OUBPl%2F78ff736aaa7bd5b9755c9ba249059c5f%2FGroup_10764.png&w=1080&q=75)
+
+![Image 7: Group 10764.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F5DIOsDgG13cqXlSX2OUBPl%2F78ff736aaa7bd5b9755c9ba249059c5f%2FGroup_10764.png&w=1080&q=75)
+
+Turborepo removes the complex maintenance burden holding developers back from adopting monorepos—and makes build times faster.
+
+### [Incremental builds](https://vercel.com/resources/monorepos-ebook#incremental-builds)
+
+Building once is painful enough. By analyzing your codebase, Turborepo can determine what’s new and what’s impacted by a given change to determine the minimum amount of work that needs to be done.
+
+### [Remote caching](https://vercel.com/resources/monorepos-ebook#remote-caching)
+
+If incremental builds determine what work to do, remote caching determines if this work has been done before. Another way to think of remote caching is like a shared drive for your builds. That means you can share the Turborepo cache across your whole team and CI, and you won’t need to recompile, retest, or re-execute your code if it’s unchanged.
+
+Aside from saving space on your machine, it also results in even faster, more incremental builds. Plus, if you only have one small change to one piece of code, you only need to test that code, not your whole codebase.
+
+![Image 8: image 39.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F6G3F8dJuT3UXKaiizz514t%2F6dfceaea8e2007fbf4d485f6851e89a6%2Fimage_39.png&w=1920&q=75)
+
+![Image 9: image 39.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F6G3F8dJuT3UXKaiizz514t%2F6dfceaea8e2007fbf4d485f6851e89a6%2Fimage_39.png&w=1920&q=75)
+
+### [Parallel task running](https://vercel.com/resources/monorepos-ebook#parallel-task-running)
+
+To speed things up even further, Turborepo helps developers split builds into parallel operations, so they can run multiple tasks at the same time. This is unique to Turborepo—while other JavaScript build tools run things in dependency-first order, Turborepo can determine how different tasks relate to one another.
+
+![Image 10: Speed test - fast.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F1sqP6m0qO3FSMZcgFET3HY%2F88872a694a811fca98331333cc22db38%2FSpeed_test_-_fast.png&w=3840&q=75)
+
+![Image 11: Speed test - fast.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F1sqP6m0qO3FSMZcgFET3HY%2F88872a694a811fca98331333cc22db38%2FSpeed_test_-_fast.png&w=3840&q=75)
+
+Parallel tasks save an enormous amount of time in the build process and will help your team iterate and ship faster, without worrying that one small change will hold up the whole process.
+
+> ![Image 12](https://images.ctfassets.net/e5382hct74si/4VZgRJ1VQdM14tKqr0hvXa/a4567d99b7f8299e7ac83cea40a8e69e/C08Iv8_f_400x400.jpg)
+> 
+> 
+> ![Image 13](https://images.ctfassets.net/e5382hct74si/4VZgRJ1VQdM14tKqr0hvXa/a4567d99b7f8299e7ac83cea40a8e69e/C08Iv8_f_400x400.jpg)
+> 
+> 
+> With Turborepo, we were able to give each workspace its own build, test, and typecheck scripts and not worry about manually managing when they execute — Turbo handles the pipelining and caching. Turbo remote caching has drastically sped up our CI runs when a code change only touches one or a few workspaces.
+> 
+> 
+> Spike Brehm Software Engineer at Watershed
+
+![Image 14: image 39 (1).png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4yWDNph7TjjPx2DX5ZgRx4%2Fbf46a8f50655e147d3515aee64668f8d%2Fimage_39__1_.png&w=750&q=75)
+
+![Image 15: image 39 (1).png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4yWDNph7TjjPx2DX5ZgRx4%2Fbf46a8f50655e147d3515aee64668f8d%2Fimage_39__1_.png&w=750&q=75)
+
+### [All performance, no overhead](https://vercel.com/resources/monorepos-ebook#all-performance,-no-overhead)
+
+Turborepo is open source and works well with most development tools, but its full power is realized on Vercel, the end-to-end development platform. Turborepo works out-of-the-box on Vercel and is easy to set up with zero configuration needed.
+
+This means teams can adopt and use features like remote caching right away. Since Turborepo joined Vercel, we’ve seen development teams of all sizes adopt Turborepo for faster builds and save an average of 76.8 hours per month by remotely caching their deployments on Vercel.
+
+### [Monorepos keep your code organized. Turborepo makes it fast.](https://vercel.com/resources/monorepos-ebook#monorepos-keep-your-code-organized.-turborepo-makes-it-fast.)
+
+Monorepos can be extremely useful for productivity and collaboration, but the tooling can be a nightmare. It's become completely normal to spend entire days on tooling alone—tweaking configs, writing one-off scripts, and stitching things together. In the end, your development cycles take longer, which means products are released slower than they can and should be.
+
+We need a fresh take on the whole setup: A toolchain that works for you and not against you, with sensible defaults, and even better escape hatches. One that’s built with the same techniques used by large teams, but in a way that doesn't require a PhD to learn or staff to maintain. With Turborepo on Vercel, we're doing just that: abstracting the complex configuration needed for most monorepos into a single cohesive build system—giving you a world-class development experience without the maintenance burden.
+
+> ![Image 16](https://images.ctfassets.net/e5382hct74si/4NXT8Dvrmi8oToVta88Ot/5331aa8c130c5ebb858a8d76b81a6fce/_HiVTyjR_400x400.jpg)
+> 
+> 
+> ![Image 17](https://images.ctfassets.net/e5382hct74si/4NXT8Dvrmi8oToVta88Ot/5331aa8c130c5ebb858a8d76b81a6fce/_HiVTyjR_400x400.jpg)
+> 
+> 
+> Turborepo has saved us 67 hours of CI since we adopted it. That's for a team of only four full-time developers.
+> 
+> 
+> Matt Pocock Lead Developer of Stately.ai
+
+[Unlock the power of monorepos](https://vercel.com/resources/monorepos-ebook#unlock-the-power-of-monorepos)
+-----------------------------------------------------------------------------------------------------------
+
+Enable your team to ship faster with Turborepo.

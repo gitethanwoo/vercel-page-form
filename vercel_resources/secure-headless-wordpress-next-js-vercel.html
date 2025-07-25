@@ -1,0 +1,97 @@
+Title: Secure, headless WordPress with Next.js and Vercel
+
+URL Source: https://vercel.com/resources/secure-headless-wordpress-next-js-vercel
+
+Published Time: 2023-05-10T19:39:12.904Z
+
+Markdown Content:
+In today's digital landscape, web security is a top priority for businesses and organizations of all sizes. With the increasing number of cyber threats, attack vectors, it's more important than ever to ensure that your application is protected against potential security breaches.
+
+WordPress is a popular CMS with plenty of history to back its success. It's also a great opportunity to improve the security of your web presence by using WordPress headlessly with Next.js.
+
+On Vercel, you'll be able to take advantage of [Vercel Secure Compute](https://vercel.com/blog/vercel-security#secure-connections-https-and-secure-compute) and [Serverless Functions](https://vercel.com/docs/concepts/functions/serverless-functions), enforcing security by default to create an isolated WordPress backend.
+
+[Why use headless WordPress?](https://vercel.com/resources/secure-headless-wordpress-next-js-vercel#why-use-headless-wordpress)
+-------------------------------------------------------------------------------------------------------------------------------
+
+As you've built your application on WordPress, it's likely that you've created a body of content that would be difficult to recreate in a more modern CMS solution. Your content authors are probably already familiar and efficient with the WordPress Admin experience.
+
+As you move to a modern approach, you want to take advantage of these existing strengths but create bolster your systems where you can. Through composable solutions, digital transformation allows you to do keep the best parts of your existing stack while extending into best-of-breed technologies for your frontend. To learn more,[visit our library of composable resources](https://vercel.com/resources/collections/composable).
+
+Using the combination of WordPress, Next.js and Vercel, we can leverage current assets while enhancing the security of your overall system. As creators and maintainers of Next.js, Vercel will always be the best place to deploy the world's leading React framework.
+
+[Limiting access to your WordPress server](https://vercel.com/resources/secure-headless-wordpress-next-js-vercel#limiting-access-to-your-wordpress-server)
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+There are drawbacks common to every WordPress monolith, and every WordPress host is different, introducing its own special mix of potential vulnerabilities.
+
+Running WordPress as a monolith, your frontend is tightly coupled with your content, database, and administrative panel. If something goes wrong with your server, both your frontend and backend will go down.
+
+Opting to run WordPress headlessly with Next.js and Vercel creates a more resilient overall system.
+
+![Image 1](https://images.ctfassets.net/e5382hct74si/5J4YP7BvcmJ9gQsmifCeYY/e38f5ac432928ddb09fd476bfc07d3da/Frame_1__9_.png)
+
+#### Scalability
+
+> With both your frontend and backend on the same server, your monolith isn't as nimble as it could be to respond to variable workloads. If your next marketing cycle goes viral, your monolith may not be able to allocate the right resources to handle the capacity, taking down both your backend and frontend.
+> 
+> 
+> Alternatively, a headless approach with Vercel allows your frontend to scale from zero to infinity and back to zero at a moment's notice, protecting your WordPress backend server from spikes.
+
+![Image 2](https://images.ctfassets.net/e5382hct74si/7ruCrFyYMXKqHYh5yDAfvR/96198f48d80136b471ef8e9955a23138/Frame_1__8_.png)
+
+#### DDoS protection
+
+> Preventing attacks and handling them when they inevitably happen can consume the resources of an entire internal team. Rather than have your DevOps teams rebuild Distributed Denial of Service (DDoS) protection properties for your frontend, they can utilize existing solutions.
+> 
+> 
+> [Vercel Firewall](https://vercel.com/blog/vercel-security#the-vercel-firewall) provides intelligent protection to help protect your website or application from DDoS attacks, which can overload your server and cause your site to become unavailable. On Vercel, you can quickly create custom firewall rules, blocking malicious actors, and unwanted traffic.
+
+![Image 3](https://images.ctfassets.net/e5382hct74si/2x7hvKK2HLSfacN1KiqgbK/3a687116bb9765bbeb7c418cfe0db647/Frame_1__10_.png)
+
+#### Global CDN
+
+> Content Delivery Networks (CDNs) are a technology built to improve uptime, availability, and performance for globally distributed resources. If you plan on serving users at any scale, a CDN is a must.
+> 
+> 
+> Vercel's Edge Network includes a global CDN to distribute your content and applications to users around the world. Not only does this provide a layer of protection for your backend, but it also helps to reduce latency and improve the performance of your website or application for your users.
+
+### [Using Vercel Secure Compete to restrict access further](https://vercel.com/resources/secure-headless-wordpress-next-js-vercel#using-vercel-secure-compete-to-restrict-access-further)
+
+With this headless approach, you've made it so that traffic to your frontend no longer needs to contact your WordPress server directly—but we can take things one step further to continue improving your security posture.
+
+![Image 4: Vercel_Wordpress_285x356.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F6TvXcl8GILqP5vkrSXFQW6%2F815ce34595af63cac752a88a7a29716e%2FVercel_Wordpress_285x356.png&w=640&q=75)
+
+![Image 5: Vercel_Wordpress_285x356.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F1sGwlOo6rUl8pZiSFOtjA5%2F9838552b0fce6d09edef532198453117%2FVercel_Wordpress_285x356.png&w=640&q=75)
+
+With [Vercel Secure Compute](https://vercel.com/blog/vercel-security#secure-connections-https-and-secure-compute), your deployments and build container will be placed in a private network with dedicated IP addresses in a[region](https://vercel.com/docs/security/secure-compute#specific-region)of your choice and logically separated from other containers. This lets you restrict the rest of your infrastructure's private network, blocking everything _except_ your Vercel frontend cloud.
+
+[Improve security with Vercel Serverless Functions](https://vercel.com/resources/secure-headless-wordpress-next-js-vercel#improve-security-with-vercel-serverless-functions)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+With Vercel, your frontend will be powered by Serverless Functions, bringing you the built-in performance and security properties of a serverless architecture. This proven model enhances your ability to scale with security as a default.
+
+![Image 6](https://images.ctfassets.net/e5382hct74si/6CdoiNiA0FF3250TB3hgFB/fd8219346c7f503df84860722cfecdce/Frame_1__12_.png)
+
+#### Limited attack surface
+
+> Serverless Functions run in a fully managed environment so you don't have to worry about managing and patching software versions. This can help reduce the attack surface for your application, as there are fewer components that become stale and brittle over time.
+
+![Image 7](https://images.ctfassets.net/e5382hct74si/6UUbbW6jD9Y2W1atx3ySlq/9dbbb460dbceb77c13f167cccfcefa7b/Frame_1__11_.png)
+
+#### Better isolation
+
+> Serverless functions are isolated from each other. If one function is compromised, it will not affect any of your other compute. This brings better security than serverful schemes, where a compromised server can potentially give an attacker access to all the resources running on that server.
+
+![Image 8](https://images.ctfassets.net/e5382hct74si/28ULYuGxBO8wwpio5qkwlD/aa19d66713eb827eb2fa39e2a912fcfe/Frame_1__13_.png)
+
+#### Event-driven
+
+> Vercel Serverless Functions are event-driven so they can't be taken advantage of while they aren't actively working on something. In contrast, an always-on, long-running server, is always potentially vulnerable (rather than only while it is trying to answer to requests).
+
+[Composable architecture in the frontend cloud](https://vercel.com/resources/secure-headless-wordpress-next-js-vercel#composable-architecture-in-the-frontend-cloud)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+As the frontend cloud continues to evolve, more sites and applications are finding reduced risk and increased reliability with their composable architectures. Headless WordPress will let your existing content continue to be available to your frontends
+
+If you'd like to learn more about the technical aspects of how to set up, [visit our guide on setting up headless WordPress with Vercel](https://vercel.com/guides/wordpress-with-vercel).

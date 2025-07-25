@@ -1,0 +1,155 @@
+Title: Build vs. Buy
+
+URL Source: https://vercel.com/resources/what-bootstrapping-costs-your-business
+
+Published Time: 2023-09-29T17:15:52.223Z
+
+Markdown Content:
+Sep. 29th, 2023
+
+What bootstrapping costs your business
+
+Technical business leaders often find themselves asking a critical question when it comes to their frontend: Should we build it ourselves or buy an end-to-end platform off of the shelf? While it is possible to build your own solution, it might be much costlier for your business.
+
+### [Minimizing risk and cost](https://vercel.com/resources/what-bootstrapping-costs-your-business#minimizing-risk-and-cost)
+
+*   **Buy:** If you purchase a solution that doesn't meet your team's needs, you can pivot quickly to avoid further investment. 
+*   **Build:** if you build a solution that doesn't meet your team's needs, **you experience a sunk cost.**That is to say, you’ve already invested time and effort that cannot be recovered—only to buy later.
+
+### [For instant impact, buy](https://vercel.com/resources/what-bootstrapping-costs-your-business#for-instant-impact,-buy)
+
+*   Continue shipping improvements and features while performing user research.
+*   Increase output of your existing engineering talent.
+*   Inform future build architecture.
+
+Divided into five sections, this guide will walk through the layers of a frontend toolkit and break down the value and costs to consider for each.
+
+[Building a Developer Platform](https://vercel.com/resources/what-bootstrapping-costs-your-business#building-a-developer-platform)
+----------------------------------------------------------------------------------------------------------------------------------
+
+### [Continuous Integration + Continuous Deployment | Build tooling and pipeline management](https://vercel.com/resources/what-bootstrapping-costs-your-business#continuous-integration-+-continuous-deployment-|-build-tooling-and-pipeline-management)
+
+### [Value](https://vercel.com/resources/what-bootstrapping-costs-your-business#value)
+
+*   **Iteration speed**
+*   Iteration velocity is the solution to every software challenge, but a few factors slow teams down if you try to build out a solution yourself.
+*   Investing in a frontend platform like Vercel ensures maximum iteration speed, with lightning-fast build times and staging/preview environments built by default.
+*   **Push confidently**
+*   Push code confidently, with tooling to both help ensure that regressions never enter production and to easily identify where bugs or errors were introduced. If something does need to be corrected, Vercel’s instant rollback reverts the changes as a restored version of a previous deployment.
+
+### [Costs to consider](https://vercel.com/resources/what-bootstrapping-costs-your-business#costs-to-consider)
+
+*   Tech debt, with the average developer devoting two full workdays to tech debt/week. 
+*   Source: [Stripe: The Developer Coefficient](https://stripe.com/files/reports/the-developer-coefficient.pdf)
+*   Slow builds when fast iteration can mean new deployments in seconds. 
+*   Source: [DZon: Release Frequency: A Need for Speed](https://dzone.com/articles/release-frequency-a-need-for-speed)
+*   Setting up staging and pre-production environments. 
+*   Tools for CI/CD, builds, and pipeline management. 
+
+### [Staging and pre-production environments](https://vercel.com/resources/what-bootstrapping-costs-your-business#staging-and-pre-production-environments)
+
+### [Value](https://vercel.com/resources/what-bootstrapping-costs-your-business#value)
+
+*   **Collaboration and iteration**
+*   Changes take time, and what gets sent to production may not always match what customers experience. With Vercel as your frontend platform, you can see changes and leave feedback in the same context as your users. Live, shareable Preview URLs instantly reflect updates and turn disjoined feedback into a streamlined, collaborative process that technical and non-technical stakeholders can contribute to alike.
+*   **Automate repetition**
+*   With a platform like Vercel, your team can focus on writing code, not configuring or maintaining pre-production environments. Vercel runs alongside your workflow, so as your team makes changes, see them reflected live immediately.
+
+### [Costs to consider](https://vercel.com/resources/what-bootstrapping-costs-your-business#costs-to-consider)
+
+*   Slower time-to-market due to disjoined review cycles and bottlenecks in your workflow across teams/stakeholders.
+*   Building and maintaining staging environment.
+*   Building or buying collaboration tooling.
+*   Merge conflicts when moving from pre-production to production environment.
+*   Misalignment of staging and production infrastructure.
+*   Missed deadlines. 
+
+### [Use case: Desenio](https://vercel.com/resources/what-bootstrapping-costs-your-business#use-case-desenio)
+
+Desenio, the largest online retailer of posters and wall art, chose Vercel for seamless collaboration across teams. They now enjoy out-of-the-box feature staging environments with instant Git pushes–environments that used to take weeks to build.
+
+_"We have so many stakeholders with phenomenal ideas, and we had ideas coming left and right. With Vercel it's fun and easy to just create a couple of variations and send links to our stakeholders. It makes collaboration so much easier."_
+
+-Dash Donnergren, Frontend Developer at Desenio
+
+### [Web framework compatibility | Third-party integrations](https://vercel.com/resources/what-bootstrapping-costs-your-business#web-framework-compatibility-|-third-party-integrations)
+
+### [Value](https://vercel.com/resources/what-bootstrapping-costs-your-business#value)
+
+*   **Future-proofing**
+*   Updating your tech stack is inevitable. As the makers of Next.js, Turborepo, and many of your other favorite tools and frameworks, when you choose Vercel you can rest assured that your platform will work seamlessly with all your favorite tools and frameworks—forever.
+*   **Empower stakeholders**
+*   By decoupling your stack, non-developer stakeholders can leverage the best-of-breed technology for their own workflows, and won’t need to suffer downtime if business needs change. Let them keep using the tools they love. 
+
+### [Costs to consider](https://vercel.com/resources/what-bootstrapping-costs-your-business#costs-to-consider)
+
+*   Future-proof and de-risk your tech stack
+*   Unforeseen costs relating to tool compatibility
+*   Engineering resources for rewriting future code
+*   Tech debt focus instead of feature development
+
+### [Use case: Wunderman Thompson](https://vercel.com/resources/what-bootstrapping-costs-your-business#use-case-wunderman-thompson)
+
+Wunderman Thompson (WT) manages and runs projects with Vercel as easily as something like an email platform, says Rodrigo Barona, WT Engineering and Design Manager. This is the feel: new project, connect your repo, deploy, domain, check. For an agency like WT, building a site quickly can be the difference between keeping or losing a client, and the last thing the agency wants to do is start from scratch. By using Vercel and Turborepo, the WT team can produce live sites within the same day a request arrives.
+
+_“We’re able to build a master template for [our client’s] brand that meets their needs, while still minimizing complexity. We don’t have extra fields or plugins to manage different aspects, it’s only the things that the client needs.”_
+
+-Rodrigo Barona, Engineering and Design Manager at Wunderman Thompson
+
+[Managed Infrastructure](https://vercel.com/resources/what-bootstrapping-costs-your-business#managed-infrastructure)
+--------------------------------------------------------------------------------------------------------------------
+
+### [Hosting | Compute and rendering (Kubernetes, Docker) | Global CDN | Multi-region support](https://vercel.com/resources/what-bootstrapping-costs-your-business#hosting-|-compute-and-rendering-(kubernetes,-docker)-|-global-cdn-|-multi-region-support)
+
+### [Value](https://vercel.com/resources/what-bootstrapping-costs-your-business#value)
+
+*   **Infrastructure orchestration**
+*   With a true frontend platform, your framework controls your global infrastructure, not the other way around. Developers can focus on the code without worrying about how it needs to be orchestrated. Frontend platforms manage the orchestration, scaling, and provisioning of your infrastructure, based entirely on the code your team writes. 
+*   **Scalability and reliability**
+*   Uptime is essential to your bottom line. With a frontend platform like Vercel, every layer of your infrastructure scales up and down automatically, with no need to worry about traffic spikes. Performance is always a priority: Vercel also ensures a 99.99% uptime SLA.
+*   **Maintenance and feature support**
+*   Time spent doing repetitive maintenance can be better focused on solving the next challenge. A frontend platform like Vercel can automatically support new features and updates, with no extra time configuring a backend. 
+
+### [Costs to consider](https://vercel.com/resources/what-bootstrapping-costs-your-business#costs-to-consider)
+
+*   Wasteful default scaling to high traffic level
+*   DevOps resources SLA management
+*   Lost revenue from site downtime and latency
+*   Automations that can’t keep pace with your developers and business
+*   Cost of performance optimization
+*   Cost of developer resources
+*   Infrastructure management for new updates or feature releases
+*   Opportunity cost of time spent architecting
+
+### [Use case: Barnebys](https://vercel.com/resources/what-bootstrapping-costs-your-business#use-case-barnebys)
+
+Barnebys, a search engine for art, antiques, and collectibles from more than 3,000 auction houses and galleries around the world, removed the need for DevOps entirely when they partnered with Vercel.
+
+_“Vercel has removed our need for DevOps. We’ve never had downtime. Everything just works.”_
+
+-Johan Dahl, CTO at Barnebys
+
+[Internal documentation | Onboarding | Talent acquisition | Support](https://vercel.com/resources/what-bootstrapping-costs-your-business#internal-documentation-|-onboarding-|-talent-acquisition-|-support)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### [Value](https://vercel.com/resources/what-bootstrapping-costs-your-business#value)
+
+*   **Team efficiency**
+*   What happens to your internal system if the people who build and maintain it leave your company? When you buy a solution, you have a tool anyone can use.
+*   Vercel features and tools are easy for all segments of the business to start using, with the backing of world-class documentation and enterprise support
+
+### [Costs to consider](https://vercel.com/resources/what-bootstrapping-costs-your-business#costs-to-consider)
+
+*   Lost institutional knowledge when employees leave.
+*   Onboarding new employees to a bespoke infrastructure, requiring months vs. days of ramp-up time.
+*   Source: [Hackernoon: Engineer Onboarding: The ugly truth about ramp-up time](https://hackernoon.com/engineer-onboarding-the-ugly-truth-about-ramp-up-time-7e323t9j)
+*   Updating documentation of built-yourself infrastructure.
+*   Lost developer productivity due to bugs in homegrown framework.
+
+### [Use case: Loom](https://vercel.com/resources/what-bootstrapping-costs-your-business#use-case-loom)
+
+Loom, a video communication software company, quickly and seamlessly onboarded different segments of their business to Vercel.
+
+_"Whether it’s the marketing team or the legal team, we know that we're not going to step oneach other, and it's all part of the same ecosystem. When we're ready to pull it all together, it's seamless and fast."_
+
+-Tatiana Mac, Loom Senior Software Engineer

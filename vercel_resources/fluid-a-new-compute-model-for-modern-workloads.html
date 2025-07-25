@@ -1,0 +1,131 @@
+Title: Fluid: A new compute model for modern workloads — Vercel
+
+URL Source: https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads
+
+Markdown Content:
+Feb. 5th, 2025
+
+The challenge with modern compute
+
+Current compute models no longer meet the needs of highly dynamic applications. While dedicated servers provide efficiency and always-on availability, they often lead to over-provisioning, scaling challenges, and operational overhead. Serverless computing improves this with auto-scaling and pay-as-you-go pricing, but can suffer from cold starts and inefficient use of idle time. It’s time for a new, balanced approach.
+
+Fluid compute evolves beyond serverless, trading single-invocation functions for high-performance mini-servers. This model has helped thousands of early adopters maximize resource efficiency, minimize cold starts, and reduce compute costs.
+
+### [Introducing Fluid compute](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#introducing-fluid-compute-)
+
+Fluid compute is a new model for web application infrastructure. At its core, Fluid embraces a set of principles that optimize performance and cost while establishing a vision for meeting the demands of today’s dynamic web
+
+*   Compute triggers only when needed
+*   Real-time scaling from zero to peak traffic
+*   Supports advanced tasks like streaming and post-response processing
+*   Billing based on actual compute usage, minimizing waste
+*   Existing resources are used before scaling new ones
+*   Pre-warmed instances reduce latency and prevent cold-starts 
+
+All with zero configuration and zero maintenance overhead.
+
+![Image 1: Traditional vs ICF.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2FBj0lGKhRo5iBIkneGZgve%2F38c8977248e23fc8ff1b82d4f4afd905%2FTraditional_vs_ICF.png&w=1920&q=75)
+
+![Image 2: Traditional vs ICF (1).png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4r6mR7yJLrM5x40pKY53xj%2F6f691e103ff908c81543f3d95459cdc4%2FTraditional_vs_ICF__1_.png&w=1920&q=75)
+
+[The evolution of Vercel Functions](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#the-evolution-of-vercel-functions)
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Fluid delivers measurable improvements across a variety of use cases, from ecommerce to AI applications. Its unique execution model combines serverless efficiency with server-like flexibility, providing real benefits for modern web applications.
+
+### [Smarter scaling with higher ceilings and better cost efficiency](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#smarter-scaling-with-higher-ceilings-and-better-cost-efficiency)
+
+Vercel Functions with Fluid compute prioritize existing resources before creating new instances, eliminating hard scaling limits and leveraging warm compute for faster, more efficient scaling. By scaling functions before instances, Fluid shifts to a many-to-one model that can handle tens of thousands of concurrent invocations.
+
+At the same time, Fluid mitigates the risks of uncontrolled execution that can drive up costs. Functions waiting on backend responses can process additional requests instead of sitting idle, reducing wasted compute. Built-in recursion protection prevents infinite loops before they spiral into excessive usage.
+
+### [Cold start prevention for reduced latency](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#cold-start-prevention-for-reduced-latency)
+
+Fluid minimizes the effects of cold starts by greatly reducing their frequency and softening their impact. When cold starts do happen, a[Rust-based runtime](https://vercel.com/blog/vercel-functions-are-now-faster-and-powered-by-rust)with full Node.js and Python support accelerates initialization.[Bytecode caching](https://vercel.com/blog/introducing-bytecode-caching-for-vercel-functions)further speeds up invocation by pre-compiling function code, reducing startup overhead.
+
+### [Support for advanced tasks](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#support-for-advanced-tasks)
+
+Vercel Functions with Fluid compute extend the lifecycle of an invocation, enabling function executions to extend beyond when the final response is sent back to a client.
+
+With[`waitUntil`](https://www.figma.com/exit?url=https%3A%2F%2Fvercel.com%2Fchangelog%2Fwaituntil-is-now-available-for-vercel-functions), tasks like logging, analytics, and database updates can continue to run in the background of a compute function to reduce time to response. For AI workloads, this means managing post-response tasks like model training updates without impacting real-time performance.
+
+### [Dense global compute and multi-region failover](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#dense-global-compute-and-multi-region-failover)
+
+Vercel Functions with Fluid compute support a dense global compute model, running compute closer to where your data already lives instead of attempting unrealistic replication across every edge location. Rather than forcing widespread data distribution, this approach ensures your compute is placed in regions that align with your data, optimizing for both performance and consistency. Dynamic requests are routed to the nearest healthy compute region—among your designated locations—ensuring efficient and reliable execution. In addition to standard[multi-availability zone failover](https://vercel.com/blog/effortless-high-availability-for-dynamic-frontends), for enterprise customers, multi-region failover is now the default when activating Fluid.
+
+### [Open, portable, and fully supported](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#open,-portable,-and-fully-supported)
+
+Vercel Functions run without proprietary code, ensuring full portability across any provider that supports standard function execution. Developers don’t need to write functions explicitly for the infrastructure—workloads are inferred and automatically provisioned. With full Node.js and Python runtime support, including native modules and the standard library, Fluid ensures seamless compatibility with existing applications and frameworks—without runtime constraints.
+
+> ![Image 3](https://images.ctfassets.net/e5382hct74si/2ZWK7TDBJYchAmmTmizM3p/8bab02ec6082f645ac0f771ba3e77527/Verse_Logo.png)
+> 
+> 
+> ![Image 4](https://images.ctfassets.net/e5382hct74si/2ZWK7TDBJYchAmmTmizM3p/8bab02ec6082f645ac0f771ba3e77527/Verse_Logo.png)
+> 
+> 
+> Many of our API endpoints were lightweight and involved external requests, resulting in idle compute time. By leveraging in-function concurrency, we were able to share compute resources between requests, cutting costs by over 50% with zero code changes.
+> 
+> 
+> Lead Full Stack Developer
+
+[The impact of Fluid in real-world applications](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#the-impact-of-fluid-in-real-world-applications)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Modern applications require compute that is low-latency, efficient, and scalable. Fluid compute meets these demands by dynamically allocating resources and optimizing performance for AI, real-time personalization, and API workloads.
+
+### [AI and real-time inference](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#ai-and-real-time-inference)
+
+AI workloads require fast, scalable compute. Traditional serverless struggles with model inferences, leading to cost inefficiencies. **Fluid compute advantages**:
+
+*   Concurrency: Handles multiple AI inference requests per function
+*   Background tasks: Return user results quickly while running post-response tasks
+*   Pre-warmed instances: Reduces latency for real-time responses
+*   Dynamic scaling: Accommodates traffic surges without cost spikes
+
+### [API reliability](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#-api-reliability)
+
+APIs drive real-time applications but often face bottlenecks in traditional serverless models. **Fluid compute advantages**:
+
+*   Concurrency: Processes multiple API requests in a single function instance
+*   Background tasks: Supports webhook processing and database interactions
+*   Cross-region failover: Ensures reliability during outages 
+
+### [Rendering and personalization](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#rendering-and-personalization)
+
+Authentication, authorization, and personalization must happen instantly. Traditional serverless struggles with latency and cost inefficiencies for frequent middleware execution. **Fluid compute advantages**:
+
+*   Bytecode caching: Reduces latency for dynamic rendering
+*   Concurrency: Shares rendering resources efficiently
+*   Dynamic scaling: Handles traffic surges without delays 
+
+### [Middleware at the edge](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#middleware-at-the-edge-)
+
+Authentication, authorization, and personalization must happen instantly. Traditional serverless struggles with latency and cost inefficiencies for frequent middleware execution. **Fluid compute advantages**:
+
+*   Pre-warmed execution: Ensures immediate middleware responses
+*   Edge caching: Reduces redundant compute calls
+*   Background tasks: Handles non-critical tasks after the response
+
+[What makes Fluid compute different?](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#what-makes-fluid-compute-different)
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Understanding how Fluid compute compares to existing serverless solutions helps highlight its advantages in efficiency, scalability, and cost optimization.
+
+![Image 5: Table (15).png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F3SpfTdkrki8VWkRMmdMrC6%2Fd60c782c00c9236b91b0fbea3974162e%2FTable__15_.png&w=1080&q=75)
+
+![Image 6: Table (16).png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4aImTwSnSIC18wTjULhNKp%2F078db79ab3b1928e0cb8fd30565f578a%2FTable__16_.png&w=1080&q=75)
+
+[The future of compute](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#the-future-of-compute)
+--------------------------------------------------------------------------------------------------------------------------
+
+Fluid compute is more than an optimization—it’s a fundamental shift in how modern applications scale and perform. By combining the flexibility of serverless with the efficiency of persistent compute, it sets a new path forward for web application compute. As applications become more complex and traffic more unpredictable, the need for an intelligent, more efficient compute model has emerged. Fluid compute is that model.
+
+### [Reduce compute costs by up to 85%](https://vercel.com/resources/fluid-a-new-compute-model-for-modern-workloads#reduce-compute-costs-by-up-to-85%)
+
+Fluid has helped thousands of early adopters maximize resource efficiency, minimize cold starts, and reduce compute costs.
+
+![Image 7: Background+Shadow.png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F3ANTHnY2op11P9c8MR9Y8n%2F07113a34f8795b02ed2fece97829b0dd%2FBackground_Shadow.png&w=1920&q=75)
+
+![Image 8: Background+Shadow (1).png](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F7AFdrgpgKqxgH634v5OpbH%2F2cc48c76123f2f83c2fb2001a66ae85c%2FBackground_Shadow__1_.png&w=1920&q=75)
+
+Fluid compute is available for all Vercel users—no complex migrations or coding changes required.

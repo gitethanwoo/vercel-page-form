@@ -1,0 +1,287 @@
+Title: How Vercel improves your website’s search engine ranking
+
+URL Source: https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking
+
+Published Time: 2024-02-12T13:54:42.279Z
+
+Markdown Content:
+Your web page’s ranking in Google Search is [determined by four main factors](https://www.google.com/intl/en_uk/search/howsearchworks/how-search-works/ranking-results/#usability):
+
+1.   **Relevancy:** How close is the topic of your page to the search query?
+2.   **Quality:** How trustworthy and helpful is your page to others?
+3.   **Usability:** How smooth is the experience of navigating your page?
+4.   **Context:** Who is the user and what are they more likely to need?
+
+Relevancy and quality, though crucial, can be a bit of a “black box” to improve. Many strategies yield tangible results, but there are few hard and fast rules.
+
+Context is dependent on your user. For instance, if they search for a sport, they’re likely to get their local (or favorite) team.
+
+Usability, however, is highly measurable. Google uses transparent performance metrics to rank your application by its “page experience.” These metrics are called [Core Web Vitals](https://web.dev/articles/vitals).
+
+We’ve recently written quite a bit about how _exactly_ Google [ranks your application through its Core Web Vitals](https://vercel.com/blog/how-core-web-vitals-affect-seo). The goal of this article is to show how Vercel and JavaScript frameworks such as Next.js can help you optimize the usability of your site, and thereby improve search ranking and user conversion.
+
+[The Core Web Vitals and their related metrics](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#the-core-web-vitals-and-their-related-metrics)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The three [Core Web Vitals](https://web.dev/articles/vitals) (LCP, CLS, and INP*) often get conflated with other, albeit helpful, metrics that measure your site’s performance for users. Only improvements to the Core Web Vitals themselves will impact your site’s search ranking.
+
+However, all these metrics are closely related to Core Web Vitals. Optimizing one metric often yields positive results in many of the others.
+
+Plus, i**mprovements in each of these metrics have**[**real, measured business impact**](https://vercel.com/blog/the-user-experience-of-the-frontend-cloud#why-do-you-need-speed)**,** with the potential to increase users’ conversion rates on your site. They correlate directly to a better experience for your users.
+
+![Image 1: The Core Web Vitals and their related metrics.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F1qYT9WgPJa0vuN8KbVaZei%2Ffb982ffeebb06c158dfeaa3b1b4e2276%2FInline_Graphic_1920xVariable-1.png&w=1920&q=75)
+
+![Image 2: The Core Web Vitals and their related metrics.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F1qYT9WgPJa0vuN8KbVaZei%2Ffb982ffeebb06c158dfeaa3b1b4e2276%2FInline_Graphic_1920xVariable-1.png&w=1920&q=75)
+
+Note that these metrics can be viewed in a 28-day sliding window through [Google Search Console or PageSpeed Insights](https://vercel.com/blog/how-core-web-vitals-affect-seo#how-to-see-your-application%E2%80%99s-core-web-vitals), or in realtime with [Vercel Speed Insights](https://vercel.com/blog/how-core-web-vitals-affect-seo#a-quicker-way-to-iterate-on-core-web-vitals-vercel-speed-insights).
+
+Below, we provide a brief overview of each metric and show a few places where Vercel (or the [35+ frameworks it supports](https://vercel.com/docs/frameworks)) can help you optimize your application.
+
+Performance optimization is a deep and nuanced topic, so we’ve linked to other articles where possible to explore specific recommended strategies.
+
+* * *
+
+*On March 12, 2024, [INP replaced FID](https://web.dev/blog/inp-cwv-march-12)as a Core Web Vital.
+
+[Network response: Time to first byte (TTFB)](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#network-response-time-to-first-byte-(ttfb))
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+[TTFB](https://web.dev/articles/ttfb) represents how long it takes from a user clicking on a link to the response beginning to stream in (very quickly after seeing the white page, but before actual content starts painting).
+
+More technically, TTFB is the sum of redirect time, service worker boot time (if applicable), DNS lookup, TLS handshake, and request—up until the first byte of the response arrives.
+
+![Image 3: In this diagram, TTFB is the time between `redirectStart` and `responseStart`.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F1h3SQ03UeTwaiXHJssc7Jc%2F3bd96073119acea0245f298c12cfde24%2FInline_Graphic_1920xVariable.png&w=1920&q=75)
+
+![Image 4: In this diagram, TTFB is the time between `redirectStart` and `responseStart`.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F5hpAwMvnTFAvkfKcj99UID%2F33f11c128c38ba81044277bc6881108b%2FInline_Graphic_1920xVariable-1.png&w=1920&q=75)
+
+### [Optimizing TTFB: Intelligently cached content served from the edge](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#optimizing-ttfb-intelligently-cached-content-served-from-the-edge)
+
+Vercel’s Frontend Cloud automatically optimizes your application’s TTFB through its [Edge Network](https://vercel.com/blog/the-user-experience-of-the-frontend-cloud#what-is-a-content-delivery-network-(cdn)) and [latency caching within the request lifecycle](https://vercel.com/blog/the-user-experience-of-the-frontend-cloud#the-lifecycle-of-a-user-request).
+
+Additionally, [Partial Prerendering](https://vercel.com/blog/partial-prerendering-with-next-js-creating-a-new-default-rendering-model)—a recent Next.js optimization that can be adopted into any framework thanks to Vercel’s [Build Output API](https://vercel.com/docs/build-output-api/v3)—replaces Edge SSR and [does not block TTFB on serverless cold starts](https://vercel.com/blog/partial-prerendering-with-next-js-creating-a-new-default-rendering-model#understanding-the-trade-offs-eliminated), drastically improving the metric.
+
+For instance, within a month of Parachute migrating to Vercel, their [load times improved by 60%](https://vercel.com/customers/parachute).
+
+[Rendering: First Contentful Paint (FCP) and Largest Contentful Paint (LCP)](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#rendering-first-contentful-paint-(fcp)-and-largest-contentful-paint-(lcp))
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+FCP measures the time from the moment the page starts loading to the moment the first piece of content from the Document Object Model (DOM) is rendered on screen. This could be any content from the webpage such as an image, a block of text, or a canvas render.
+
+Since FCP includes the time it takes to unload the previous page and establish the new connection, it can appear significantly different between [field and lab testing](https://vercel.com/blog/how-core-web-vitals-affect-seo#how-google-ranks-based-on-page-speed).
+
+More anecdotally, FCP is when your user first sees something happening on the screen, indicating that your site will be ready to use shortly, which helps to lock in their engagement.
+
+![Image 5: FCP occurs here in the second frame, when the very first content paints to the page.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F6v6QtVeOsXkZRT2COJ7dee%2F688e47918d0f9219ec17cfaba2649536%2FInline_Graphic_1920xVariable.png&w=1920&q=75)
+
+![Image 6: FCP occurs here in the second frame, when the very first content paints to the page.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2FYr0spmX0KLvAYMMW7AMde%2F7abee06b23e21db5e0762622002e511d%2FInline_Graphic_1920xVariable-1.png&w=1920&q=75)
+
+### [How LCP differs from FCP](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#how-lcp-differs-from-fcp)
+
+LCP tracks how long it takes for the most noticeable element at the top of your webpage to become visible. It essentially measures how quickly the user feels they can begin using the page.
+
+The “most noticeable element” measured by LCP can be a variety of things—your `h1`, a large (but not background) image, a video, etc. To see exactly which element Google is counting as your LCP, use [Lighthouse](https://pagespeed.web.dev/).
+
+### [Optimizing LCP: Make it static content](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#optimizing-lcp-make-it-static-content)
+
+In order to load and render the element responsible for your LCP as quickly as possible, it should ideally be static content fetched from the nearest edge location.
+
+This is easier said than done. While homepages are relatively straightforward to keep as static content, product pages or articles often come from an external CMS. This has led to the approach of statically generating website pages at build time (often referred to as static site generation or SSG).
+
+SSG, however, comes with the downside of not being able to change your page’s content without rebuilding the application it’s a part of. As your business scales, this can lead to long build times and [the overhead that slower deployment iteration comes with](https://vercel.com/blog/improving-developer-workflow#1)-real-costs-from-slow-builds).
+
+This is why Vercel offers [Incremental Static Regeneration (ISR)](https://vercel.com/docs/incremental-static-regeneration), available simply by writing your normal framework code.
+
+ISR means that, at the page level, you can choose whether you will serve fresh or cached data _and_ how often that cached data should be refreshed. Crucially, this data refresh can happen on-demand or at a set interval, _without redeploying your application_.
+
+You can optimize this so that your users always get edge-cached data when they navigate to your site, thereby improving LCP, TTI, and TBT.
+
+### [Further optimizing LCP with Next.js: Component-level data control](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#further-optimizing-lcp-with-next.js-component-level-data-control)
+
+Next.js takes ISR a step further, leveraging [React Suspense and Server Components](https://vercel.com/blog/understanding-react-server-components) to give you _component-level_ flexibility of which data is dynamic and which is cached.
+
+As opposed to page-level control, Next.js’s fine-grained flexibility means that **you can ensure that your LCP element is both static****_and_****streamed before any other piece of your page**, leaving smaller dynamic components to load in as they become ready.
+
+While doing the opposite—streaming smaller pieces first—may give a faster FCP, LCP is the Core Web Vital that is measured by Google to rank your application and indicates a better overall user experience.
+
+![Image 7: In this diagram, the browser initially recognizes the top-left header as the LCP before eventually settling on the center element for the final measurement. In this specific case, LCP could be optimized by streaming in the center element before the header.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F6Mhs2TYXCUV9Iy3w3qpcim%2Fd2d0a59628e35c34beb27cf32342f8e4%2FInline_Graphic_1920xVariable.png&w=1920&q=75)
+
+![Image 8: In this diagram, the browser initially recognizes the top-left header as the LCP before eventually settling on the center element for the final measurement. In this specific case, LCP could be optimized by streaming in the center element before the header.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F59SuluefzInYApSnqusehb%2F8658b1237a666d0ebe48cee011a95a1f%2FInline_Graphic_1920xVariable-1.png&w=1920&q=75)
+
+[Load complete: Time to Interactive (TTI) and Total Blocking Time (TBT)](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#load-complete-time-to-interactive-(tti)-and-total-blocking-time-(tbt))
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+TTI tracks the time from when the page starts loading to when it can reliably respond to user input quickly.
+
+More precisely, TTI waits for a “quiet window” of 5 seconds where your page has no long tasks (tasks that run for more than 50ms on the main thread) and no more than 2 active network GET requests. Then it looks backward from that window to when the last long task ended. This point is your TTI.
+
+![Image 9: In this diagram, to find the TTI, the browser looks back from the 5-second quiet window to the last main thread long task.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F2JNutaavfl8FEUhb14llRI%2F895b6ae23ccaa50fb2f76cefd6e02ded%2FInline_Graphic_1920xVariable.png&w=1920&q=75)
+
+![Image 10: In this diagram, to find the TTI, the browser looks back from the 5-second quiet window to the last main thread long task.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F6ngtJYRldrrfYZofp9PJFN%2Fe647c81a7aa2d22a7d05813d09bb1be3%2FInline_Graphic_1920xVariable-1.png&w=1920&q=75)
+
+With rendering techniques like server-side rendering (SSR), pages can paint content before users can click buttons on the page. This can lead to frustration, or, in a worst-case scenario, to users thinking the site is broken.
+
+This is why you want to keep the time between FCP and TTI to an absolute minimum (< 800ms). This window is measured by TBT.
+
+### [Optimizing TTI and TBT: Only load what you need](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#optimizing-tti-and-tbt-only-load-what-you-need)
+
+React Suspense and Server Components drastically improve TTI and TBT. Thanks to the concurrent nature of Suspense, the hydration of components happens _off the main thread._
+
+Even if your application streams in many components, the TTI “quiet window” will still look back to when the last main-thread long task ended. Your TTI (and thereby TBT) improves dramatically when properly utilizing Suspense.
+
+For instance, using this selective hydration strategy, [Vercel was able to reduce the TBT](https://vercel.com/blog/improving-interaction-to-next-paint-with-react-18-and-suspense#case-study-next.js-site) of `nextjs.org` from 430ms to 80ms.
+
+* * *
+
+Secondly, many modern JavaScript frameworks (like [Next.js](https://nextjs.org/) or [SvelteKit](https://kit.svelte.dev/), optimized to run on Vercel) ensure that only the visible UI (or soon-to-be visible UI) accounts for the JavaScript running on the page.
+
+Generally speaking, websites have to manually delegate which code should run and when. In a traditional React single-page application (SPA), for example, the browser loads _all_ your application code on initial load.
+
+Modern JS frameworks [drastically improve on this](https://nextjs.org/docs/app/building-your-application/optimizing), automatically dividing code at the route level (code splitting) and even the viewport level (lazy loading).
+
+With these automatic optimizations, you can get to the TTI “quiet window” much faster, while still ensuring the user gets everything they need to interact.
+
+[Responsiveness: First Input Delay (FID) and Interaction to Next Paint (INP)](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#responsiveness-first-input-delay-(fid)-and-interaction-to-next-paint-(inp))
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+[FID is a former Core Web Vital](https://web.dev/articles/fid) that measures the time between the first user interaction on a page (i.e. clicking a link, tapping a button, or using some other JS control) to the time when the browser’s main thread is idle and able to begin processing that event.
+
+Keep in mind that, by default, JavaScript is single-threaded. If you’re loading a large JS script, nothing else can happen on your page until the main thread is idle—even [reacting to a user’s click on a plain HTML link](https://web.dev/articles/fid#what_if_an_interaction_doesnt_have_an_event_listener).
+
+There are strategies such as workers and React Concurrency that can help this, which we’ll get into below.
+
+### [First Input Delay (FID) vs. Interaction to Next Paint (INP)](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#first-input-delay-(fid)-vs.-interaction-to-next-paint-(inp))
+
+[FID was recently replaced by INP](https://web.dev/blog/inp-cwv-march-12) as a Core Web Vital to measure the speed of your application’s interactivity. Let’s break down the differences between the two:
+
+*   FID measures only the _first_ input and browser response. INP considers the responsiveness of all user input for the duration of the page session. Then, it averages the times together for the score, ignoring one “worst time” for every 50 interactions.
+*   FID only measures the delay between input and the browser _starting_ to respond. INP measures the time between the input and the event completing in response—to the presentation of the next frame.
+
+![Image 11: An interaction's lifecycle starts with an input delay until event handlers kick in, often due to prolonged tasks on the main thread. After the event handlers execute, there's a brief delay before the next frame is displayed.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F1cUU2GEoe9Yo8P1ZpKD4oi%2F7bc6406b9426d0b0aa288d256298ee26%2FInline_Graphic_1920xVariable.png&w=1920&q=75)
+
+![Image 12: An interaction's lifecycle starts with an input delay until event handlers kick in, often due to prolonged tasks on the main thread. After the event handlers execute, there's a brief delay before the next frame is displayed.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4oksS79eV3x4O09uzhaRhk%2F2ee4c1acc36e0cfeab175d123d3471c5%2FInline_Graphic_1920xVariable-1.png&w=1920&q=75)
+
+*   INP additionally groups events together that occur as part of the same logical user interaction, defining the interaction’s latency as the maximum duration of all its events.
+
+Note that it is possible that a user can visit a page and not interact, in which case no INP score will be calculated. This also happens if the page is accessed by a bot such as a search crawler or headless browser that has not been scripted to interact with the page.
+
+### [Optimizing INP: Stay off the main thread](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#optimizing-inp-stay-off-the-main-thread)
+
+Since the main thread must be idle to process event handlers, [React Suspense helps us](https://vercel.com/blog/improving-interaction-to-next-paint-with-react-18-and-suspense) here, too, by keeping component hydration off the main thread. Additionally, you can look into:
+
+*   Using CSS instead of JavaScript for animations, since a separate thread handles CSS, called the browser’s compositor thread. Some CSS properties, such as transforms, can also[use the GPU for rendering](https://developer.mozilla.org/en-US/docs/Web/Performance/Fundamentals#specific_coding_tips_for_application_performance).
+*   [Throttling or debouncing events](https://www.freecodecamp.org/news/javascript-debounce-example/)—especially ones driven by scrolling—that may be called repeatedly by user input.
+*   [Reducing your DOM size](https://web.dev/articles/dom-size-and-interactivity), to avoid having the browser recalculate too many elements on each render.
+*   [Getting SVGs out of your client-side JS bundle](https://kurtextrem.de/posts/svg-in-js). Inline SVGs can be especially troublesome if you have too many (DOM size) or if they end up in your client-side JS bundle(for example, by inlining them in JSX). You may need reference them in an`<img>` tag or look into[alternate ways of rendering them](https://css-tricks.com/too-many-svgs-clogging-up-your-markup-try-use/), such as keeping them in[React Server Components](https://vercel.com/blog/understanding-react-server-components).
+*   In the case of a complex application, using web workers to[arbitrarily execute JavaScript on separate threads](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers), keeping the main thread open for user input.
+*   Lazy loading images, fonts, or scripts, which[Next.js can automatically do for you](https://nextjs.org/docs/app/building-your-application/optimizing).
+*   Code splitting, [as mentioned above](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#optimizing-tti-and-tbt-only-load-what-you-need).
+
+[Usability: Cumulative Layout Shift (CLS)](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#usability-cumulative-layout-shift-(cls))
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+[CLS measures _layout shifts_](https://web.dev/articles/cls), which occur any time a visible element jumps in position from one frame to the next.
+
+Layout shifts often occur when loading resources asynchronously or dynamically adding DOM elements to the page _above_ existing content (causing content to be pushed down).
+
+Among other things, the cause of a layout shift could be an image or video whose dimensions are not specified, a font that displays at a size different from its fallback, or a third-party ad or widget that dynamically resizes.
+
+![Image 13: Rendering new content above existing content pushes existing content down the page (layout shift), interrupting the user experience.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F2EwzG7F1GNWu0SOGU4RTIc%2F85a303e25fd443ff1afa4073e03c1971%2FInline_Graphic_1920xVariable.png&w=1920&q=75)
+
+![Image 14: Rendering new content above existing content pushes existing content down the page (layout shift), interrupting the user experience.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F71by1KiXPxnafR17YKhFaj%2Fbda96f0a506750eb21f445561408e08c%2FInline_Graphic_1920xVariable-1.png&w=1920&q=75)
+
+CLS measures the largest burst of layout shifts during a session. Google tracks layout shifts within 1-second windows, calculating a score for each shift based on the affected portion of the viewport and the distance the element moved.
+
+These scores are summed to get a cumulative score for each window. The highest score among these windows represents the actual CLS score. A good CLS score is below 0.1.
+
+### [Vercel Toolbar tracks layout shifts](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#vercel-toolbar-tracks-layout-shifts)
+
+Your CLS score can result from significant shifts of large elements (highly noticeable) or many tiny shifts of smaller elements (tough to debug).
+
+Especially on fast connections, layout shifts may happen too quickly for the eye to track. Google does not tell you which elements are shifting and impacting your score.
+
+That’s why we added a [layout shift tracker to the Vercel Toolbar](https://vercel.com/changelog/automatically-detect-and-replay-layout-shifts), which programmatically detects every layout shift and points you exactly to the problem elements.
+
+![Image 15: Vercel can automatically detect and replay layout shifts on your deployments from the Vercel Toolbar.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F7h3gBhpJxa6cn4CFPogarj%2F9a51efe9c3ad040c33b69ab2a062d720%2FLayout_Shifts.jpg&w=1920&q=75)
+
+![Image 16: Vercel can automatically detect and replay layout shifts on your deployments from the Vercel Toolbar.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F3TC5LakviZMy57QUkqdVQI%2F977b1891e53e877714cb596382aed395%2FLayout_Shifts-1.jpg&w=1920&q=75)
+
+Since Vercel’s [Preview Deployments are true-to-prod](https://vercel.com/blog/the-developer-experience-of-the-frontend-cloud), you get the assurance that no unforeseen network conditions will add layout shifts back in.
+
+For extra convenience, the Vercel Toolbar can also be [added to your local dev environment](https://vercel.com/docs/workflow-collaboration/vercel-toolbar/in-production-and-localhost), which allows you to detect layout shifts before they’re ever merged into code.
+
+### [Optimizing layout shifts: Stay still after FCP](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#optimizing-layout-shifts-stay-still-after-fcp)
+
+A layout shift occurring means that the browser has to recalculate the position of all elements in the DOM affected by the shift. This can impact your other web performance metrics, especially if your DOM is large.
+
+Let’s look at how to improve.
+
+* * *
+
+**Scripts that impact the layout of the page should not run after First Contentful Paint (FCP).**
+
+A/B testing, feature flags, or even redirects and internationalization—which must run _after_ user request—can often alter the layout of your page and drastically impact your CLS.
+
+Unfortunately, these types of scripts can be very difficult to render while still meeting Core Web Vitals standards such as LCP and CLS.
+
+*   **Client-side rendering (CSR)**your experimentation will evaluate which version of your app a user will see _after_ the page has loaded. This results in poor UX since your users will have to wait for loaders while the experiment is evaluated and eventually rendered, creating layout shift.
+*   **Server-side rendering (SSR)**can slow page response times as experiments are evaluated on demand. Users have to wait for the experiments along a similar timeline as CSR—but stare at a blank page until all of the work is done to build and serve the page.
+
+> ![Image 17](https://images.ctfassets.net/e5382hct74si/6qrBUDhtNDTBIsnnJ623BE/1e5458960a512e0071c81b40d7cdefbf/1628260108075.jpeg)
+> 
+> 
+> ![Image 18](https://images.ctfassets.net/e5382hct74si/6qrBUDhtNDTBIsnnJ623BE/1e5458960a512e0071c81b40d7cdefbf/1628260108075.jpeg)
+> 
+> 
+> “With Edge Middleware, we can show the control or experiment version of a page immediately instead of using third-party scripts. This results in better performance and removes the likelihood of flickering/layout shifts.”
+> 
+> 
+> Jillian Anderson Slate Software Engineer at SumUp
+
+Vercel combines [Incremental Static Regeneration (ISR)](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#optimizing-lcp-make-it-static-content) and Edge Middleware to give your users [statically-rendered experiments](https://vercel.com/blog/zero-cls-experiments-nextjs-edge-config), serving them as fast as possible to your users with zero layout shift.
+
+This is the best of all worlds: you can have highly dynamic code at build, and Vercel’s Edge Network computes what to statically serve [within 15ms at runtime](https://vercel.com/blog/zero-cls-experiments-nextjs-edge-config#leveraging-edge-config-for-read-speed).
+
+Plus, you can [manage all your experimentation with Vercel’s Edge Config](https://vercel.com/blog/edge-config-and-launch-darkly), without the need to redeploy.
+
+* * *
+
+**Images should notify the DOM of their****`width`****and****`height`****.**
+
+Since even the smallest images take slightly longer to load than text, your site’s image containers should have an explicit `width` and `height` to prevent elements from being pushed around when the image loads in.
+
+Frameworks like Next.js and SvelteKit offer [automatic image optimization](https://nextjs.org/docs/pages/building-your-application/optimizing/images) to avoid this challenge in the first place by determining the width and height of your image ahead of time to prevent CLS while the image loads in.
+
+* * *
+
+**Fonts and their fallbacks should match in size.**
+
+When using custom fonts, the browser often renders the fallback a split second before the custom font. If your fallback and custom font do not match in size, this can cause elements to shift when the custom font loads.
+
+There are many [ways to optimize this behavior](https://vercel.com/guides/optimizing-web-fonts), but the built-in [font optimization in Next.js](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) is the easiest. Next.js allows you to automatically self-host any font file, which drastically improves load time (rather than requesting the file from Google Fonts, for instance). Additionally, Next.js then provides a fallback font to match the size of your custom font.
+
+* * *
+
+**Animations on one element should not affect other elements.**
+
+[Animations](https://web.dev/articles/cls#animations_and_transitions) can heavily impact CLS if not properly handled. Ideally, animations should target an element’s [CSS transform property](https://developer.mozilla.org/docs/Web/CSS/transform).
+
+For instance, instead of changing `width` or `height`, use `transform: scale()`.
+
+To move elements around, avoid changing the`top`,`right`,`bottom`, or`left`properties and use`transform: translate()`instead.
+
+Plus, [as noted above](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#optimizing-inp-stay-off-the-main-thread), CSS transforms can be GPU-accelerated, improving the availability of your CPU’s main thread and thereby optimizing your Core Web Vitals.
+
+[Takeaways](https://vercel.com/resources/how-vercel-improves-your-websites-search-engine-ranking#takeaways)
+-----------------------------------------------------------------------------------------------------------
+
+Let’s take a look at what we’ve covered:
+
+*   After content relevancy and structure, Core Web Vitals—LCP, FID, and CLS—greatly impact your application’s ranking in Google Search.
+*   FID was swapped out on March 12, 2024 for INP as the third Core Web Vital.
+*   Deploying your application on Vercel’s Frontend Cloud vastly and automatically optimizes your application’s TTFB, which in turn improves your FCP and LCP.
+*   Next.js 14’s Partial Prerendering further optimizes TTFB, FCP, and LCP.
+*   Vercel’s Incremental Static Regeneration (ISR) can drastically improve your users’ time to see page content. Next.js offers ISR with component-level granularity, as opposed to page-level. ISR directly optimizes FCP, LCP, TTI, and TBT.
+*   React Suspense, available for use within Next.js, gives you vast flexibility in optimizing your LCP, TTI, TBT, and INP.
+*   The built-in automatic optimizations of Next.js for images, fonts, and scripts drastically improve LCP, TTI, TBT, INP, and even CLS.
+*   The Vercel Toolbar enables you to accurately measure hard-to-spot CLS, both in local dev and in your true-to-prod Preview Deployments.
+*   Vercel’s Edge Middleware unlocks CLS-free A/B testing, feature flags, redirects, internationalization, and more.

@@ -1,0 +1,141 @@
+Title: When to add serverless to your Kubernetes architecture
+
+URL Source: https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture
+
+Published Time: 2024-05-01T14:48:13.544Z
+
+Markdown Content:
+If you’re considering serverless architecture for some or all of your web app, you’ve likely found conflicting viewpoints on best practices.
+
+Vercel is a serverless PaaS built on top of Kubernetes, and we’ve seen a lot of teams navigate these waters. Here, we’ll define the differences between serverless architecture and containerized Kubernetes apps, and we’ll address when to use each—**both architectures excel at different kinds of workloads.**
+
+We’ll also explore different ways you can deploy the serverless pieces of your application and illustrate how Vercel fits into this ecosystem—as a Frontend Cloud that seamlessly extends your Kubernetes backend.
+
+[Understanding serverless architecture](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#understanding-serverless-architecture)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Kubernetes offers many benefits for your app, but provisioning servers, scaling clusters, and handling infrastructure patches can eat into valuable development time.
+
+**Serverless** is a deployment model where a cloud vendor handles some or all of these infrastructure complexities, which lets you focus more on crafting business logic. You define the code you want to execute, and the serverless cloud platform takes care of scaling, configuring, patching, and ensuring high availability.
+
+### [Pods vs. functions](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#pods-vs.-functions)
+
+Serverless and Kubernetes handle scaling orchestration in different ways, but you can use a similar framework to understand them.
+
+In Kubernetes, the smallest deployable unit is a pod, which is made up of one or more containers. Kubernetes can effectively orchestrate and horizontally scale pods because they’re stateless. With a pod in isolation—from initial boot to termination—the same sequence of inputs will always give the same sequence of outputs.
+
+Serverless also relies on orchestrating small, stateless units: functions. Since they don’t come bundled with system dependencies, functions are more optimized and more modular than typical containers. They can boot on demand—in tens of milliseconds as opposed to tens of seconds.
+
+This allows for a huge amount of flexibility and means that serverless is a great choice for decoupling application services and handling unpredictable traffic patterns.
+
+[What to know before going serverless](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#what-to-know-before-going-serverless)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+When it comes to choosing serverless vs. containers, there’s no one right answer. As long as your serverless provider offers a way to securely connect to your Kubernetes cluster, **you can decouple and deploy your app’s services where they each make sense.** Below we'll highlight some points to consider as you decide where to deploy which workloads.
+
+### [Event-driven architecture (EDA)](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#event-driven-architecture-(eda))
+
+Unlike containers, which must run continuously to handle incoming requests, serverless functions execute in response to asynchronous events. These can include user requests, webhooks, database changes, cron jobs, and more.
+
+This event-driven approach is particularly useful when it comes to decoupling services within your application for independent development and deployment.
+
+For instance, a `new_user_created` event from your stateful user database could trigger individual serverless functions for email notification, onboarding initialization, analytics tracking, and a trial start—all scaled on demand by the serverless provider.
+
+On the flip side, if pieces of your application handle straightforward request/response interactions with predictable traffic, or rely heavily on synchronous communication and state sharing, the overhead of refactoring to EDA might not be worth it.
+
+What’s important is to analyze services in your application independently. As your codebase scales, you will regularly encounter places where decoupled serverless components offer the best path forward.
+
+### [Rightsizing](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#rightsizing)
+
+The event-driven nature of serverless functions means they scale to zero when unused. They cost nothing during idle periods, and they can spin up instantly to handle traffic surges. This all happens without manual intervention from engineers.
+
+While Kubernetes does offer both pod and cluster autoscaling, pod initialization is too slow to scale on demand. Rightsizing persistent server capacity to match traffic patterns takes planning, and fluctuations in traffic often lead to resource underutilization and higher costs.
+
+### [Cold starts](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#cold-starts)
+
+Optimized serverless functions can spin up in less than 40ms. But when a function hasn't been invoked for a while, the provider must provision resources, set up the runtime, and load code, causing a brief delay for users. This is known as a cold start.
+
+Thankfully, you can do a lot to mitigate both the occurrence and duration of cold starts, making them negligible in enterprise web apps. Enterprise customers on Vercel, currently see brief cold starts in **fewer than 0.2% of requests**.
+
+You can think of cold starts as the alternative to scaling Kubernetes containers. While they're more likely during bursty traffic, they’re still preferable to underprovisioning Kubernetes infrastructure, which leads to delays of seconds or even minutes before a container initializes and the user can access your app.
+
+### [Cost](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#cost)
+
+Serverless cloud providers often bundle infrastructure costs into their pricing. This can mean higher upfront costs than self-hosted Kubernetes, where you size components individually.
+
+However, running containers in Kubernetes costs you the same, regardless of direct user activity. In serverless, event-driven usage means you only incur costs when functions execute.
+
+This all means that serverless offers a tighter alignment between cost and revenue-generating events. While other factors can influence costs (like background tasks or surge traffic), serverless gives you better visibility into how your infrastructure spend relates to customer value. In Kubernetes, it’s tough to precisely attribute costs to specific workloads.
+
+To save costs in Kubernetes, you optimize container image size, resource requests/limits, intelligent scaling (HPA/VPA), and underutilized resources. In serverless, focus on function duration, memory allocation, external service calls, and caching.
+
+### [Observability](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#observability)
+
+Kubernetes offers mature observability tools (logging, metrics, tracing, etc.), but continually provisioning observability infrastructure becomes a chore as your codebase grows.
+
+While serverless observability eliminates infrastructure management, you'll still need to actively aggregate logs and correlate events across function calls. This involves proactive code instrumentation and, usually, vendor-specific dashboards.
+
+Vercel eases these challenges with [a built-in observability suite](https://vercel.com/docs/observability) designed for serverless. This offers the best of both worlds: reduced setup and minimal maintenance.
+
+### [Testing](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#testing)
+
+To get full-system verification, testing in Kubernetes relies on replicating your entire application into a simulated cluster. While straightforward, each testing or staging environment must be manually provisioned and paid for.
+
+Due to the asynchronous nature of EDA, end-to-end testing in serverless is even more critical—but also far more complex across a distributed system.
+
+To solve this, Vercel’s unlimited, true-to-production [Deployment Environments](https://vercel.com/docs/deployments/environments) allow you to use CI/CD actions to easily target specific components and dependencies, ensuring all changes work as expected in real-world use cases.
+
+### [Developer experience](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#developer-experience)
+
+The choice between self-hosted Kubernetes and serverless deeply impacts your team’s developer experience.
+
+With Kubernetes, you can tailor your platform to even the most niche requirements. But this flexibility burdens your internal developers, who will spend more time on infrastructure plumbing and have less portability when working across projects with differing setups.
+
+Serverless shifts the burden. You accept the constraints of a provider's framework, but your developers benefit from standardization. They can focus on core application logic, knowing the platform will handle scaling and much of the operational complexity.
+
+[When to use serverless vs. containers](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#when-to-use-serverless-vs.-containers)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+With all the above context in mind, serverless is a great choice for:
+
+*   Decoupled architecture
+*   A faster, more iterative workflow
+*   Focusing on features rather than infra
+*   Cost sensitivity to idle resources
+*   Spiky, unpredictable workloads
+*   [Achieving a NoOps vision](https://vercel.com/resources/simplify-your-kubernetes-frontend-deployment-with-vercel)
+
+And Kubernetes containers are important for backend features that require:
+
+*   Workloads with long execution times (like multiplayer game servers)
+*   Strict control needs over the runtime environment
+*   Stateful architectures that can’t be event-driven
+
+**Most real-world architectures combine serverless and serverful elements**, playing to the strengths of each. If your entire workload is made of self-hosted containers, especially the frontend, it might be time to reconsider.
+
+[Where do you deploy serverless applications?](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#where-do-you-deploy-serverless-applications)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Now that you know some of what serverless entails, let's explore deployment options:
+
+*   **Open-source options:** For complete vendor independence using your existing self-hosted setup, you can consider options like Knative, which bring serverless concepts to Kubernetes. Expect much more operational overhead in exchange for flexibility
+*   **Major cloud providers (AWS, Azure, GCP):** If you need to prioritize customization and granular cost control, and you already leverage their ecosystems, these can be good choices. Be prepared for an engineering-intensive setup to manage caching, security, and distribution
+*   **Specialized FaaS providers:** Tools like Cloudflare Workers and IBM Cloud Functions excel at executing specific, self-contained serverless functions. They're great for augmenting existing applications piecemeal or handling single-feature burst traffic patterns
+*   **Managed serverless PaaS:** Most teams choose serverless to get away from the burdens of managing infrastructure. Providers like Vercel, Netlify, Amplify, or Fly.io are integrated solutions that look to streamline deployment and automate global distribution, letting you focus on application code
+
+### [Vercel’s approach: Developer-centric and NoOps](https://vercel.com/resources/when-to-add-serverless-to-your-kubernetes-architecture#vercel%E2%80%99s-approach-developer-centric-and-noops)
+
+Vercel has approached the serverless space through an obsessive focus on making your entire frontend truly NoOps—and then seamlessly integrating that frontend with your existing Kubernetes architecture.
+
+We do this through [framework-defined infrastructure (FdI)](https://vercel.com/blog/framework-defined-infrastructure), the next evolution of Infrastructure as Code (IaC), which automates all frontend primitive deployment solely by reading the standardized build outputs of frontend frameworks.
+
+There are no YAML files or additional configuration—all infrastructure functionality is available within your [JavaScript framework of choice](https://vercel.com/docs/frameworks).
+
+This automatic infrastructure means no more waiting on manual setup or maintenance. Freed from infrastructure complexities, frontend teams get to work within familiar codebases and iterate from design to deploy faster than ever.
+
+So what does this enable? Learn more about how Vercel’s managed infrastructure and developer experience platform help:
+
+*   Extend your backend cloud and [simplify your Kubernetes frontend deployment](https://vercel.com/resources/simplify-your-kubernetes-frontend-deployment-with-vercel/preview)
+*   [Deliver the fastest frontends around the globe](https://vercel.com/blog/the-user-experience-of-the-frontend-cloud) without sacrificing personalization
+*   [Drastically cut iteration time](https://vercel.com/blog/the-developer-experience-of-the-frontend-cloud), allowing developers to collaborate and deliver more features more safely
+*   [Provide 99.99% uptime for your application](https://vercel.com/blog/the-resiliency-of-the-frontend-cloud), handling resiliency so you don’t have to

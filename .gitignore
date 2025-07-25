@@ -3,8 +3,6 @@
 # dependencies
 /node_modules
 
-# vercel_resources
-/vercel_resources
 
 # vercel_map.json
 /vercel_map.json

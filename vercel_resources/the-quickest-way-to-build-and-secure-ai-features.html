@@ -1,0 +1,135 @@
+Title: The quickest way to build and secure AI features
+
+URL Source: https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features
+
+Published Time: 2024-06-06T14:55:35.127Z
+
+Markdown Content:
+Creating AI features for an app should be exciting, and not full of tech debt, clunky integrations, platform lock-in, and slow response times—which is often the case.
+
+This is where Vercel can help. By providing the AI-native abstractions you need to get started and the full Frontend Cloud for automated global delivery, Vercel makes integrating cutting-edge AI models with your existing app as simple as adding a few lines of code. No migration required.
+
+Let’s explore the way forward.
+
+[Why traditional platforms fall short](https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features#why-traditional-platforms-fall-short)
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Traditional platforms often struggle to process and deliver AI-generated content efficiently, since they may lack the streaming architectures, robust caching solutions, and on-demand scaling crucial to AI workloads.
+
+Let’s break it down:
+
+*   **Streaming architectures:** AI models usually generate responses chunk-by-chunk. To create a seamless, interactive experience by delivering this content to users in real time, you need infrastructure that supports streaming
+*   **Caching mechanisms:** Even though models keep getting faster and cheaper to query, flexible caching allows you to save yourself needless costs and value your users’ time
+*   **Scalability:** Querying AI models can be computationally intensive and highly irregular. Platforms need to scale up and down on demand to handle varying workloads and ensure consistent performance
+
+These limitations hinder innovation and development velocity and result in frustrating user experiences with slow or unresponsive interfaces. Integrations with your platform may be sparse, frustrating to use, or time-consuming to implement. You may feel the need for a more AI-native experience.
+
+### [The need for a new approach](https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features#the-need-for-a-new-approach)
+
+To overcome these challenges and focus on the potential of AI features, you need a platform specifically designed for these unique requirements of AI development.
+
+Vercel’s serverless infrastructure not only addresses the technical limitations of traditional platforms but also, through Next.js and the AI SDK, empowers developers with the open-source tools and flexibility needed to create truly innovative, user-obsessed AI experiences.
+
+### [Future-proofing your AI stack](https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features#future-proofing-your-ai-stack)
+
+With how quickly AI is changing, the most important abilities your development platform can give you are **iteration velocity** and **flexible experimentation**. You need to be able to test new ideas, gather feedback, and refine your AI features without being bogged down by slow development cycles. Anything that _can_ be automated _should_ be automated.
+
+You also need to deliver lightweight, high-performance AI features to users on desktop and mobile. Even though AI is flashy, the fact remains: users don’t have much patience for unresponsive interfaces. Every interaction with your application needs to delight.
+
+Let’s take a look at the tools that can get you there.
+
+[The AI stack: AI SDK, Next.js, and Vercel](https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features#the-ai-stack-ai-sdk,-next.js,-and-vercel)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+### [AI SDK: Thoughtful AI abstractions for developers](https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features#ai-sdk-thoughtful-ai-abstractions-for-developers)
+
+Integrating large language models (LLMs) into apps is complicated and heavily dependent on your specific model provider.
+
+The [Vercel AI SDK](https://sdk.vercel.ai/docs/introduction) is a TypeScript library designed to help developers build AI-powered applications with Next.js, Nuxt, SvelteKit, and more. It abstracts the differences between model providers, eliminates boilerplate code for building chatbots, and allows you to go beyond text output to [generate rich, interactive components](https://vercel.com/blog/ai-sdk-3-generative-ui).
+
+![Image 1: Vercel's AI SDK offers an interoperable, streaming-enabled, edge-ready software development kit for AI apps built with JavaScript.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F42J8rRC9NDw0UnLhoNXkUZ%2F4d17d6d7fee81c4758a299d65a0ea1a0%2FIntroducing_Vercel_AI_SDK__1_..png&w=1920&q=75)
+
+![Image 2: Vercel's AI SDK offers an interoperable, streaming-enabled, edge-ready software development kit for AI apps built with JavaScript.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2FH8LIFm0xkUKJM8mbEo0YM%2F6f133194ce763cfb453b0f2d106e1fea%2FInline_Graphic-Dark.avif&w=3840&q=75)
+
+The abstraction layer makes your life easier, allowing you to effortlessly implement or hot-swap any AI models you want to experiment with. You can find the perfect fit for your application without rewriting hundreds of lines of code.
+
+Included in the SDK is:
+
+*   [**AI SDK Core**](https://sdk.vercel.ai/docs/ai-sdk-core)**:** A unified API for generating text, structured objects, and tool calls with LLMs
+*   [**AI SDK UI**](https://sdk.vercel.ai/docs/ai-sdk-ui)**:** A set of framework-agnostic hooks for quickly building chat, completion, and assistant interfaces
+*   [**AI SDK RSC**](https://sdk.vercel.ai/docs/ai-sdk-rsc)**:** A library to stream generative user interfaces with React Server Components (RSC)
+
+You can build AI features with flexibility and type safety, creating AI-powered apps that are intelligent and scalable.
+
+Any JavaScript framework works with the Vercel AI SDK—at the end of the day, it’s a strictly typed abstraction layer for working with and swapping out any large language model. Below, however, we’ll explore why React Server Components and Partial Prerendering make Next.js an especially compelling choice for AI development.
+
+### [Next.js: React Server Components as AI building blocks](https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features#next.js-react-server-components-as-ai-building-blocks)
+
+[React Server Components (RSCs)](https://vercel.com/blog/understanding-react-server-components), usable inside the Next.js App Router, are a game-changer for AI development. Thanks to their ability to bring external data fetches down to your application's component level—as opposed to the page level—they act as fully self-contained, modular building blocks that can be dropped into any part of your Next.js projects.
+
+But RSCs are more than convenient building blocks. They also offer a significant performance boost, especially on mobile devices. By leveraging server-side rendering and streaming, RSCs drastically reduce the amount of JavaScript that needs to be sent to and processed by the client device, resulting in faster load times and a smoother user experience.
+
+With the combination of RSCs plus the client-side React superpowers you’re used to, you can create highly interactive, responsive, and fully portable AI features that feel like an integral part of your application—not a clunky add-on.
+
+### [Caching and Partial Prerendering: Industry-leading responsivity for dynamic workloads](https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features#caching-and-partial-prerendering-industry-leading-responsivity-for-dynamic-workloads)
+
+AI responses can be computationally expensive and introduce a lot of latency. Caching these responses is crucial for improving application performance and reducing costs associated with repeated model queries.
+
+However, traditional page-level caching falls short when dealing with dynamic AI content. Next.js offers granular, per-component caching, allowing you to tailor caching strategies to the specific needs of each AI feature. This ensures users receive the most up-to-date information while maintaining lightning-fast load times.
+
+With advancements in [Partial Prerendering (PPR)](https://vercel.com/blog/partial-prerendering-with-next-js-creating-a-new-default-rendering-model), which allows for prerendering specific parts of a page, you can instantly serve static content, eliminating the dreaded blank loading screen and further enhancing the user experience.
+
+### [The Frontend Cloud: Automating the infrastructure](https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features#the-frontend-cloud-automating-the-infrastructure)
+
+Deploying your AI-powered Next.js application on Vercel is the final piece of the puzzle: The Frontend Cloud completely automates the complexities of AI infrastructure.
+
+First, Vercel offers the [Developer Experience Platform](https://vercel.com/products/previews) to get you from zero to deployment as quickly as possible—no configuration necessary. It has:
+
+*   A familiar, Git-based workflow where every `git push` creates a true-to-production, fully-collaborative preview deployment
+*   Unlimited environments, simultaneously deployed, for maximum experimentation
+*   A toolbar equipped with issue tracking, SEO and a11y auditing, and more
+*   An entire suite of observability tooling built into a centralized dashboard
+*   [Many more developer conveniences](https://vercel.com/blog/the-developer-experience-of-the-frontend-cloud) beyond the scope of this article
+
+Vercel’s [managed infrastructure](https://vercel.com/products/rendering) is another game-changer.
+
+Out of the box, [Vercel Functions support streaming](https://vercel.com/blog/streaming-for-serverless-node-js-and-edge-runtimes-with-vercel-functions) with extended response times, ideal for handling large AI-generated outputs. Traditional serverless functions (like Lambdas) send responses all at once, but Vercel Functions allow you to deliver data in chunks as it becomes available. This way you can update users as the model is still generating, which is crucial for AI responses that often range from 5-30s in delivery time.
+
+With zero configuration, Vercel's serverless infrastructure scales elastically, accommodating unpredictable AI workloads with ease. Plus, Vercel's [Edge Network seamlessly integrates](https://vercel.com/blog/the-user-experience-of-the-frontend-cloud) with Next.js to deliver your granularly cached data with minimal latency. This integration works through your framework code, eliminating the need for additional configuration. You can deliver consistent, high-performance experiences for all users, regardless of traffic fluctuations.
+
+All this automation allows you to rapidly prototype and deploy AI applications in hours, not days or weeks. You can focus on building innovative AI features instead of wresting with infrastructure.
+
+[Securing your AI application from “denial of wallet”](https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features#securing-your-ai-application-from-%E2%80%9Cdenial-of-wallet%E2%80%9D)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Due to the high cost of querying LLMs, AI applications are uniquely vulnerable to attacks that can lead to exorbitant token usage, a phenomenon sometimes called "denial of wallet." Vercel's robust security tools offer a strong defense against these threats.
+
+Vercel's [Web Application Firewall (WAF)](https://vercel.com/blog/introducing-the-vercel-waf), enabled by default for all applications, provides comprehensive protection against common vulnerabilities like SQL injections, cross-site scripting (XSS), and denial-of-service (DoS) attacks. Additionally, Vercel's WAF incorporates features specifically tailored for AI apps. Rate limiting (currently in beta) helps control excessive traffic, while [Attack Challenge Mode](https://vercel.com/docs/security/attack-challenge-mode) offers immediate protection during attacks.
+
+![Image 3: All security features are available from your central dashboard.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F5Jl38b16lmdZzrhpTrOT7e%2F2b56c7e42635a78983d7ea3e6ac0c500%2Fvercel-waf-dashboard.png&w=1920&q=75)
+
+![Image 4: All security features are available from your central dashboard.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F6A2PioVTIT7qFwo2PiCmjW%2F7aa7534081aa95f171a8bbc499d291af%2Fvercel-waf-dashboard-dark.png&w=1920&q=75)
+
+This multi-layered security, combined with Vercel's platform-wide firewall for DDoS and Layer 3/4 attacks, ensures the availability, integrity, and confidentiality of your AI application, all without sacrificing performance.
+
+[Integrate with your existing frontend](https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features#integrate-with-your-existing-frontend)
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+While deploying your entire frontend on Vercel offers the most seamless developer experience, we understand that migrating your entire workload might not be feasible for every project. Fortunately, you can still leverage the power of Next.js, Vercel AI SDK, and Vercel's infrastructure to incrementally enhance your existing frontend with AI capabilities.
+
+By creating a standalone AI app that interacts with your current codebase via API, you can experiment with different AI models, fine-tune prompts, and gather user feedback in a controlled environment. This approach allows you to:
+
+*   **Mitigate risk:** Thoroughly test AI features before integrating them into your main application, minimizing potential disruptions.
+*   **Accelerate iteration:** Quickly iterate on AI features and gather feedback, enabling faster time-to-market.
+*   **Maintain flexibility:** Easily switch between AI providers or models without refactoring your entire codebase.
+
+This approach requires some consideration of your architecture. For example, you may need to make additional API calls to fetch AI-generated content from your Vercel-hosted components. Depending on your setup, this could also negatively impact streaming.
+
+However, with patterns like microservices or microsites, where the AI feature is hosted on a separate subdomain or service, you can easily work around this and still reap the rewards of Vercel's AI capabilities.
+
+[Get started with our AI templates and integrations](https://vercel.com/resources/the-quickest-way-to-build-and-secure-ai-features#get-started-with-our-ai-templates-and-integrations)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ready to dive in? Vercel offers a variety of [templates](https://vercel.com/templates?type=ai) and [integrations](https://vercel.com/docs/integrations/ai) to kickstart your AI development journey. Whether you're building a chatbot, an image generator, or any other AI-powered application, there’s a solid foundation to get you up and running.
+
+There’s no need to wait for your current platform to catch up. You can jump into the future of AI development with AI SDK, Next.js, and Vercel and build intelligent, user-centric applications that deliver exceptional experiences. Your users will thank you.

@@ -1,0 +1,176 @@
+Title: Iterating towards secure by default
+
+URL Source: https://vercel.com/resources/iterating-towards-secure-by-default
+
+Published Time: 2024-06-26T15:55:20.882Z
+
+Markdown Content:
+Vercel blocks an average of 1 billion suspicious TCP connections per week, with some days seeing up to 7 billion malicious requests. Securing the modern web is an evolving challenge that grows exponentially more complex each year.
+
+Today's applications are distributed globally, with countless entry points and third-party integrations. Headless architecture further expands the attack surface, introducing ephemeral functions that are difficult to track. Meanwhile, threats grow more sophisticated, new regulations expand compliance requirements, and pressure mounts on development teams to deliver faster.
+
+At Vercel, we're pioneering a more integrated solution: a security philosophy embodied in a comprehensive toolkit that enables you to secure every application layer without sacrificing performance or developer velocity.
+
+[Our security playbook](https://vercel.com/resources/iterating-towards-secure-by-default#our-security-playbook)
+---------------------------------------------------------------------------------------------------------------
+
+We believe security should be an integral part of the development process, not an afterthought. Integrating security into the development workflow enables your teams to build secure applications from the ground up, without sacrificing speed or agility.
+
+A holistic approach to security reduces the risk of vulnerabilities and fosters a culture of security within your organization.
+
+Our philosophy centers around three core principles:
+
+1.   **Secure by default:** We strive to ensure that every application deployed on our platform is secure by default. This means implementing robust security measures at every layer, letting code inform the infrastructure without requiring extensive configuration or expertise from developers.
+2.   **Built for speed:** We recognize that even the most comprehensive security should never come at the cost of performance. Our solutions are designed to be scalable, ensuring that your applications remain fast and responsive, even under heavy load.
+3.   **Developer empowerment:** We believe that developers are the first line of defense in application security. Our tools and platforms empower developers to build secure applications by providing guidance, guardrails, and automation.
+
+With this in mind, we’ve been working hard to give you tools that are **secure, fast, dynamic, scalable, and reliable**. To get there, we’ve had to take a step back and look at the existing challenges in the industry and figure out how to overcome them.
+
+[Challenge 1: Modern threats](https://vercel.com/resources/iterating-towards-secure-by-default#challenge-1-modern-threats)
+--------------------------------------------------------------------------------------------------------------------------
+
+Especially with the rise of easy-to-use AI, the threat landscape is evolving faster than ever. From large-scale DDoS attacks that can overwhelm your infrastructure to targeted bot attacks aimed at scraping data or abusing APIs, the risks are diverse and ever-present. This can lead to extreme costs, especially with auto-scaling cloud architectures (commonly called “denial of wallet”).
+
+Vercel's multi-layered defense mechanisms are designed to protect your applications from these modern threats, providing a comprehensive shield against a wide range of attacks:
+
+*   **DDoS Mitigation:** Vercel's infrastructure is built to [absorb and deflect DDoS attacks](https://vercel.com/docs/security/ddos-mitigation) at both the network and application layers. This ensures that your applications remain available and responsive, even under extreme traffic conditions, and you don’t pay for malicious traffic.
+*   **IP Blocking and Attack Challenge Mode:** Vercel allows you to [block specific IP addresses or ranges](https://vercel.com/docs/security/vercel-waf/ip-blocking) and even implement a challenge mode to filter out bot traffic during DDoS attacks, providing granular control over application access.
+*   **Rate Limiting (Beta):** This feature allows you to limit the frequency of requests from individual users or IP addresses, effectively mitigating brute-force attacks, API token abuse, and other forms of malicious activity.
+*   **Secure Compute:** Vercel's [Secure Compute](https://vercel.com/docs/security/secure-compute) allows you to create private connections between your Serverless Functions and your backend, such as databases inside VPCs and other private infrastructure, [like Kubernetes clusters](https://vercel.com/resources/simplify-your-kubernetes-frontend-deployment-with-vercel). This ensures that sensitive data and resources are never exposed to the public internet.
+
+To help protect us and our users against the newest risks on the market, we’re regularly testing new solutions internally and [forming partnerships](https://vercel.com/blog/protecting-ai-apps-with-vercel-and-kasada) to inform and improve our security products for you.
+
+We’ll continue to learn from our own experiences and pass those learnings onto the platform as appropriate.
+
+[Challenge 2: Lack of transparency](https://vercel.com/resources/iterating-towards-secure-by-default#challenge-2-lack-of-transparency)
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Achieving clear visibility into security events while dealing with the intricacies of distributed systems can be extremely challenging, to say the least. Events are scattered across various microservices, and logs are dispersed; correlating information to identify potential threats becomes time-consuming and error-prone.
+
+This lack of transparency hinders your ability to detect and respond to security incidents, leaving your applications vulnerable to prolonged attacks.
+
+Vercel addresses this challenge by providing a comprehensive view of your application's security posture. Combined with Vercel’s [existing monitoring suite](https://vercel.com/docs/observability/monitoring), your Vercel dashboard allows you to aggregate logs, metrics, and events from across your deployments, empowering you with real-time insights into potential threats and vulnerabilities.
+
+*   **Real-time monitoring:** The dashboard provides real-time monitoring of security events, allowing you to quickly identify and respond to anomalies or suspicious activity.
+*   **Instant rollback:** If a configuration change inadvertently weakens your security posture, you can instantly roll back to a previous state, minimizing the impact of any misconfigurations.
+*   **SIEM integration:** For organizations that rely on Security Information and Event Management (SIEM) systems, Vercel can integrate with these platforms through log drains. This allows you to correlate security events across your entire infrastructure and gain deeper insights into potential threats.
+
+You can easily monitor security events, track changes, and investigate anomalies, ensuring that your applications remain protected and your data remains secure.
+
+![Image 1: Monitoring allows you to visualize and quantify the performance and traffic of your Vercel application. You can create custom queries to debug and optimize bot traffic, bandwidth, errors, and more across preview and production deployments.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F1LYWt9t6YQfoaGDjKTFno6%2Faeb7745cdad1dc90f8a81ad9efc961c7%2Fmonitoring-light.png&w=1920&q=75)
+
+![Image 2: Monitoring allows you to visualize and quantify the performance and traffic of your Vercel application. You can create custom queries to debug and optimize bot traffic, bandwidth, errors, and more across preview and production deployments.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F5htuhh2X3DFhv3ulD1IOmF%2Fd98177de23f56b0c8b90f25dc32339f9%2Fmonitoring-dark.png&w=1920&q=75)
+
+Of course, security and transparency aren’t usually friends. Rest assured that:
+
+*   All Vercel deployments are automatically encrypted with HTTPS/SSL, ensuring that data transmitted between the user's browser and your application remains secure.
+*   All data at rest, including sensitive information like access tokens and secrets, is encrypted using the robust AES-256 standard.
+*   All `.vercel.app` domains automatically support HSTS (HTTP Strict Transport Security), enforcing secure connections.
+
+[Challenge 3: Performance overhead](https://vercel.com/resources/iterating-towards-secure-by-default#challenge-3-performance-overhead)
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Traditional security solutions, while necessary, can often introduce a significant performance overhead. This is particularly true for third-party Web Application Firewalls (WAFs) and other cloud-based security services that require traffic to be routed through their servers before reaching your application. This additional network hop introduces latency, [potentially impacting user experience and SEO rankings](https://vercel.com/blog/the-user-experience-of-the-frontend-cloud).
+
+Furthermore, relying on external services for security creates an additional point of failure. If the security provider experiences downtime, your application's performance and availability could be severely impacted.
+
+Vercel's integrated approach to security addresses these performance concerns head-on. By embedding security measures directly into our platform, we eliminate the need for additional network hops and minimize latency. Our Edge Network, with its global distribution and 99.99% uptime guarantee, ensures that your applications remain fast and responsive, [even under heavy traffic](https://vercel.com/blog/the-resiliency-of-the-frontend-cloud).
+
+We also designed [Vercel’s WAF](https://vercel.com/blog/introducing-the-vercel-waf) to be lightweight and efficient, minimizing any impact on application performance. Because it operates within our existing infrastructure, any changes you make to the WAF **propagate globally in just 300ms**—as opposed to some third-party vendors, which can take up to 30 minutes.
+
+You should never have to wait for security.
+
+[Challenge 4: Integration complexities](https://vercel.com/resources/iterating-towards-secure-by-default#challenge-4-integration-complexities)
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Distributed systems make it difficult to integrate third-party security solutions in the first place. Applications are often composed of numerous microservices, each potentially running on different platforms and requiring specific security configurations.
+
+Plus, setting up security solutions often involves intricate DNS configurations, API integrations, and potentially even code modifications.
+
+All these tasks require specialized knowledge and time, and they have the potential to introduce slowdowns or vulnerabilities that are difficult to troubleshoot.
+
+Vercel simplifies this complexity by providing a fully out-of-the-box security experience:
+
+*   **Zero-setup WAF deployment:** Vercel's WAF is automatically and instantly deployed, ensuring your project is protected from the moment it launches. This rapid deployment means you can confidently start [writing rules to safeguard your applications](https://vercel.com/docs/security/vercel-waf/custom-rules) from day one, without the need to wait or wonder if your security measures are in place and effective.
+*   **Native integration with Vercel ecosystem:** Vercel's security tools are embedded in our [Developer Experience Platform](https://vercel.com/products/previews), designed to work seamlessly with all features and services. This ensures a smooth and consistent user experience, reducing the learning curve while maximizing the effectiveness of your security measures. **You just have one place for all things deployment-related.**
+*   [**Automated access control**](https://vercel.com/docs/accounts/team-members-and-roles/access-roles)**:** Vercel automates the provisioning and de-provisioning of access rights, keeping pace with the dynamic nature of your applications and reducing the risk of human error. Restrict access to your preview and production deployments, adding an extra layer of security.
+*   [**Centralized access management**](https://vercel.com/docs/security/access-control)**:** Vercel provides a centralized dashboard for managing access controls, [SAML SSO](https://vercel.com/docs/security/saml), and [Directory Sync](https://vercel.com/docs/security/directory-sync), simplifying administration and ensuring consistent security policies across your organization.
+
+This reduction of the complexity of managing multiple security solutions saves you time and resources and ensures that your applications are protected from the ground up, without requiring extensive configuration or specialized knowledge.
+
+![Image 3: You can add firewall rules directly inside the Vercel dashboard.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F7uYi9esYmAelPB34pRV22Z%2F6986db54fbc1e14f661f17defdee35ee%2Ffirewall-rules-light.png&w=1920&q=75)
+
+![Image 4: You can add firewall rules directly inside the Vercel dashboard.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F2QZrEdXUMZKkYWcC32u9Br%2F9f363e0f306ce5c8abc5e7a79a762dc7%2Ffirewall-rules-dark.png&w=1920&q=75)
+
+[Challenge 5: Configuration](https://vercel.com/resources/iterating-towards-secure-by-default#challenge-5-configuration)
+------------------------------------------------------------------------------------------------------------------------
+
+After integrating your security tooling with your application, you’re still left with a lot to do. Security tools often overwhelm users with a vast array of configuration options. The sheer number of settings and intricate interactions between them can make it difficult to determine the optimal configuration for your specific application and environment.
+
+At worst, misconfiguration can inadvertently weaken your security posture.
+
+Vercel's approach to configuration is centered around strong defaults, simplicity, and clarity—without sacrificing options for those who want to dig in. We strive to minimize the number of decisions you have to make upfront while still providing the flexibility to tailor your security settings to your needs.
+
+*   **Framework-aware:** Unlike traditional WAFs, Vercel leverages [framework-defined infrastructure](https://vercel.com/blog/framework-defined-infrastructure) to allow you to write firewall rules based on your actual framework routes (`path = /blog/[slug]`) rather than fiddling with RegEx or prefixes. This awareness ensures that security measures are seamlessly aligned with your application's architecture, enhancing both protection and development efficiency.
+*   **Opinionated, managed rulesets:** Vercel provides curated rulesets designed to protect against common web application vulnerabilities, such as the OWASP Top 10. These rulesets are regularly updated to address emerging threats, ensuring your applications remain protected without requiring constant manual intervention.
+*   **Sensible defaults:** Vercel's security settings are designed with sensible defaults that provide a high level of protection out of the box. This means you can get started quickly without needing a security expert. However, you still have the flexibility to customize settings as needed to meet your specific requirements.
+*   **Edge Middleware for everything else:** Leverage Vercel's Edge Middleware to implement custom authentication and authorization at the edge, such as rate limiting, bot mitigation, or additional security headers—providing an additional layer of protection for sensitive APIs.
+
+Developers and security teams can focus on building and deploying secure applications rather than getting bogged down in complex configurations. This saves time and resources and reduces the risk of human error, ensuring that your security measures are always aligned with your application's unique needs.
+
+![Image 5: Edge Middleware is code that executes before a request is processed on a site. This makes it perfect for implementing custom security measures.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2FTrP1H3mgLtlGFaPtNJKBe%2F8e920491b923689729593384c2e74393%2Fedge-middleware-light.png&w=3840&q=75)
+
+![Image 6: Edge Middleware is code that executes before a request is processed on a site. This makes it perfect for implementing custom security measures.](https://vercel.com/vc-ap-vercel-marketing/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F078X3qALZ6juvZCOewbn5%2Fab25831dea4495e7f637f4b566c65c3c%2Fedge-middleware-dark.png&w=3840&q=75)
+
+[Challenge 6: Cost efficiency](https://vercel.com/resources/iterating-towards-secure-by-default#challenge-6-cost-efficiency)
+----------------------------------------------------------------------------------------------------------------------------
+
+In the traditional security model, protecting web applications often involves a patchwork of disparate tools and services. Each has its own licensing fees, maintenance costs, and potential unexpected expenses.
+
+To solve this and empower _all_ developers, Vercel consolidates dependable security features into a unified platform, eliminating the need for costly third-party subscriptions and streamlining your security operations.
+
+*   **Free WAF with all the essentials:** Vercel's WAF provides robust protection against common web attacks, including SQL injection, cross-site scripting (XSS), and remote file inclusion (RFI). This crucial security layer is free of charge for all Vercel users, eliminating the need for third-party WAFs. (Do note that some features for the WAF are limited based on your existing Vercel plan, but all primary functionalities, including advanced features like TLS fingerprinting, are completely free.)
+*   **No charges for malicious traffic:** Unlike some providers that charge based on traffic volume, Vercel uses features such as built-in [DDoS mitigation](https://vercel.com/docs/security/ddos-mitigation) to absorb the cost of malicious traffic, protecting you from unexpected expenses.
+*   **And all the rest:** In addition to the firewall, Vercel offers a [comprehensive suite of security tools](https://vercel.com/docs/security/overview), from access controls to fully automated infrastructure protection, all within a single platform. This consolidation eliminates the need to juggle multiple subscriptions and integrations.
+
+[What’s left for frontend developers to secure?](https://vercel.com/resources/iterating-towards-secure-by-default#what%E2%80%99s-left-for-frontend-developers-to-secure)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+While Vercel provides a robust foundation for web application security, it's important to recognize that [security is a shared responsibility](https://vercel.com/docs/security/shared-responsibility).
+
+Vercel takes care of securing the infrastructure, network, and core platform, but developers still play a crucial role in actively ensuring the security of their applications—primarily at the framework level.
+
+This includes:
+
+### [Application code](https://vercel.com/resources/iterating-towards-secure-by-default#application-code)
+
+*   **Input validation:** To prevent XSS and other injection attacks, validate and sanitize all user input on the frontend.
+*   **Secure authentication and authorization:** Implement robust authentication and authorization mechanisms to protect sensitive data and functionalities. Use libraries and tools to aid in this process.
+*   **API security:** Ensure secure communication with backend APIs, including input validation, proper error handling, and authentication.
+*   **Error handling and logging:** Implement comprehensive error handling and logging on the frontend to promptly detect and respond to potential security issues.
+
+### [Third-party dependencies](https://vercel.com/resources/iterating-towards-secure-by-default#third-party-dependencies)
+
+*   **Keep dependencies updated:** Regularly update dependencies to patch security vulnerabilities.
+*   **Audit dependencies:** Conduct security audits to identify and address potential risks in third-party code.
+*   **Pay attention to docs:** Frameworks and libraries often help you [stay up-to-date with key security recommendations](https://rc.nextjs.org/docs/app/building-your-application/deploying/production-checklist#security) specific to the tooling.
+
+### [Additional security measures where needed](https://vercel.com/resources/iterating-towards-secure-by-default#additional-security-measures-where-needed)
+
+*   **Content Security Policy (CSP):** Configure a strict CSP to control the sources from which content can be loaded, mitigating the risk of XSS and other attacks.
+*   **Know when to collaborate with your security team:** Although Vercel empowers anyone to deliver a secure application to the globe, developers should also recognize when they cannot stay up-to-date with the latest threats and vulnerabilities—when it’s time to call in the experts for a truly comprehensive approach.
+
+* * *
+
+By fostering a collaborative approach to security, where both Vercel and developers play an active role, we can create a more secure web ecosystem. Vercel provides the foundation, and developers build upon it with secure code and best practices, resulting in applications that are resilient to modern threats.
+
+[The goal: “Secure by Default”](https://vercel.com/resources/iterating-towards-secure-by-default#the-goal-%E2%80%9Csecure-by-default%E2%80%9D)
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+We envision a future where deploying to Vercel is synonymous with out-of-the-box security, freeing developers from the tedium and complexity of securing global applications.
+
+While we've made significant progress, we're committed to further innovation at the framework level to set a new standard in web security. For instance, we're exploring ways to integrate Vercel security with [Conformance rulesets](https://vercel.com/docs/workflow-collaboration/conformance), guiding developers towards building applications that are secure by design from the framework level up.
+
+The Vercel WAF is a significant step in our “Secure by Default” journey. It leverages our unique [framework-defined infrastructure](https://vercel.com/blog/framework-defined-infrastructure) to provide intelligent, context-aware protection for your applications. This deep understanding of your application allows the WAF to make informed decisions about each request, enhancing security without sacrificing performance.
+
+Vercel is dedicated to creating a secure development ecosystem that empowers you to focus on what you do best: building innovative and engaging applications.

@@ -1,0 +1,165 @@
+Title: How to prepare your site for Black Friday traffic
+
+URL Source: https://vercel.com/resources/how-to-prepare-your-site-for-black-friday-traffic
+
+Published Time: 2023-04-20T19:26:52.341Z
+
+Markdown Content:
+Good engineering work drives better user experiences, which increases site traffic and conversions. But what happens when you get unprecedented traffic, like on Black Friday or Cyber Monday? Keep reading for five ways you can prepare your site for major traffic spikes.
+
+[1. Consider NoOps](https://vercel.com/resources/how-to-prepare-your-site-for-black-friday-traffic#1.-consider-noops)
+---------------------------------------------------------------------------------------------------------------------
+
+Leading ecomm engineering teams requires strong multi-tasking. You have to move quickly, jump on trends, and be ready to iterate at a moment’s notice. This is where the concept of NoOps (no operations) is useful. The goal of NoOps—completely automating the deployment, monitoring, and management of applications and the infrastructure on which they run—can help ensure that timelines are met. With platforms that enable this automation, your devs can stay focused on delivering great experiences, whether you have 100 visitors to your site or millions.
+
+Take seasonal promotions like Black Friday when you know there’s going to be a traffic spike. Often, without NoOps, it can take weeks for your DevOps team to stand up new services, like installing app dependencies, configuring database access and service roles, and running end-to-end (E2E) tests. This type of work is imperative before a big traffic spike because if your site goes down, that’s revenue lost. By using platforms like Vercel that support NoOps, your team can automate the work and be ready for anything—whether it’s a holiday or just a regular Monday.
+
+### [Rely on Vercel's serverless infrastructure for:](https://vercel.com/resources/how-to-prepare-your-site-for-black-friday-traffic#rely-on-vercel's-serverless-infrastructure-for)
+
+*   **Infinite scalability.** Every layer of our infrastructure scales up and down dynamically, so you don’t need to worry about traffic spikes. 
+*   **Intelligent edge caching.** Our Edge Network preserves copies of critical metadata to avoid and tolerate outages. Plus, framework integrations ensure optimal caching and purging.
+*   **Reliability and speed.** Since deploying and reverting ensure resources and metadata are acquired and provisioned successfully, users won't experience site errors and your site can always handle high traffic.
+
+> ![Image 1](https://images.ctfassets.net/e5382hct74si/3G8kmBmhIXRDPRMONd7ws7/26eb5c203fe084cf148c1fc66fdd0a7e/image_27.png)
+> 
+> 
+> ![Image 2](https://images.ctfassets.net/e5382hct74si/3G8kmBmhIXRDPRMONd7ws7/26eb5c203fe084cf148c1fc66fdd0a7e/image_27.png)
+> 
+> 
+> For us, Vercel has removed the need for DevOps. It’s easy to build complex products and services, it’s hard to make them simple to use. Vercel is reshaping the web like how Apple shaped smartphones and tablets. We've never had downtime or needed to upscale/downscale. Everything just works.
+> 
+> 
+> CTO at Barnebys
+
+[2. Experiment with confidence](https://vercel.com/resources/how-to-prepare-your-site-for-black-friday-traffic#2.-experiment-with-confidence-)
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Personalization and A/B testing improves conversion rates and creates a significant revenue opportunity during peak traffic periods, but traditional third-party implementation can drastically impact site speed and reliability. Fearing loss in sales from performance degradation, teams opt out of potentially lucrative experimentation efforts during Black Friday and Cyber Monday.
+
+Static sites are often faster than highly dynamic sites that are personalized to your user. Teams try to layer A/B testing and personalization scripts onto these static sites, but doing so can lead to client-side bloat and content flash every time the user refreshes.
+
+Vercel gives developers the ability to do server-side personalization without impacting the speed and reliability of your site thanks to [Edge Functions](https://vercel.com/features/edge-functions).
+
+> ![Image 3](https://images.ctfassets.net/e5382hct74si/3EL9aQGJzz32ADMAlafq7q/26d49b435d5f10d2ab87151cd5fb9ac2/sumup-logo-5.png)
+> 
+> 
+> ![Image 4](https://images.ctfassets.net/e5382hct74si/3EL9aQGJzz32ADMAlafq7q/26d49b435d5f10d2ab87151cd5fb9ac2/sumup-logo-5.png)
+> 
+> 
+> With Edge Middleware, we can show the control or experiment version of a page immediately instead of using third-party scripts. This results in better performance and removes the likelihood of flickering/layout shifts.
+> 
+> 
+> Software engineer at SumUp
+
+Edge Functions allow you to deliver content to your site’s visitors with speed and personalization, and are deployed globally by default on Vercel's Edge Network. They enable you to move server-side logic to the Edge, close to your visitor's device—this reduces the length of the feedback cycle and gets data to your users faster. If users can move around your site faster, they'll convert faster, too.
+
+To use Edge Functions, you can deploy Middleware, which is code that executes before a request is processed. Depending on the incoming request, you can execute custom logic, rewrite, redirect, add headers and more, before returning a response. (That means personalization without the loss of performance.)
+
+[3. Optimize everything](https://vercel.com/resources/how-to-prepare-your-site-for-black-friday-traffic#3.-optimize-everything)
+-------------------------------------------------------------------------------------------------------------------------------
+
+During Black Friday, the competition for customer attention is at an all-time high. With **100 milliseconds of latency potentially costing a 1% decrease in conversions**, the stakes are high. You need an attractive storefront to get users excited and then a lightning-speed site to get them to convert.
+
+Often, out-of-the-box ecommerce solutions don't give developers the tools they need to make granular optimization decisions. By conforming to these pre-set specs, your site will never be as performant as it can be. With flexible tools like Vercel that enable customization and frameworks like Next.js, your site will be fast, reliable, and good-looking by default.
+
+While they may seem small, images are hugely important, which is why they take up about half the data on the internet. Your product pages are only as good as that product image, but large images can delay load time.
+
+This is why you want to make sure each image is optimized to ship the smallest size possible for each device. With Next.js, images can default to 35% smaller than the JPEG files without impacting the quality index, which drastically reduces load time.
+
+> ![Image 5](https://images.ctfassets.net/e5382hct74si/60ML2MgrBELpiMuxCRjDUP/277dea9b0c22ad8b5fa771d0587a3733/parachute-logo.png)
+> 
+> 
+> ![Image 6](https://images.ctfassets.net/e5382hct74si/60ML2MgrBELpiMuxCRjDUP/277dea9b0c22ad8b5fa771d0587a3733/parachute-logo.png)
+> 
+> 
+> Vercel Analytics has helped us to pinpoint performance bottlenecks on our site and track overall trends. This allows us to understand where to focus development work for the biggest impact to our Core Web Vitals metrics.
+> 
+> 
+> Principal software architect at Parachute
+
+In the same way, special fonts and running unnecessary scripts can also slow load time But with Next.js, developers are able to default everything to be performance-first.
+
+Every millisecond delay in website load time decreases conversion rates. Google has found **as mobile page load times go from one second to three seconds, the probability of bounce increases 32%**. After five seconds, the probability is 90%, and by six seconds—just one second longer—the probability of bounce rises to 106%.
+
+As real-time analytics, personalized recommendations, and dynamic pricing become the ecommerce norm, speed is ever more imperative. While seconds are critical, so is the experience. You can no longer sacrifice interactivity for speed.
+
+[4. Add field data to your monitoring strategy](https://vercel.com/resources/how-to-prepare-your-site-for-black-friday-traffic#4.--add-field-data-to-your-monitoring-strategy)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+In addition to optimizing your web assets, the next tactic for protecting performance is to respond to any and all degradations immediately by tracking real-time user data.
+
+[Core Web Vitals](https://vercel.com/blog/core-web-vitals), a set of performance metrics introduced by Google in 2021, are a strong indicator of user experience quality, measuring loading time and performance, responsiveness to user input, and visual stability. Failure to maintain strong vitals performance leads to higher bounce and lower conversion rates. Even micro-outages or defects that are limited to a subset of your users can be costly to your conversions during high-traffic times.
+
+![Image 7](https://images.ctfassets.net/e5382hct74si/2gUsCWONhwN16YeXLH0lNH/1496474803dafe18f15a18bccc0b319f/upward_arrow.png)
+
+#### Here's a tip...
+
+> Prioritize pages by search traffic to ensure you’re spending the most time optimizing the pages that matter most to your business.
+
+Your goal during Black Friday should be to deliver a frictionless shopping experience for every user no matter their device, location, or network connection. While commerce teams deploy comprehensive Synthetic and Application Performance Monitoring (APM) for Black Friday and Cyber Monday to prevent catastrophic outages, there are similarly costly user-specific issues that may go undetected without real user monitoring.
+
+### [Get a true picture of your user experience](https://vercel.com/resources/how-to-prepare-your-site-for-black-friday-traffic#get-a-true-picture-of-your-user-experience)
+
+Vercel [gathers data from real users in real time](https://vercel.com/analytics) by providing Core Web Vitals data automatically. You can see these metrics: First Contentful Paint (FCP), Largest Contentful Paint (LCP), Cumulative Layout Shift (CLS), First Input Delay (FID), and even Interaction to Next Paint (INP) at any time for all of your pages in your Vercel console.
+
+The advantage of measuring with Core Web Vitals is that you have accurate, field-tested performance data with every user represented: a true picture of your user experience. You no longer need to worry about whether your site performs faster or slower based on the specific tech setup of a customer.
+
+Core Web Vitals also allow you to move to event-driven monitoring where performance degradations can be dealt with in real time.
+
+> ![Image 8](https://images.ctfassets.net/e5382hct74si/7mYAtu89Ax8BDDWtfCKwdq/e8e36dc7d3d16f2d2492e1745e6f65c7/blush_design.svg)
+> 
+> 
+> ![Image 9](https://images.ctfassets.net/e5382hct74si/7mYAtu89Ax8BDDWtfCKwdq/e8e36dc7d3d16f2d2492e1745e6f65c7/blush_design.svg)
+> 
+> 
+> Vercel is the best and easiest platform for high-traffic product launches. Our site handled a 350% traffic spike flawlessly without thinking too hard on our backend infrastructure.
+> 
+> 
+> Co-founder of Blush
+
+[5. Enable closer stakeholder collaboration](https://vercel.com/resources/how-to-prepare-your-site-for-black-friday-traffic#5.-enable-closer-stakeholder-collaboration-)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ever had your team build a feature only to have the marketing team veto most of the design before launch? If so, you understand from first-hand experience why engineering and marketing need to work together early in the process and avoid wasted work.
+
+To keep your teams working efficiently, break down silos between them and share work early and often. In the past, this type of push and pull between teams was difficult because spinning up individual test environments for every feature was too time-consuming. But with modern hosting solutions and advanced CI/CD pipelines—including the fact that Vercel integrates with digital asset management systems (DAMs) and leading CMSs like Contentful—it’s easier than ever to get your teams to work in parallel, instead of on top of each other.
+
+To make sure teams are collaborating at their best, use [Vercel Preview Deployments](https://vercel.com/features/previews). Within minutes your team can test, discuss, and iterate using live sites, without the need for complicated staging setup. When collaboration is embedded into your workflow, it can improve performance, help with productivity, and make your organization a better place to work.
+
+> ![Image 10](https://images.ctfassets.net/e5382hct74si/3SnpsRxv6ZXQ3dylwEX8CM/e0987a193e6108bd49161af956480b5e/solana_1.svg)
+> 
+> 
+> ![Image 11](https://images.ctfassets.net/e5382hct74si/3SnpsRxv6ZXQ3dylwEX8CM/e0987a193e6108bd49161af956480b5e/solana_1.svg)
+> 
+> 
+> Vercel makes it easy to collaborate with the rest of Solana Labs. We’re able to effectively chart progress and share the most recent deployments. All of that is seamless and turnkey. We don't have to worry about managing the staging pipeline and ensuring that it reflects production accurately. Vercel makes it simple.
+> 
+> 
+> Head of web at Solana Labs
+
+[See it in action: NZXT scales for Black Friday with no downtime](https://vercel.com/resources/how-to-prepare-your-site-for-black-friday-traffic#see-it-in-action-nzxt-scales-for-black-friday-with-no-downtime)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+NZXT is a global company that builds custom gaming PCs. Their site is an interactive hardware-designing experience for gamers.
+
+Since moving from a monolithic software stack to a headless frontend solution with Vercel, NZXT has enabled their site to effortlessly scale to support their high-volume sales moments.
+
+Their engineering leaders and teams rest easy on Black Friday, knowing that their Next.js frontend is prepared for an influx of global visitors.
+
+Another key element to their success is enterprise-grade support. “Vercel customer support and monitoring is the best in the industry. That gives us a lot of confidence going into Black Friday,” says Donny West, NZXT Principal Software Engineer.
+
+> ![Image 12](https://images.ctfassets.net/e5382hct74si/01qtzFO3wzCnV7THL8zweS/3b979b89f8a7a6094f0328962c7df320/NZXT_logo.png)
+> 
+> 
+> ![Image 13](https://images.ctfassets.net/e5382hct74si/01qtzFO3wzCnV7THL8zweS/3b979b89f8a7a6094f0328962c7df320/NZXT_logo.png)
+> 
+> 
+> Last Black Friday and Cyber Monday was the first in NZXT’s 20-year history with zero downtime. **That literally translates to millions of dollars.**
+> 
+> 
+> Director of Engineering NZXT
+
+[In conclusion: Make it easy for people to give you their money](https://vercel.com/resources/how-to-prepare-your-site-for-black-friday-traffic#in-conclusion-make-it-easy-for-people-to-give-you-their-money)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Seems pretty reasonable, right? If someone wants to buy your product, don’t get in their way. That means focus on speed, agility, and accessibility, build strong guardrails into your workflow, personalize when you can (without compromising speed), test often, and collaborate with other stakeholders to make sure new features truly work. A strong engineering team will protect your site and your users, whether you’re prepping for Black Friday, a new launch, or anything your business may have planned.
