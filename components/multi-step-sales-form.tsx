@@ -1,6 +1,5 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -8,14 +7,14 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, CheckCircle2 } from "lucide-react"
 
 interface FormData {
   email: string
   name: string
   phone: string
   country: string
-  interests: string[]
+  organizationNeeds: string[]
   help: string
 }
 
@@ -23,7 +22,7 @@ interface FormErrors {
   email?: string
   name?: string
   country?: string
-  interests?: string
+  organizationNeeds?: string
   help?: string
 }
 
@@ -38,11 +37,54 @@ const countries = [
   { value: "other", label: "Other" }
 ]
 
-const interestOptions = [
-  { id: "vercel", label: "Vercel" },
-  { id: "v0", label: "v0" },
-  { id: "other", label: "Something else" }
+const organizationNeedsOptions = [
+  { 
+    id: "vercel_hosting", 
+    label: "Global CDN & Edge Deployment",
+    description: "Push to git, deploy everywhere. Lightning-fast loading from 100+ edge locations worldwide."
+  },
+  { 
+    id: "preview_deployments", 
+    label: "Staging Environments",
+    description: "Every pull request gets a live URL. Ship with confidence after stakeholders review real deploys."
+  },
+  { 
+    id: "nextjs_platform", 
+    label: "Zero-Config Infrastructure",
+    description: "The creators of Next.js host it best. Automatic optimizations, ISR, and framework-native features."
+  },
+  { 
+    id: "enterprise_security", 
+    label: "SOC 2 & HIPAA Compliance",
+    description: "SOC 2, HIPAA, SSO, advanced RBAC, isolated builds, and 99.99% SLA for mission-critical apps."
+  },
+  {
+    id: "performance_scale",
+    label: "Auto-Scaling Infrastructure",
+    description: "Handle millions of users without config. Automatic scaling, DDoS protection, and global CDN included."
+  },
+  { 
+    id: "v0_personal", 
+    label: "AI Code Generation",
+    description: "Turn ideas into React code instantly. Build UIs, components, and features with natural language."
+  },
+  { 
+    id: "v0_teams", 
+    label: "Team Collaboration Tools",
+    description: "Collaborate with shared Projects, custom instructions, higher rate limits, and centralized billing."
+  },
+  { 
+    id: "v0_enterprise", 
+    label: "Enterprise AI Features",
+    description: "SSO, data training opt-out, priority access, and higher rate limits for security-conscious organizations."
+  },
+  {
+    id: "custom_needs",
+    label: "Custom Requirements",
+    description: "I have specific requirements not listed here."
+  }
 ]
+
 
 export function MultiStepSalesForm() {
   const [currentStep, setCurrentStep] = useState(1)
@@ -51,7 +93,7 @@ export function MultiStepSalesForm() {
     name: "",
     phone: "",
     country: "",
-    interests: [],
+    organizationNeeds: [],
     help: ""
   })
   const [errors, setErrors] = useState<FormErrors>({})
@@ -91,7 +133,7 @@ export function MultiStepSalesForm() {
         if (!formData.country) newErrors.country = "Country is required"
         break
       case 4:
-        if (formData.interests.length === 0) newErrors.interests = "Please select at least one interest"
+        if (formData.organizationNeeds.length === 0) newErrors.organizationNeeds = "Please select at least one option"
         break
       case 5:
         if (!formData.help.trim()) newErrors.help = "Please tell us how we can help"
@@ -112,12 +154,12 @@ export function MultiStepSalesForm() {
     setCurrentStep(prev => Math.max(prev - 1, 1))
   }
 
-  const handleInterestChange = (interestId: string, checked: boolean) => {
+  const handleNeedsChange = (needId: string, checked: boolean) => {
     setFormData(prev => ({
       ...prev,
-      interests: checked 
-        ? [...prev.interests, interestId]
-        : prev.interests.filter(id => id !== interestId)
+      organizationNeeds: checked 
+        ? [...prev.organizationNeeds, needId]
+        : prev.organizationNeeds.filter(id => id !== needId)
     }))
   }
 
@@ -142,57 +184,52 @@ export function MultiStepSalesForm() {
 
   if (isSubmitted) {
     return (
-      <Card className="border-0 shadow-2xl shadow-black/5 bg-card/80 backdrop-blur-sm">
-        <CardContent className="p-12 text-center">
-          <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h2 className="text-3xl font-semibold text-foreground mb-3">Thank you!</h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">We've received your information and will be in touch soon.</p>
-        </CardContent>
-      </Card>
+      <div className="min-h-[600px] flex flex-col items-center justify-center text-center">
+        <CheckCircle2 className="w-16 h-16 text-green-500 mb-6"/>
+        <h2 className="text-3xl font-semibold text-foreground mb-3">Thank you!</h2>
+        <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
+          We've received your submission and will be in touch shortly.
+        </p>
+      </div>
     )
   }
 
   return (
-    <Card className="border border-primary/5 shadow-2xl shadow-black/5 bg-card/80 backdrop-blur-sm">
-      <CardContent className="p-12 h-[600px] flex flex-col">
-        <div className="flex flex-col h-full">
-          {/* Progress indicator */}
-          <div className="flex items-center justify-between flex-none">
-            <div className="flex space-x-3">
-              {Array.from({ length: totalSteps }, (_, i) => (
-                <div
-                  key={i}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    i + 1 <= currentStep 
-                      ? 'bg-primary scale-125' 
-                      : i + 1 === currentStep + 1 
-                        ? 'bg-primary/20 scale-110' 
-                        : 'bg-border'
-                  }`}
-                />
-              ))}
-            </div>
-            <span className="text-sm font-medium text-muted-foreground tracking-wide">{currentStep} of {totalSteps}</span>
-          </div>
+    <div className="min-h-[600px] h-full flex flex-col">
+      {/* Progress indicator */}
+      <div className="flex items-center justify-between flex-none mb-6">
+        <div className="flex space-x-3">
+          {Array.from({ length: totalSteps }, (_, i) => (
+            <div
+              key={i}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                i + 1 <= currentStep 
+                  ? 'bg-primary scale-125' 
+                  : i + 1 === currentStep + 1 
+                    ? 'bg-primary/20 scale-110' 
+                    : 'bg-border'
+              }`}
+            />
+          ))}
+        </div>
+        <span className="text-sm font-medium text-muted-foreground tracking-wide">{currentStep} of {totalSteps}</span>
+      </div>
 
-          {/* Main content area with fixed height */}
-          <div className="flex-1 flex items-center justify-center min-h-0">
-            <div className="w-full max-h-full overflow-y-auto p-1">
+      {/* Main content area - flex-1 to fill available space */}
+      <div className="flex-1 flex flex-col">
+        <div className="w-full max-w-xl mx-auto h-[500px]">
 
           {/* Step 1: Company Email */}
           {currentStep === 1 && (
-            <div className="space-y-8 animate-in fade-in-50 slide-in-from-right-5 duration-300">
-              <div className="space-y-3">
-                <h2 className="text-3xl font-bold text-foreground tracking-tight">What's your company email?</h2>
+            <div className="flex flex-col justify-center h-full animate-in fade-in-50 slide-in-from-right-5 duration-300">
+              <div className="mb-6">
+                <h2 className="text-3xl font-bold text-foreground tracking-tight mb-2">What's your company email?</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">We'll use this to understand your company better.</p>
               </div>
-              <div className="space-y-4">
+              <div>
                 <Input
                   type="email"
+                  name="email"
                   placeholder="you@company.com"
                   value={formData.email}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
@@ -203,7 +240,7 @@ export function MultiStepSalesForm() {
                   }`}
                 />
                 {errors.email && (
-                  <p className="text-sm text-destructive font-medium">{errors.email}</p>
+                  <p className="text-sm text-destructive font-medium mt-3">{errors.email}</p>
                 )}
               </div>
             </div>
@@ -211,14 +248,15 @@ export function MultiStepSalesForm() {
 
           {/* Step 2: Name and Phone */}
           {currentStep === 2 && (
-            <div className="space-y-8 animate-in fade-in-50 slide-in-from-right-5 duration-300">
-              <div className="space-y-3">
-                <h2 className="text-3xl font-bold text-foreground tracking-tight">What's your name?</h2>
+            <div className="flex flex-col justify-center h-full animate-in fade-in-50 slide-in-from-right-5 duration-300">
+              <div className="mb-6">
+                <h2 className="text-3xl font-bold text-foreground tracking-tight mb-2">What's your name?</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">And optionally, your phone number.</p>
               </div>
               <div className="space-y-6">
                 <div>
                   <Input
+                    name="name"
                     placeholder="Your full name"
                     value={formData.name}
                     onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
@@ -234,6 +272,7 @@ export function MultiStepSalesForm() {
                 </div>
                 <Input
                   type="tel"
+                  name="phone"
                   placeholder="Phone number (optional)"
                   value={formData.phone}
                   onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
@@ -245,12 +284,12 @@ export function MultiStepSalesForm() {
 
           {/* Step 3: Country */}
           {currentStep === 3 && (
-            <div className="space-y-8 animate-in fade-in-50 slide-in-from-right-5 duration-300">
-              <div className="space-y-3">
-                <h2 className="text-3xl font-bold text-foreground tracking-tight">Which country are you in?</h2>
+            <div className="flex flex-col justify-center h-full animate-in fade-in-50 slide-in-from-right-5 duration-300">
+              <div className="mb-6">
+                <h2 className="text-3xl font-bold text-foreground tracking-tight mb-2">Which country are you in?</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">This helps us provide relevant information.</p>
               </div>
-              <div className="space-y-4">
+              <div>
                 <Select 
                   value={formData.country} 
                   onValueChange={(value) => setFormData(prev => ({ ...prev, country: value }))}
@@ -271,108 +310,116 @@ export function MultiStepSalesForm() {
                   </SelectContent>
                 </Select>
                 {errors.country && (
-                  <p className="text-sm text-destructive font-medium">{errors.country}</p>
+                  <p className="text-sm text-destructive font-medium mt-3">{errors.country}</p>
                 )}
               </div>
             </div>
           )}
 
-          {/* Step 4: Interests */}
+          {/* Step 4: Organization Needs */}
           {currentStep === 4 && (
-            <div className="space-y-8 animate-in fade-in-50 slide-in-from-right-5 duration-300">
-              <div className="space-y-3">
-                <h2 className="text-3xl font-bold text-foreground tracking-tight">What are you interested in?</h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">Select all that apply.</p>
+            <div className="flex flex-col justify-center h-full animate-in fade-in-50 slide-in-from-right-5 duration-300">
+              <div className="mb-6">
+                <h2 className="text-3xl font-bold text-foreground tracking-tight mb-2">What are your organization's needs?</h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">Choose all that apply.</p>
               </div>
-              <div className="space-y-4">
-                {interestOptions.map((option) => (
-                  <div key={option.id} className="group">
-                    <div className={`flex items-center space-x-4 p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer ${
-                      formData.interests.includes(option.id)
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:border-border/80 hover:bg-muted/50"
-                    }`}>
-                      <Checkbox
-                        id={option.id}
-                        checked={formData.interests.includes(option.id)}
-                        onCheckedChange={(checked) => handleInterestChange(option.id, checked as boolean)}
-                        className="w-5 h-5 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                      />
-                      <Label htmlFor={option.id} className="text-xl cursor-pointer font-medium flex-1 text-foreground">
-                        {option.label}
-                      </Label>
-                    </div>
+              <div className="relative">
+                <div className="min-h-[300px] max-h-[400px] overflow-y-auto pr-4">
+                  <div className="space-y-4 pb-12">
+                    {organizationNeedsOptions.map((option) => (
+                      <label 
+                        key={option.id} 
+                        htmlFor={option.id}
+                        className={`flex items-start space-x-4 p-5 rounded-xl border-2 transition-all duration-200 cursor-pointer ${
+                          formData.organizationNeeds.includes(option.id)
+                            ? "border-primary bg-primary/5"
+                            : "border-border hover:border-border/80 hover:bg-muted/50"
+                        }`}
+                      >
+                        <Checkbox
+                          id={option.id}
+                          checked={formData.organizationNeeds.includes(option.id)}
+                          onCheckedChange={(checked) => handleNeedsChange(option.id, checked as boolean)}
+                          className="w-5 h-5 mt-0.5 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                        />
+                        <div className="flex-1 space-y-1">
+                          <span className="text-base font-semibold text-foreground leading-tight block">{option.label}</span>
+                          <p className="text-sm text-muted-foreground">{option.description}</p>
+                        </div>
+                      </label>
+                    ))}
                   </div>
-                ))}
-                {errors.interests && (
-                  <p className="text-sm text-destructive font-medium">{errors.interests}</p>
-                )}
+                </div>
+                {/* Fade-out gradient overlay */}
+                <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none" />
               </div>
+              {errors.organizationNeeds && (
+                <p className="text-sm text-destructive font-medium mt-3">{errors.organizationNeeds}</p>
+              )}
             </div>
           )}
 
           {/* Step 5: How can we help */}
           {currentStep === 5 && (
-            <div className="space-y-8 animate-in fade-in-50 slide-in-from-right-5 duration-300">
-              <div className="space-y-3">
-                <h2 className="text-3xl font-bold text-foreground tracking-tight">How can we help?</h2>
+            <div className="flex flex-col justify-center h-full animate-in fade-in-50 slide-in-from-right-5 duration-300">
+              <div className="mb-6">
+                <h2 className="text-3xl font-bold text-foreground tracking-tight mb-2">How can we help?</h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">Tell us about your needs and goals.</p>
               </div>
-              <div className="space-y-4">
+              <div>
                 <Textarea
+                  name="help"
                   placeholder="Describe how Vercel can help your company..."
                   value={formData.help}
                   onChange={(e) => setFormData(prev => ({ ...prev, help: e.target.value }))}
-                  className={`min-h-[180px] text-lg py-6 px-6 border-2 rounded-xl transition-all duration-200 focus:ring-4 focus:ring-primary/10 resize-none ${
+                  className={`min-h-[200px] text-lg py-6 px-6 border-2 rounded-xl transition-all duration-200 focus:ring-4 focus:ring-primary/10 resize-none ${
                     errors.help 
                       ? "border-destructive/50 focus:border-destructive" 
                       : "border-border focus:border-primary hover:border-border/80"
                   }`}
                 />
                 {errors.help && (
-                  <p className="text-sm text-destructive font-medium">{errors.help}</p>
+                  <p className="text-sm text-destructive font-medium mt-3">{errors.help}</p>
                 )}
               </div>
             </div>
           )}
 
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div className="flex justify-between items-center pt-8 flex-none">
-            {currentStep > 1 ? (
-              <Button
-                variant="outline"
-                onClick={handlePrevious}
-                className="flex items-center gap-2 px-6 py-3 text-lg border-2 rounded-xl transition-all duration-200 hover:bg-muted/50"
-              >
-                <ChevronLeft className="w-5 h-5" />
-                Previous
-              </Button>
-            ) : (
-              <div />
-            )}
-
-            {currentStep < totalSteps ? (
-              <Button
-                onClick={handleNext}
-                className="flex items-center gap-2 px-8 py-3 text-lg bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-all duration-200 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
-              >
-                Next
-                <ChevronRight className="w-5 h-5" />
-              </Button>
-            ) : (
-              <Button
-                onClick={handleSubmit}
-                className="px-8 py-3 text-lg bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-all duration-200 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
-              >
-                Submit
-              </Button>
-            )}
-          </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      {/* Navigation */}
+      <div className="flex flex-col sm:flex-row justify-between items-center flex-none mt-6 gap-4 sm:gap-0">
+        {currentStep > 1 ? (
+          <Button
+            variant="outline"
+            onClick={handlePrevious}
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-lg border-2 rounded-xl transition-all duration-200 hover:bg-muted/50"
+          >
+            <ChevronLeft className="w-5 h-5" />
+            Previous
+          </Button>
+        ) : (
+          <div className="hidden sm:block" />
+        )}
+
+        {currentStep < totalSteps ? (
+          <Button
+            onClick={handleNext}
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3 text-lg bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-all duration-200 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
+          >
+            Next
+            <ChevronRight className="w-5 h-5" />
+          </Button>
+        ) : (
+          <Button
+            onClick={handleSubmit}
+            className="w-full sm:w-auto px-8 py-3 text-lg bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-all duration-200 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
+          >
+            Talk to Vercel
+          </Button>
+        )}
+      </div>
+    </div>
   )
 }

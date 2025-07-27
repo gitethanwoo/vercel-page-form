@@ -1,13 +1,19 @@
+"use client"
+
 import { Header } from "@/components/header"
 import { SalesForm } from "@/components/sales-form"
+import { MultiStepSalesForm } from "@/components/multi-step-sales-form"
 import { EbayLogo } from "@/components/ebay-logo"
 import { TripadvisorLogo } from "@/components/tripadvisor-logo"
 import { SonosLogo } from "@/components/sonos-logo"
-import { Phone, Clock } from "lucide-react"
+import { Phone, Clock, Settings2 } from "lucide-react"
+import { useState } from "react"
 
 
 
 export default function SalesPage() {
+  const [useMultiStep, setUseMultiStep] = useState(false)
+
   return (
     <div className="w-full px-4 min-h-screen bg-gray-50 text-black">
       <div className="absolute inset-0 -z-10 h-full w-full bg-white">
@@ -38,7 +44,9 @@ export default function SalesPage() {
             <div className="flex flex-col">
               {/* Header section - always shows first */}
               <div className="p-12 border-b border-gray-200 order-1">
-                <h1 className="text-3xl mb-6 md:text-3xl font-semibold tracking-tight">Talk to our Sales team.</h1>
+                <div className="mb-6">
+                  <h1 className="text-3xl md:text-3xl font-semibold tracking-tight">Talk to our Sales team.</h1>
+                </div>
                 <div className="flex flex-col gap-6 text-lg text-gray-700">
                   <div className="flex items-start gap-4 text-base">
                     <Phone className="w-6 h-6 mt-1 text-gray-600 shrink-0" />
@@ -59,7 +67,7 @@ export default function SalesPage() {
 
               {/* Mobile only: Form goes here */}
               <div className="lg:hidden order-2 p-12 bg-white border-b border-gray-200">
-                <SalesForm />
+                {useMultiStep ? <MultiStepSalesForm /> : <SalesForm />}
               </div>
 
               {/* Stats and testimonials - shows after form on mobile, stays in left column on desktop */}
@@ -91,7 +99,7 @@ export default function SalesPage() {
 
           {/* Desktop only: Form in right column */}
           <div className="hidden lg:block col-span-12 bg-white lg:col-span-6 p-12">
-            <SalesForm />
+            {useMultiStep ? <MultiStepSalesForm /> : <SalesForm />}
           </div>
         </div>
         <div className="grid grid-cols-12 gap-0 border border-gray-200 relative">
@@ -104,9 +112,19 @@ export default function SalesPage() {
             <div className="absolute top-[-12px] right-[-12px] w-6 h-6 pointer-events-none">
               <div className="absolute top-1/2 left-0 w-full h-px bg-gray-400 transform -translate-y-1/2"></div>
               <div className="absolute left-1/2 top-0 w-px h-full bg-gray-400 transform -translate-x-1/2"></div>
-            </div>
-          </div>
+                      </div>
+        </div>
       </main>
+      
+      {/* Hidden form toggle in bottom-right corner */}
+      <button
+        onClick={() => setUseMultiStep(!useMultiStep)}
+        className="fixed bottom-4 right-4 flex items-center gap-1 px-2 py-1 text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded transition-colors opacity-20 hover:opacity-100 z-10"
+        title={`Switch to ${useMultiStep ? 'simple' : 'multi-step'} form`}
+      >
+        <Settings2 className="w-3 h-3" />
+        {useMultiStep ? 'Single Step' : 'Multi Step'}
+      </button>
     </div>
   )
 }
