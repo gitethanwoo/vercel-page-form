@@ -124,6 +124,18 @@ export function MultiStepSalesForm() {
   const handleSubmit = async () => {
     if (validateStep(5)) {
       console.log("Form submitted:", formData)
+      
+      // Fire-and-forget AI workflow
+      fetch('/api/ai-workflow', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ formData }),
+      }).catch(error => {
+        console.error("AI workflow error (non-blocking):", error)
+      })
+      
       setIsSubmitted(true)
     }
   }
