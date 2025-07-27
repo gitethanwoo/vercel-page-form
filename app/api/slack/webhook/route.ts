@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*🔍 AI Research Summary:*\n${data.researchResult ? data.researchResult.substring(0, 2000) + (data.researchResult.length > 2000 ? '...' : '') : 'No research available'}`
+          text: `*🔍 Company Research Summary:*\n${data.researchResult ? data.researchResult.substring(0, 2000) + (data.researchResult.length > 2000 ? '...' : '') : 'No research available'}`
         }
       },
       {
