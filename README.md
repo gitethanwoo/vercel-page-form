@@ -100,6 +100,59 @@ This allows your sales team to receive leads with context immediately.
 
 ## Customization
 
+### Creating Your Own Knowledge Base
+
+One of the most powerful features of this template is the ability to create domain-specific knowledge bases using [Upstash's Documentation Crawler](https://upstash.com/docs/search/tools/documentationcrawler). This allows you to crawl your own documentation, knowledge base, or any website and create a searchable index for AI research.
+
+#### Quick Setup with Documentation Crawler
+
+1. **Install the crawler** (no installation required):
+   ```bash
+   npx @upstash/search-crawler
+   ```
+
+2. **Run the crawler** with your Upstash credentials:
+   ```bash
+   npx @upstash/search-crawler \
+     --upstash-url "UPSTASH_SEARCH_REST_URL" \
+     --upstash-token "UPSTASH_SEARCH_REST_TOKEN" \
+     --index-name "my-knowledge-base" \
+     --doc-url "https://your-docs.com"
+   ```
+
+3. **Update the search index** in `app/api/search/route.ts`:
+   ```typescript
+   const index = client.index("my-knowledge-base"); // Change from "vercel-docs"
+   ```
+
+#### What the Documentation Crawler Does
+
+The crawler automatically:
+- **Discovers** all internal documentation links
+- **Crawls** each page and extracts content
+- **Tracks** new or obsolete data
+- **Upserts** the new records into your Upstash Search index
+
+#### Use Cases for Custom Knowledge Bases
+
+- **Company Documentation**: Crawl your internal docs, product guides, or knowledge base
+- **Industry Research**: Index competitor websites, industry reports, or market analysis
+- **Technical Resources**: Crawl technical documentation, API docs, or developer guides
+- **Sales Materials**: Index case studies, whitepapers, or marketing content
+
+#### Automated Updates
+
+You can combine the Documentation Crawler with [Qstash Schedule](https://upstash.com/docs/qstash) to keep your knowledge base up to date automatically. Deploy the crawler on a server and call it on a schedule to fetch updates in your documentation.
+
+#### Quick Setup Script
+
+We've included a helpful script to get you started:
+```bash
+node scripts/setup-knowledge-base.js
+```
+
+This script will guide you through setting up different types of knowledge bases and provide the exact commands you need to run.
+
 ### Modifying Organizational Needs
 
 Update the `organizationNeedsOptions` array in `components/multi-step-sales-form.tsx`:

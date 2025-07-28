@@ -38,6 +38,9 @@ When the form is submitted, the AI workflow runs in two phases:
 - Focuses on Vercel-relevant case studies and solutions
 - The research prompt instructs the AI to focus strictly on company information and not to perform personal research
 
+**Custom Knowledge Base Integration**
+One of the most powerful features is the ability to create domain-specific knowledge bases using [Upstash's Documentation Crawler](https://upstash.com/docs/search/tools/documentationcrawler). This allows you to crawl your own documentation, knowledge base, or any website and create a searchable index for AI research. The crawler automatically discovers all internal documentation links, crawls each page, tracks new or obsolete data, and upserts the new records into your Upstash Search index.
+
 **Phase 2: Email Generation**
 - Creates a personalized sales email with:
   - Warm opening
@@ -109,6 +112,30 @@ Visit your deployment and submit the form with your company information. The mul
 - Because the AI call is decoupled from the form, you can reuse this pattern in other contexts (e.g., contact forms or support enquiries)
 
 ## Customization Examples
+
+### Creating Custom Knowledge Bases
+
+The template includes integration with [Upstash's Documentation Crawler](https://upstash.com/docs/search/tools/documentationcrawler), making it incredibly easy to create domain-specific knowledge bases:
+
+```bash
+# Quick setup (no installation required)
+npx @upstash/search-crawler \
+  --upstash-url "UPSTASH_SEARCH_REST_URL" \
+  --upstash-token "UPSTASH_SEARCH_REST_TOKEN" \
+  --index-name "my-knowledge-base" \
+  --doc-url "https://your-docs.com"
+```
+
+Then update the search index in your code:
+```typescript
+const index = client.index("my-knowledge-base"); // Change from "vercel-docs"
+```
+
+**Use Cases:**
+- **Company Documentation**: Crawl internal docs, product guides, or knowledge bases
+- **Industry Research**: Index competitor websites, industry reports, or market analysis
+- **Technical Resources**: Crawl technical documentation, API docs, or developer guides
+- **Sales Materials**: Index case studies, whitepapers, or marketing content
 
 ### Modifying Organizational Needs
 
