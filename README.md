@@ -75,9 +75,8 @@ Each step includes validation and a progress indicator. The form rejects persona
 
 When the form is submitted, the AI workflow runs in two phases:
 
-**Phase 1: Bot Detection & Research**
-- Uses AI to detect if the submission is from a bot
-- If human, performs research using Upstash Search and web search
+**Phase 1: Company Research**
+- Performs research using Upstash Search and web search
 - Gathers information about company industry, size, products, and technical stack
 - Focuses on Vercel-relevant case studies and solutions
 
@@ -144,14 +143,7 @@ The crawler automatically:
 
 You can combine the Documentation Crawler with [Qstash Schedule](https://upstash.com/docs/qstash) to keep your knowledge base up to date automatically. Deploy the crawler on a server and call it on a schedule to fetch updates in your documentation.
 
-#### Quick Setup Script
 
-We've included a helpful script to get you started:
-```bash
-node scripts/setup-knowledge-base.js
-```
-
-This script will guide you through setting up different types of knowledge bases and provide the exact commands you need to run.
 
 ### Modifying Organizational Needs
 
