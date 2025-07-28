@@ -4,9 +4,9 @@ import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  title: 'Sales Form - AI Integration',
+  description: 'Sales Form - AI Integration built with the AI SDK and OpenAI',
+  generator: 'Sales Form - AI Integration',
 }
 
 export default function RootLayout({
