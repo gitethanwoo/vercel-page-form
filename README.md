@@ -1,8 +1,10 @@
 # AI-Powered Sales Form Template
 
-A Next.js template that demonstrates how to build an intelligent sales workflow using Vercel's AI SDK, Upstash Search, and Slack webhooks. This template shows how to capture leads through a multi-step form, automatically research companies using AI, generate personalized email responses, and post results to Slack.
+A Next.js template that demonstrates how to build an intelligent sales workflow using Vercel's AI SDK, [Upstash Search](https://upstash.com/docs/search), and Slack webhooks. This template shows how to capture leads through a multi-step form, automatically research companies using AI, generate personalized email responses, and post results to Slack.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/gitethanwoo/vercel-page-form&demo-title=AI-Powered%20Sales%20Form&demo-description=Multi-step%20sales%20form%20with%20AI%20research%2C%20automated%20email%20generation%2C%20and%20Slack%20integration&demo-url=https://vercel-page-form.vercel.app&env=UPSTASH_SEARCH_REST_URL,UPSTASH_SEARCH_REST_TOKEN,SLACK_WEBHOOK_URL&envDescription=See%20the%20README%20to%20learn%20how%20to%20get%20these%20env%20vars&envLink=https://github.com/gitethanwoo/vercel-page-form&stores=%5B%7B%22type%22%3A%22integration%22%2C%22integrationSlug%22%3A%22upstash%22%2C%22productSlug%22%3A%22upstash-search%22%7D%5D&skippable-integrations=1&project-name=AI-Powered%20Sales%20Form&repository-name=vercel-sales-form)
+
+[Read Docs](#how-it-works) • [Features](#features) • [Deploy Your Own](#quick-start) • [Running Locally](#running-locally)
 
 ## Features
 
@@ -11,7 +13,7 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
 - **Personalized Email Generation**: Create tailored sales emails based on research findings
 - **Slack Integration**: Post research results and email drafts directly to Slack channels
 - **Seamless Setup**: Native Vercel-Upstash integration for one-click credential management
-- **Modern UI**: Built with Next.js 15, Tailwind CSS, and Radix UI components
+- **Modern UI**: Built with Next.js 15, Radix UI + Tailwind CSS
 - **Type Safety**: Full TypeScript support with Zod validation
 
 ## Quick Start
@@ -19,7 +21,7 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
 1. **Deploy the template**
    - Click the "Deploy with Vercel" button above
    - Connect your Git provider and import the project
-   - Vercel will automatically detect Upstash requirements and offer to set up the integration
+   - Vercel will detect Upstash requirements via the `stores` parameter and offer to set up the integration
    - You'll be prompted to create/connect your Upstash account
    - Environment variables will be auto-populated
 
@@ -27,7 +29,7 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
    
    **Option A: Set up Upstash through Vercel (Recommended)**
    - In your Vercel dashboard, go to Settings → Environment Variables
-   - Add your `SLACK_WEBHOOK_URL` and other variables
+   - Add your `SLACK_WEBHOOK_URL`
    - For Upstash Search, you can create a new Upstash account directly through Vercel's integration
    - Vercel will automatically populate `UPSTASH_SEARCH_REST_URL` and `UPSTASH_SEARCH_REST_TOKEN`
    
@@ -36,8 +38,6 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
    UPSTASH_SEARCH_REST_URL=your_upstash_search_url
    UPSTASH_SEARCH_REST_TOKEN=your_upstash_search_token
    SLACK_WEBHOOK_URL=your_slack_webhook_url
-   VERCEL_URL=your_vercel_url
-   NEXT_PUBLIC_BASE_URL=your_base_url
    ```
 
 3. **Set up Slack webhook**
@@ -48,6 +48,16 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
    - Visit your deployment URL
    - Submit the form with company information
    - Check your Slack channel for the research results and email draft
+
+## Running Locally
+
+```bash
+git clone https://github.com/gitethanwoo/vercel-page-form
+cd vercel-page-form
+pnpm install
+cp .env.example .env.local
+pnpm dev
+```
 
 ## Project Structure
 
@@ -178,7 +188,14 @@ Modify the research and email generation prompts in `app/api/ai-workflow/route.t
 
 The template uses Tailwind CSS with custom components. Modify `tailwind.config.ts` and component styles to match your brand.
 
-## Environment Variables
+## Required Env Vars
+
+```bash
+# .env.local
+UPSTASH_SEARCH_REST_URL=
+UPSTASH_SEARCH_REST_TOKEN=
+SLACK_WEBHOOK_URL=
+```
 
 ### Setting Up Upstash Search
 
@@ -209,16 +226,6 @@ If you prefer to set up Upstash manually:
 2. Create a new Search database
 3. Copy the REST URL and token from your dashboard
 4. Add them to your Vercel environment variables
-
-### All Required Variables
-
-| Variable | Description | Required | Auto-populated by Vercel |
-|----------|-------------|----------|-------------------------|
-| `UPSTASH_SEARCH_REST_URL` | Upstash Search REST API URL | Yes | ✅ (with integration) |
-| `UPSTASH_SEARCH_REST_TOKEN` | Upstash Search REST API token | Yes | ✅ (with integration) |
-| `SLACK_WEBHOOK_URL` | Slack incoming webhook URL | Yes | ❌ |
-| `VERCEL_URL` | Your Vercel deployment URL | Yes | ✅ (automatic) |
-| `NEXT_PUBLIC_BASE_URL` | Public base URL for API calls | Yes | ✅ (automatic) |
 
 ## Technologies Used
 
@@ -293,4 +300,4 @@ If you have questions or need help customizing this template:
 
 ---
 
-Built with ❤️ using [Vercel](https://vercel.com) and [Next.js](https://nextjs.org) 
+Built with [Vercel](https://vercel.com) and [Next.js](https://nextjs.org) 
