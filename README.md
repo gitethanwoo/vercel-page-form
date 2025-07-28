@@ -2,7 +2,7 @@
 
 A Next.js template that demonstrates how to build an intelligent sales workflow using Vercel's AI SDK, Upstash Search, and Slack webhooks. This template shows how to capture leads through a multi-step form, automatically research companies using AI, generate personalized email responses, and post results to Slack.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/gitethanwoo/vercel-page-form)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/gitethanwoo/vercel-page-form&env=UPSTASH_SEARCH_REST_URL,UPSTASH_SEARCH_REST_TOKEN,SLACK_WEBHOOK_URL&envDescription=UPSTASH_SEARCH_REST_URL:Your%20Upstash%20Search%20REST%20URL&envDescription=UPSTASH_SEARCH_REST_TOKEN:Your%20Upstash%20Search%20REST%20token&envDescription=SLACK_WEBHOOK_URL:Your%20Slack%20incoming%20webhook%20URL&integration-ids=upstash)
 
 ## Features
 
@@ -10,6 +10,7 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
 - **AI-Powered Research**: Automatically research companies using Vercel's AI SDK and Upstash Search
 - **Personalized Email Generation**: Create tailored sales emails based on research findings
 - **Slack Integration**: Post research results and email drafts directly to Slack channels
+- **Seamless Setup**: Native Vercel-Upstash integration for one-click credential management
 - **Modern UI**: Built with Next.js 15, Tailwind CSS, and Radix UI components
 - **Type Safety**: Full TypeScript support with Zod validation
 
@@ -18,9 +19,19 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
 1. **Deploy the template**
    - Click the "Deploy with Vercel" button above
    - Connect your Git provider and import the project
-   - Vercel will prompt you for environment variables
+   - Vercel will automatically detect Upstash requirements and offer to set up the integration
+   - You'll be prompted to create/connect your Upstash account
+   - Environment variables will be auto-populated
 
 2. **Configure environment variables**
+   
+   **Option A: Set up Upstash through Vercel (Recommended)**
+   - In your Vercel dashboard, go to Settings → Environment Variables
+   - Add your `SLACK_WEBHOOK_URL` and other variables
+   - For Upstash Search, you can create a new Upstash account directly through Vercel's integration
+   - Vercel will automatically populate `UPSTASH_SEARCH_REST_URL` and `UPSTASH_SEARCH_REST_TOKEN`
+   
+   **Option B: Manual Upstash setup**
    ```bash
    UPSTASH_SEARCH_REST_URL=your_upstash_search_url
    UPSTASH_SEARCH_REST_TOKEN=your_upstash_search_token
@@ -169,13 +180,45 @@ The template uses Tailwind CSS with custom components. Modify `tailwind.config.t
 
 ## Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `UPSTASH_SEARCH_REST_URL` | Upstash Search REST API URL | Yes |
-| `UPSTASH_SEARCH_REST_TOKEN` | Upstash Search REST API token | Yes |
-| `SLACK_WEBHOOK_URL` | Slack incoming webhook URL | Yes |
-| `VERCEL_URL` | Your Vercel deployment URL | Yes |
-| `NEXT_PUBLIC_BASE_URL` | Public base URL for API calls | Yes |
+### Setting Up Upstash Search
+
+The easiest way to set up Upstash Search is through Vercel's native integration:
+
+1. **Deploy your template to Vercel**
+2. **Go to your Vercel dashboard** → Settings → Environment Variables
+3. **Click "Add Integration"** and search for "Upstash"
+4. **Create a new Upstash account** or connect an existing one
+5. **Vercel will automatically populate** the required environment variables:
+   - `UPSTASH_SEARCH_REST_URL`
+   - `UPSTASH_SEARCH_REST_TOKEN`
+
+This integration eliminates the need to manually copy credentials and ensures secure credential management.
+
+**Benefits of Vercel Integration:**
+- ✅ **One-click setup** - No manual credential copying
+- ✅ **Automatic updates** - Credentials stay in sync
+- ✅ **Enhanced security** - Credentials managed by Vercel
+- ✅ **Zero configuration** - Works out of the box
+- ✅ **Free tier included** - Upstash offers generous free tier
+
+### Manual Setup (Alternative)
+
+If you prefer to set up Upstash manually:
+
+1. Create an account at [upstash.com](https://upstash.com)
+2. Create a new Search database
+3. Copy the REST URL and token from your dashboard
+4. Add them to your Vercel environment variables
+
+### All Required Variables
+
+| Variable | Description | Required | Auto-populated by Vercel |
+|----------|-------------|----------|-------------------------|
+| `UPSTASH_SEARCH_REST_URL` | Upstash Search REST API URL | Yes | ✅ (with integration) |
+| `UPSTASH_SEARCH_REST_TOKEN` | Upstash Search REST API token | Yes | ✅ (with integration) |
+| `SLACK_WEBHOOK_URL` | Slack incoming webhook URL | Yes | ❌ |
+| `VERCEL_URL` | Your Vercel deployment URL | Yes | ✅ (automatic) |
+| `NEXT_PUBLIC_BASE_URL` | Public base URL for API calls | Yes | ✅ (automatic) |
 
 ## Technologies Used
 
@@ -185,6 +228,25 @@ The template uses Tailwind CSS with custom components. Modify `tailwind.config.t
 - **Styling**: Tailwind CSS with Radix UI components
 - **Validation**: Zod schema validation
 - **Deployment**: Vercel
+
+## How the Deploy Button Works
+
+The "Deploy to Vercel" button includes special parameters that enable seamless integration:
+
+### **URL Parameters**
+- `repository-url`: Points to this GitHub repository
+- `env`: Pre-defines required environment variables
+- `envDescription`: Provides helpful descriptions for each variable
+- `integration-ids`: Tells Vercel to offer Upstash integration setup
+
+### **Deployment Flow**
+1. **Click Deploy** → Vercel clones the repository
+2. **Integration Detection** → Vercel identifies Upstash requirements
+3. **Setup Wizard** → Offers to create/connect Upstash account
+4. **Auto-Configuration** → Populates environment variables
+5. **Deploy** → Launches your AI-powered sales form
+
+This creates a "one-click deployment" experience where users don't need to manually set up any external services!
 
 ## Contributing
 
