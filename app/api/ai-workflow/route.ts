@@ -48,19 +48,6 @@ export async function POST(request: Request) {
     if (!formData) {
       return Response.json({ error: 'Form data is required' }, { status: 400 });
     }
-
-    const is_bot = await generateObject({
-      model: openai('gpt-4.1-nano'),
-      schema: z.object({
-        is_bot: z.boolean().describe('Whether the form submission is from a bot'),
-      }),
-      prompt: `Identify if the form submission is from a bot. Note that this form is on the Vercel website, where someone has entered their company email address and clicked 'talk to sales'. If the subject matter is significantly different from what we would expect, it is likely a bot. If the subject matter is similar to what we would expect, it is likely a human. You only need to be 40% sure it's a human. Here is the form data: ${JSON.stringify(formData, null, 2)}`,
-    })
-
-    if (is_bot.object.is_bot) {
-      return Response.json({ error: 'Form submission is from a bot' }, { status: 400 })
-    }
-
     // Phase 1: Research with o3
     const researchResult = await generateText({
       model: openai('o3'),
