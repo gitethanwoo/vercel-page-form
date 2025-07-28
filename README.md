@@ -2,7 +2,7 @@
 
 A Next.js template that demonstrates how to build an intelligent sales workflow using Vercel's AI SDK, Upstash Search, and Slack webhooks. This template shows how to capture leads through a multi-step form, automatically research companies using AI, generate personalized email responses, and post results to Slack.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/gitethanwoo/vercel-page-form&env=UPSTASH_SEARCH_REST_URL,UPSTASH_SEARCH_REST_TOKEN,SLACK_WEBHOOK_URL&envDescription=UPSTASH_SEARCH_REST_URL:Your%20Upstash%20Search%20REST%20URL&envDescription=UPSTASH_SEARCH_REST_TOKEN:Your%20Upstash%20Search%20REST%20token&envDescription=SLACK_WEBHOOK_URL:Your%20Slack%20incoming%20webhook%20URL&integration-ids=upstash)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/gitethanwoo/vercel-page-form&demo-title=AI-Powered%20Sales%20Form&demo-description=Multi-step%20sales%20form%20with%20AI%20research%2C%20automated%20email%20generation%2C%20and%20Slack%20integration&demo-url=https://vercel-page-form.vercel.app&env=UPSTASH_SEARCH_REST_URL,UPSTASH_SEARCH_REST_TOKEN,SLACK_WEBHOOK_URL&envDescription=UPSTASH_SEARCH_REST_URL:Your%20Upstash%20Search%20REST%20URL&envDescription=UPSTASH_SEARCH_REST_TOKEN:Your%20Upstash%20Search%20REST%20token&envDescription=SLACK_WEBHOOK_URL:Your%20Slack%20incoming%20webhook%20URL&products=%5B%7B%22type%22%3A%22integration%22%2C%22protocol%22%3A%22storage%22%2C%22productSlug%22%3A%22upstash%22%2C%22integrationSlug%22%3A%22upstash%22%7D%5D&skippable-integrations=1&project-name=AI-Powered%20Sales%20Form&repository-name=vercel-sales-form)
 
 ## Features
 
@@ -235,9 +235,12 @@ The "Deploy to Vercel" button includes special parameters that enable seamless i
 
 ### **URL Parameters**
 - `repository-url`: Points to this GitHub repository
+- `demo-title`, `demo-description`, `demo-url`: Template showcase information
 - `env`: Pre-defines required environment variables
 - `envDescription`: Provides helpful descriptions for each variable
-- `integration-ids`: Tells Vercel to offer Upstash integration setup
+- `products`: JSON array defining integrations (Upstash Search)
+- `skippable-integrations`: Allows users to skip integrations
+- `project-name`, `repository-name`: Default project naming
 
 ### **Deployment Flow**
 1. **Click Deploy** → Vercel clones the repository
@@ -247,6 +250,25 @@ The "Deploy to Vercel" button includes special parameters that enable seamless i
 5. **Deploy** → Launches your AI-powered sales form
 
 This creates a "one-click deployment" experience where users don't need to manually set up any external services!
+
+### **Products Parameter Breakdown**
+The `products` parameter uses this structure:
+```json
+[
+  {
+    "type": "integration",
+    "protocol": "storage", 
+    "productSlug": "upstash",
+    "integrationSlug": "upstash"
+  }
+]
+```
+
+This tells Vercel to:
+- Offer Upstash integration during setup
+- Auto-configure environment variables
+- Handle account creation/connection
+- Set up the necessary services automatically
 
 ## Contributing
 
