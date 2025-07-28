@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     if (!formData) {
       return Response.json({ error: 'Form data is required' }, { status: 400 });
     }
-    // Phase 1: Research with o3
+
     const researchResult = await generateText({
       model: openai('gpt-4.1'),
       tools: {
@@ -60,19 +60,22 @@ INSIGHTS:
 
 
 ## Form Structure & Questions Asked
-The prospect filled out a multi-step sales form with these questions:
+The prospect filled out a sales form with these questions:
 
 1. **Company Email**: "What's your company email?" (We'll use this to understand your company better)
    - Answer: ${formData.email}
 
-2. **Personal Info**: "What's your name?"
-   - Name: ${formData.name}
+${formData.name ? `2. **Personal Info**: "What's your name?"
+   - Name: ${formData.name}` : ''}
 
-3. **Location**: "Which country are you in?" (This helps us provide relevant information)
-   - Country: ${formData.countryLabel || formData.country}
+${formData.country ? `3. **Location**: "Which country are you in?" (This helps us provide relevant information)
+   - Country: ${formData.countryLabel || formData.country}` : ''}
 
-4. **Organization Needs**: "What are your organization's needs?" (Choose all that apply)
-   - Selected options: ${formData.organizationNeedsDetails ? formData.organizationNeedsDetails.map((need: { label: string; description: string }) => `${need.label}: ${need.description}`).join('\n   - ') : formData.organizationNeeds?.join(', ')}
+${formData.organizationNeedsDetails || formData.organizationNeeds ? `4. **Organization Needs**: "What are your organization's needs?" (Choose all that apply)
+   - Selected options: ${formData.organizationNeedsDetails ? formData.organizationNeedsDetails.map((need: { label: string; description: string }) => `${need.label}: ${need.description}`).join('\n   - ') : formData.organizationNeeds?.join(', ')}` : ''}
+
+${formData.interest ? `4. **Product Interest**: "Primary Product Interest"
+   - Interest: ${formData.interest}` : ''}
 
 5. **Help Request**: "How can we help?" (Tell us about your needs and goals - text area. Pay close attention to this one!)
    - Answer: ${formData.help}
@@ -80,7 +83,7 @@ The prospect filled out a multi-step sales form with these questions:
 Raw form data: ${JSON.stringify(formData, null, 2)}`,
       stopWhen: stepCountIs(20),
       onStepFinish: (step) => {
-        console.log(`Research step: ${step.text}`)
+        console.log(`Research step: ${step.toolResults}`)
       }
     });
 

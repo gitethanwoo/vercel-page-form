@@ -105,7 +105,7 @@ export function MultiStepSalesForm() {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Please enter a valid email address"
     
     const commonPersonalDomains = [
-      'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com',
+      'gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'aol.com',
       'icloud.com', 'live.com', 'msn.com', 'protonmail.com', 'mail.com'
     ]
     

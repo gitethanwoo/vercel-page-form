@@ -31,7 +31,7 @@ export function SalesForm() {
     return undefined
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     
     // Validate email before submission
@@ -41,8 +41,26 @@ export function SalesForm() {
       return
     }
     
-    // This form intentionally does nothing.
-    console.log("Form submission is disabled.")
+    const formData = new FormData(e.currentTarget)
+    const submissionData = {
+      email,
+      country,
+      interest,
+      help: formData.get('help') as string
+    }
+    
+    console.log("Form submitted:", submissionData)
+    
+    // Fire-and-forget AI workflow
+    fetch('/api/ai-workflow', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ formData: submissionData }),
+    }).catch(error => {
+      console.error("AI workflow error (non-blocking):", error)
+    })
   }
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
