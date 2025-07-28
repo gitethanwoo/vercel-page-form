@@ -92,7 +92,43 @@ export default function SalesPage() {
 
   const testAIWorkflow = async (scenarioName: string, formData: any) => {
     setLoading(scenarioName)
-    setResults(prev => ({ ...prev, [scenarioName]: { success: false } }))
+
+    // Enhance test data with same format as real form submission
+    const organizationNeedsOptions = [
+      { id: "vercel_hosting", label: "Global CDN & Edge Deployment", description: "Push to git, deploy everywhere. Lightning-fast loading from 100+ edge locations worldwide." },
+      { id: "preview_deployments", label: "Staging Environments", description: "Every pull request gets a live URL. Ship with confidence after stakeholders review real deploys." },
+      { id: "nextjs_platform", label: "Zero-Config Infrastructure", description: "The creators of Next.js host it best. Automatic optimizations, ISR, and framework-native features." },
+      { id: "enterprise_security", label: "SOC 2 & HIPAA Compliance", description: "SOC 2, HIPAA, SSO, advanced RBAC, isolated builds, and 99.99% SLA for mission-critical apps." },
+      { id: "performance_scale", label: "Auto-Scaling Infrastructure", description: "Handle millions of users without config. Automatic scaling, DDoS protection, and global CDN included." },
+      { id: "v0_personal", label: "AI Code Generation", description: "Turn ideas into React code instantly. Build UIs, components, and features with natural language." },
+      { id: "v0_teams", label: "Team Collaboration Tools", description: "Collaborate with shared Projects, custom instructions, higher rate limits, and centralized billing." },
+      { id: "v0_enterprise", label: "Enterprise AI Features", description: "SSO, data training opt-out, priority access, and higher rate limits for security-conscious organizations." },
+      { id: "custom_needs", label: "Custom Requirements", description: "I have specific requirements not listed here." }
+    ]
+    
+    const countries = [
+      { value: "us", label: "United States" },
+      { value: "ca", label: "Canada" },
+      { value: "gb", label: "United Kingdom" },
+      { value: "au", label: "Australia" },
+      { value: "de", label: "Germany" },
+      { value: "fr", label: "France" },
+      { value: "jp", label: "Japan" },
+      { value: "other", label: "Other" }
+    ]
+
+    const enhancedFormData = {
+      ...formData,
+      organizationNeedsDetails: formData.organizationNeeds.map((needId: string) => {
+        const option = organizationNeedsOptions.find(opt => opt.id === needId)
+        return option ? {
+          id: option.id,
+          label: option.label,
+          description: option.description
+        } : { id: needId, label: needId, description: '' }
+      }),
+      countryLabel: countries.find(c => c.value === formData.country)?.label || formData.country
+    }
 
     try {
       const response = await fetch('/api/ai-workflow', {
@@ -100,7 +136,7 @@ export default function SalesPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ formData }),
+        body: JSON.stringify({ formData: enhancedFormData }),
       })
 
       const result = await response.json()

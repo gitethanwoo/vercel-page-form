@@ -164,7 +164,21 @@ export function MultiStepSalesForm() {
 
   const handleSubmit = async () => {
     if (validateStep(5)) {
-      console.log("Form submitted:", formData)
+      // Enhance form data with full option details for better AI context
+      const enhancedFormData = {
+        ...formData,
+        organizationNeedsDetails: formData.organizationNeeds.map(needId => {
+          const option = organizationNeedsOptions.find(opt => opt.id === needId)
+          return option ? {
+            id: option.id,
+            label: option.label,
+            description: option.description
+          } : { id: needId, label: needId, description: '' }
+        }),
+        countryLabel: countries.find(c => c.value === formData.country)?.label || formData.country
+      }
+      
+      console.log("Form submitted:", enhancedFormData)
       
       // Fire-and-forget AI workflow
       fetch('/api/ai-workflow', {
@@ -172,7 +186,7 @@ export function MultiStepSalesForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ formData }),
+        body: JSON.stringify({ formData: enhancedFormData }),
       }).catch(error => {
         console.error("AI workflow error (non-blocking):", error)
       })

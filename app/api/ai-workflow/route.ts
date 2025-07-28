@@ -1,44 +1,7 @@
-import { generateObject, generateText, stepCountIs, tool } from 'ai'
+import { generateText, stepCountIs } from 'ai'
 import { openai } from '@ai-sdk/openai'
-import { z } from 'zod'
-
-const searchVercel = tool({
-  description: 'Search Vercel documentation and resources for relevant information. Use this when you need specific technical details about Vercel features, best practices, or solutions. Note that there are no sales best practices in the knowledgebase, so you should not use this tool to research sales best practices, just information about features and solutions.',
-  inputSchema: z.object({
-    query: z.string().describe('Search query for Vercel documentation'),
-  }),
-  execute: async ({ query }: { query: string }) => {
-    try {
-      const baseUrl = process.env.VERCEL_URL 
-        ? `https://${process.env.VERCEL_URL}` 
-        : process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-      
-      const response = await fetch(`${baseUrl}/api/search`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Search failed: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      const results = data.results?.slice(0, 2).map((result: any) => ({
-        title: result.content?.title || 'Untitled',
-        content: result.content?.text || 'No content',
-        url: result.content?.url || ''
-      })) || [];
-
-      return { results, query };
-    } catch (error) {
-      console.error('Error searching Vercel docs:', error);
-      return { results: [], query, error: 'Search failed' };
-    }
-  },
-});
+import { sendSlackNotification } from '@/lib/actions/slack'
+import { searchVercel } from '@/lib/tools/search'
 
 
 export async function POST(request: Request) {
@@ -50,7 +13,7 @@ export async function POST(request: Request) {
     }
     // Phase 1: Research with o3
     const researchResult = await generateText({
-      model: openai('o3'),
+      model: openai('gpt-4.1'),
       tools: {
         searchVercel: searchVercel,
         web_search_preview: openai.tools.webSearchPreview({
@@ -95,7 +58,26 @@ INSIGHTS:
 - Technical requirements or constraints
 - Decision-making factors
 
-Form data: ${JSON.stringify(formData, null, 2)}`,
+
+## Form Structure & Questions Asked
+The prospect filled out a multi-step sales form with these questions:
+
+1. **Company Email**: "What's your company email?" (We'll use this to understand your company better)
+   - Answer: ${formData.email}
+
+2. **Personal Info**: "What's your name?"
+   - Name: ${formData.name}
+
+3. **Location**: "Which country are you in?" (This helps us provide relevant information)
+   - Country: ${formData.countryLabel || formData.country}
+
+4. **Organization Needs**: "What are your organization's needs?" (Choose all that apply)
+   - Selected options: ${formData.organizationNeedsDetails ? formData.organizationNeedsDetails.map((need: { label: string; description: string }) => `${need.label}: ${need.description}`).join('\n   - ') : formData.organizationNeeds?.join(', ')}
+
+5. **Help Request**: "How can we help?" (Tell us about your needs and goals - text area. Pay close attention to this one!)
+   - Answer: ${formData.help}
+
+Raw form data: ${JSON.stringify(formData, null, 2)}`,
       stopWhen: stepCountIs(20),
       onStepFinish: (step) => {
         console.log(`Research step: ${step.text}`)
@@ -131,11 +113,41 @@ When relevant, mention similar companies or use cases that have succeeded with V
 
 ## Discovery Questions Guidelines
 Lead with 2-3 specific questions that:
-- Clarify their technical requirements or constraints
+- Clarify their technical requirements or constraints (if you use an acronym, make sure to explain it. Don't come across as a technical know-it-all. Be conversational and friendly.)
 - Explore their timeline and decision criteria
 - Understand their current pain points better
 - Are relevant to providing a more tailored solution
 - Show genuine interest in their specific situation
+
+<bad_example>
+...
+"To better tailor the right path forward for you, a few quick questions:  
+- Which parts of the storefront are you most interested in modernizing first—PLPs, PDPs, homepage storytelling modules?
+<explanation>
+This is a bad example because it comes across as too technical - unexplained acronyms are almost always a bad idea. No payoff with a huge risk - never make the prospect feel like you're talking down to them. 
+</explanation>
+</bad_example>
+
+<bad_example2>
+...
+You’re not alone in facing the challenge of modernizing an SFCC-driven storefront without taking on a full-scale migration all at once.  
+To help shape a tailored next step, I’d love to understand a bit more:  
+- Are there specific parts of the shopping experience (e.g. homepage, campaign microsites, PDPs) where you see the most friction today?  
+<explanation>
+More bad acronyms!
+</explanation>
+</bad_example2>
+
+<good_example>
+...
+To better tailor our advice, I’d love to understand a few things:
+- Which parts of the site experience feel the slowest or most cumbersome—for customers and your internal teams?
+- How is your dev team currently managing changes to the storefront? What’s slowing them down today?
+- Do you have a specific goal or milestone in mind (e.g., for peak shopping season or a new product launch)?
+<explanation>
+This is a good example because it's conversational and friendly. It's not too technical and it's not too salesy.
+</explanation>
+</good_example>
 
 Original form data: ${JSON.stringify(formData, null, 2)}
 
@@ -149,30 +161,13 @@ Write the email response:`,
       }
     });
 
-    console.log(`=== AI WORKFLOW RESULT ===`);
-    console.log(`Form Data: ${JSON.stringify(formData, null, 2)}`);
-    console.log(`Research Result: ${researchResult.text || 'No research generated'}`);
-    console.log(`Email Result: ${emailResult.text || 'No email generated'}`);
-    console.log(`Research steps taken: ${researchResult.steps?.length || 0}`);
-    console.log(`Email steps taken: ${emailResult.steps?.length || 0}`);
-
-    // Send to Slack webhook
-    try {
-      const slackWebhookUrl = `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}/api/slack/webhook`;
-      
-      await fetch(slackWebhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          formData,
-          researchResult: researchResult.text,
-          aiResponse: emailResult.text,
-          timestamp: new Date().toISOString()
-        })
-      });
-    } catch (error) {
-      console.error('Slack webhook delivery failed:', error);
-    }
+    // Send Slack notification
+    await sendSlackNotification({
+      formData,
+      researchResult: researchResult.text,
+      aiResponse: emailResult.text,
+      timestamp: new Date().toISOString()
+    });
 
     return Response.json({ 
       response: emailResult.text,

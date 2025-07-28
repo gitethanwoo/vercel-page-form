@@ -1,35 +1,31 @@
-import { NextRequest, NextResponse } from 'next/server'
-
-interface SlackData {
-  formData: {
-    email: string
-    name: string
-    phone?: string
-    country: string
-    interests?: string[]
-    help: string
-  }
-  researchResult?: string
-  aiResponse?: string
-  timestamp: string
+interface FormData {
+  email: string
+  name: string
+  phone?: string
+  country: string
+  organizationNeeds: string[]
+  help: string
 }
 
-export async function POST(req: NextRequest) {
-  try {
-    const data: SlackData = await req.json()
-    
-    const webhookUrl = process.env.SLACK_WEBHOOK_URL
-    if (!webhookUrl) {
-      console.error('SLACK_WEBHOOK_URL not configured')
-      return NextResponse.json({ error: 'Slack webhook URL not configured' }, { status: 500 })
-    }
+interface SlackNotificationData {
+  formData: FormData
+  researchResult?: string
+  aiResponse?: string
+  timestamp?: string
+}
 
-    // Format interests for display
-    const interestsText = data.formData.interests && data.formData.interests.length > 0 
-      ? data.formData.interests.join(', ')
+export async function sendSlackNotification(data: SlackNotificationData): Promise<void> {
+  const webhookUrl = process.env.SLACK_WEBHOOK_URL
+  if (!webhookUrl) {
+    console.error('SLACK_WEBHOOK_URL not configured')
+    return
+  }
+
+  try {
+    const interestsText = data.formData.organizationNeeds && data.formData.organizationNeeds.length > 0 
+      ? data.formData.organizationNeeds.join(', ')
       : 'None specified'
 
-    // Create rich Slack message with blocks
     const blocks = [
       {
         type: 'header',
@@ -64,7 +60,7 @@ export async function POST(req: NextRequest) {
         fields: [
           {
             type: 'mrkdwn',
-            text: `*Interests:*\n${interestsText}`
+            text: `*Organization Needs:*\n${interestsText}`
           }
         ]
       },
@@ -100,13 +96,12 @@ export async function POST(req: NextRequest) {
         elements: [
           {
             type: 'mrkdwn',
-            text: `Submitted: ${new Date(data.timestamp).toLocaleString()}`
+            text: `Submitted: ${data.timestamp ? new Date(data.timestamp).toLocaleString() : new Date().toLocaleString()}`
           }
         ]
       }
     ]
 
-    // Send to Slack via incoming webhook
     const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
@@ -121,10 +116,7 @@ export async function POST(req: NextRequest) {
     if (!response.ok) {
       throw new Error(`Slack webhook failed: ${response.statusText}`)
     }
-
-    return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Slack webhook error:', error)
-    return NextResponse.json({ error: 'Failed to send to Slack' }, { status: 500 })
+    console.error('Slack notification failed:', error)
   }
 }
