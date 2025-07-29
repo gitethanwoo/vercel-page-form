@@ -176,7 +176,7 @@ Original form data: ${JSON.stringify(formData, null, 2)}
 Here is the research gathered about the prospect:
 ${researchResult.text}
 
-Write the email response:`,
+`,
       onStepFinish: (step) => {
         console.log(`Email writing step: ${step.text}`)
       }

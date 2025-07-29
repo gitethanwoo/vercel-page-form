@@ -1,9 +1,14 @@
 import Link from "next/link"
 import { VercelLogo } from "@/components/vercel-logo"
 import { Button } from "@/components/ui/button"
-import { ChevronDown } from "lucide-react"
+import { Settings2 } from "lucide-react"
 
-export function Header() {
+interface HeaderProps {
+  useMultiStep?: boolean
+  onToggleForm?: () => void
+}
+
+export function Header({ useMultiStep = false, onToggleForm }: HeaderProps) {
   return (
     <header className="container mx-auto px-6 h-16 flex items-center justify-between max-w-[1400px]">
       <div className="flex items-center gap-8">
@@ -11,27 +16,27 @@ export function Header() {
           <VercelLogo className="h-4" />
         </Link>
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="#" className="flex items-center gap-1 text-sm hover:text-gray-800">
-            Products <ChevronDown className="w-4 h-4" />
+          <Link href="/blog/solution-overview" className="text-sm hover:text-gray-800">
+            Solution Overview
           </Link>
-          <Link href="#" className="flex items-center gap-1 text-sm hover:text-gray-800">
-            Solutions <ChevronDown className="w-4 h-4" />
-          </Link>
-          <Link href="#" className="flex items-center gap-1 text-sm hover:text-gray-800">
-            Resources <ChevronDown className="w-4 h-4" />
-          </Link>
-          <Link href="#" className="text-sm hover:text-gray-800">
-            Enterprise
-          </Link>
-          <Link href="#" className="text-sm hover:text-gray-800">
-            Docs
-          </Link>
-          <Link href="#" className="text-sm hover:text-gray-800">
-            Pricing
+          <Link href="/?test=true" className="text-sm hover:text-gray-800">
+            Test Demo
           </Link>
         </nav>
       </div>
       <div className="flex items-center gap-2">
+        {onToggleForm && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onToggleForm}
+            className="hidden sm:inline-flex text-xs text-gray-500 hover:text-gray-700"
+            title={`Switch to ${useMultiStep ? 'single-step' : 'multi-step'} form`}
+          >
+            <Settings2 className="w-3 h-3 mr-1" />
+            {useMultiStep ? 'Single Step' : 'Multi Step'}
+          </Button>
+        )}
         <Button variant="ghost" className="hidden sm:inline-flex">
           Contact
         </Button>

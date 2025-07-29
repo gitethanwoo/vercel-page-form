@@ -168,7 +168,7 @@ export default function SalesPage() {
         <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]"></div>
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#9ca3af_1px,transparent_1px),linear-gradient(to_bottom,#9ca3af_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
       </div>
-      <Header />
+      <Header useMultiStep={useMultiStep} onToggleForm={() => setUseMultiStep(!useMultiStep)} />
       
       {/* Hidden Testing Panel */}
       {showTesting && (
@@ -365,16 +365,6 @@ export default function SalesPage() {
         </div>
       </main>
       
-      {/* Hidden form toggle in bottom-right corner */}
-      <button
-        onClick={() => setUseMultiStep(!useMultiStep)}
-        className="fixed bottom-4 right-4 flex items-center gap-1 px-2 py-1 text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded transition-colors opacity-20 hover:opacity-100 z-10"
-        title={`Switch to ${useMultiStep ? 'simple' : 'multi-step'} form`}
-      >
-        <Settings2 className="w-3 h-3" />
-        {useMultiStep ? 'Single Step' : 'Multi Step'}
-      </button>
-
       {/* Dev mode testing button - only visible in development */}
       {process.env.NODE_ENV === 'development' && (
         <button

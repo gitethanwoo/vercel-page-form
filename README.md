@@ -21,8 +21,6 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
 1. **Deploy the template**
    - Click the "Deploy with Vercel" button above
    - Connect your Git provider and import the project
-   - Vercel will detect Upstash requirements via the `stores` parameter and offer to set up the integration
-   - You'll be prompted to create/connect your Upstash account
    - Environment variables will be auto-populated
 
 2. **Configure environment variables**
@@ -30,14 +28,11 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
    **Required:**
    - `OPENAI_API_KEY`: Get from [OpenAI Platform](https://platform.openai.com/api-keys)
    
-   **Upstash Integration (Recommended):**
-   - Vercel will automatically populate `UPSTASH_SEARCH_REST_URL` and `UPSTASH_SEARCH_REST_TOKEN` through the integration
-   
-   **Optional:**
+   **Added Later:**
    - `SLACK_WEBHOOK_URL`: For Slack notifications (can be added later)
 
 3. **Set up Slack webhook**
-   - In your Slack workspace, create an incoming webhook for your desired channel
+   - In your Slack workspace, create an incoming webhook for your desired channel (https://api.slack.com/apps) - Add Incoming Webhooks. Requires a channel to select. 
    - Copy the webhook URL and add it to your environment variables
 
 4. **Test the form**
@@ -122,24 +117,35 @@ One of the most powerful features of this template is the ability to create doma
 
 #### Quick Setup with Documentation Crawler
 
-1. **Install the crawler** (no installation required):
-   ```bash
-   npx @upstash/search-crawler
-   ```
+1. **Get your credentials** from your newly deployed project:
+   - Go to your Vercel dashboard
+   - Click **Storage** on the horizontal menu
+   - Click on your Upstash Search database
+   - Copy your `UPSTASH_SEARCH_REST_URL` and `UPSTASH_SEARCH_REST_TOKEN`
 
-2. **Run the crawler** with your Upstash credentials:
+2. **Run the crawler** (no installation required):
    ```bash
    npx @upstash/search-crawler \
      --upstash-url "UPSTASH_SEARCH_REST_URL" \
      --upstash-token "UPSTASH_SEARCH_REST_TOKEN" \
-     --index-name "my-knowledge-base" \
-     --doc-url "https://your-docs.com"
+     --index-name "default" \
+     --doc-url "https://your-docs-site.com"
    ```
 
-3. **Update the search index** in `app/api/search/route.ts`:
-   ```typescript
-   const index = client.index("my-knowledge-base"); // Change from "vercel-docs"
+   Or run it interactively and you'll be prompted for the missing options:
+   ```bash
+   npx @upstash/search-crawler
    ```
+
+3. **Verify your data**:
+   - In the same Vercel Storage page, click **"Open in Upstash"** in the top right corner
+   - You should see all your indexed documentation in the Data Browser tab!
+
+The crawler automatically:
+- **Discovers** all internal documentation links
+- **Crawls** each page and extracts content
+- **Tracks** new or obsolete data
+- **Upserts** the new records into your Upstash Search index
 
 #### What the Documentation Crawler Does
 
@@ -215,14 +221,6 @@ This integration eliminates the need to manually copy credentials and ensures se
 - ✅ **Zero configuration** - Works out of the box
 - ✅ **Free tier included** - Upstash offers generous free tier
 
-### Manual Setup (Alternative)
-
-If you prefer to set up Upstash manually:
-
-1. Create an account at [upstash.com](https://upstash.com)
-2. Create a new Search database
-3. Copy the REST URL and token from your dashboard
-4. Add them to your Vercel environment variables
 
 ## Technologies Used
 
@@ -233,46 +231,6 @@ If you prefer to set up Upstash manually:
 - **Validation**: Zod schema validation
 - **Deployment**: Vercel
 
-## How the Deploy Button Works
-
-The "Deploy to Vercel" button includes special parameters that enable seamless integration:
-
-### **URL Parameters**
-- `repository-url`: Points to this GitHub repository
-- `demo-title`, `demo-description`, `demo-url`: Template showcase information
-- `env`: Pre-defines required environment variables
-- `envDescription`: Provides helpful descriptions for each variable
-- `products`: JSON array defining integrations (Upstash Search)
-- `skippable-integrations`: Allows users to skip integrations
-- `project-name`, `repository-name`: Default project naming
-
-### **Deployment Flow**
-1. **Click Deploy** → Vercel clones the repository
-2. **Integration Detection** → Vercel identifies Upstash requirements
-3. **Setup Wizard** → Offers to create/connect Upstash account
-4. **Auto-Configuration** → Populates environment variables
-5. **Deploy** → Launches your AI-powered sales form
-
-This creates a "one-click deployment" experience where users don't need to manually set up any external services!
-
-### **Products Parameter Breakdown**
-The `products` parameter uses this structure:
-```json
-[
-  {
-    "type": "integration",
-    "protocol": "storage", 
-    "productSlug": "upstash",
-    "integrationSlug": "upstash"
-  }
-]
-```
-
-This tells Vercel to:
-- Offer Upstash integration during setup
-- Auto-configure environment variables
-- Handle account creation/connection
-- Set up the necessary services automatically
 
 ## Contributing
 

@@ -1,0 +1,60 @@
+# AI-Powered Sales Form Solution Overview
+
+## Executive Summary
+
+I built an intelligent sales contact form for Vercel.com that uses AI to automatically research prospects and generate personalized responses. The solution combines external web research with internal knowledge base search to deliver accurate, contextual sales outreach at scale.
+
+## The Problem
+Modern B2B buyers expect immediate, personalized responses. Traditional forms route to sales teams who manually research each lead - a process that's slow and doesn't scale. Often, naive AI solutions hallucinate features or provide generic responses that don't reflect actual product capabilities.
+
+## The Solution
+
+<figure>
+  <img src="/diagram.png" alt="AI Sales Workflow Diagram" />
+  <figcaption>Figure 1: Form entries trigger agentic research across the web and internal data sources. The research is passed to a copywriter step that tunes the communication and send to Slack.</figcaption>
+</figure>
+
+
+## What Sets This Apart
+
+### 1. Curated Knowledge Base from Vercel Resources
+I curated a high quality knowledge base by scraping [Vercel official resources](https://vercel.com/resources) to ensure product grounding and language alignment. This lets the research agent reference specific Vercel content, case studies, and messaging rather than generating generic responses.
+
+### 2. Agent-in-a-Workflow
+Combines two paradigms for the most appropriate solution: an agentic step for unstructured, discovery-oriented research, and a fixed writing step for task specialization. 
+
+
+### Technical Implementation
+
+```typescript
+// Research Phase
+const research = await generateText({
+  model: openai('o3'),
+  tools: {
+    searchVercel: searchVercel,        // Upstash Vector DB
+    web_search: webSearchPreview(),    // External context
+  },
+  stopWhen: stepCountIs(20),
+});
+
+// Response Phase
+const response = await generateText({
+  model: openai('chatgpt-4o-latest'),
+  prompt: `${researchContext}...craft personalized response`,
+});
+```
+
+
+## Why This Matters for GTM
+
+This solution bridges the gap between marketing automation and human sales touch. It enables:
+- Instant lead qualification and routing
+- 24/7 intelligent response capability
+- Data-driven insights on prospect interests
+- Seamless handoff to sales with full context
+
+The architecture scales from startup to enterprise, making it ideal for Vercel's diverse customer base.
+
+## Next Steps
+
+The foundation supports expansion into customer support, technical documentation, and partner enablement - anywhere personalized, accurate communication at scale creates competitive advantage.
