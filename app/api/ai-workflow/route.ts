@@ -20,7 +20,7 @@ export async function POST(request: Request) {
           searchContextSize: 'high',
         }),
       },
-      prompt: `You are a research assistant helping to gather business information about a potential customer for a sales team.
+      prompt: `You are a research assistant helping to gather business information about a potential customer for a sales team. 
 
 ## Research Task
 Research the company to provide context for crafting a personalized sales response. Focus ONLY on business/company information.
@@ -30,6 +30,18 @@ Research the company to provide context for crafting a personalized sales respon
 2. Understand their industry, company size, and technical context
 3. Use the searchVercel tool to find relevant case studies, guides, and solutions
 4. Use web_search for additional context about their tech stack, challenges, or industry
+
+## Key Vercel Solutions Context
+When researching and positioning solutions, be aware of these key Vercel offerings if relevant:
+
+### v0 - Generative UI System
+v0 is Vercel's generative UI platform that transforms natural language prompts into production-ready React applications with instant deployment. Key capabilities:
+- **Generative UI**: Converts prompts into complete React + Tailwind + shadcn/ui applications
+- **Platform API**: Programmatic access for integration into existing workflows (beta 2025)
+- **Model Family**: v0-1.5-md (everyday tasks), v0-1.5-lg (advanced reasoning), multimodal support
+- **Competitive Edge**: Superior UI quality vs Replit/Loveable, production-ready code, developer-centric workflow
+- **Use Cases**: Rapid prototyping, UI generation, API-first development, frontend acceleration
+- **Target**: Teams needing faster iteration cycles, UI/frontend development, prototype-to-production workflows
 
 ### Important: NO PERSONAL RESEARCH
 - Do NOT research the individual person submitting the form
@@ -48,16 +60,16 @@ COMPANY RESEARCH:
 - Recent news or developments
 
 VERCEL RELEVANCE:
-- Relevant Vercel solutions or case studies
-- Technical challenges Vercel could address
+- Relevant Vercel solutions or case studies (consider v0 for UI/frontend needs, rapid prototyping, or AI-assisted development)
+- Technical challenges Vercel could address (performance, deployment, developer velocity, AI-powered workflows)
 - Similar companies or use cases
+- v0 applicability: Assess if prospect mentions UI development, prototyping speed, frontend challenges, or competing tools like Replit/Bolt
 - These should come from the knowledgebase, not the web - do not mention case studies, success stories, or example companies unless you explicitly know they are using Vercel and can cite a specific example. 
 
 INSIGHTS:
 - Key pain points or opportunities
 - Technical requirements or constraints
 - Decision-making factors
-
 
 ## Form Structure & Questions Asked
 The prospect filled out a sales form with these questions:
@@ -83,7 +95,7 @@ ${formData.interest ? `4. **Product Interest**: "Primary Product Interest"
 Raw form data: ${JSON.stringify(formData, null, 2)}`,
       stopWhen: stepCountIs(20),
       onStepFinish: (step) => {
-        console.log(`Research step: ${step.toolResults}`)
+        console.log(`Research step: ${JSON.stringify(step.toolResults, null, 2)}`)
       }
     });
 
@@ -110,6 +122,12 @@ Generate a concise email draft that includes:
 - Synthesize findings naturally into your response
 - Don't include inline citations or links unless specifically relevant
 - Focus on insights rather than listing sources
+
+### Solution Positioning
+When positioning Vercel solutions:
+- **v0**: For UI development speed, prototyping needs, AI-assisted frontend work, or when competing with Replit/Bolt/Loveable
+- **Core Platform**: For performance, deployment, developer experience, enterprise scale
+- **AI SDK**: For teams building AI applications or integrating LLM features
 
 ### Social Proof
 When relevant, mention similar companies or use cases that have succeeded with Vercel. (Do not mention companies unless you explicitly know they are using Vercel)

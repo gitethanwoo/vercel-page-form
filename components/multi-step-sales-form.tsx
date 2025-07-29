@@ -97,8 +97,8 @@ export function MultiStepSalesForm() {
   })
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const [aiResponse, setAiResponse] = useState<{response: string, research: string} | null>(null)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [aiResponse, setAiResponse] = useState<{response: string, research: string} | null>(null)
 
   const totalSteps = 5
 
@@ -184,7 +184,7 @@ export function MultiStepSalesForm() {
       setIsSubmitted(true)
       setIsProcessing(true)
       
-      // Process AI workflow and capture results
+      // Process AI workflow and redirect to results page
       try {
         const response = await fetch('/api/ai-workflow', {
           method: 'POST',
@@ -196,27 +196,32 @@ export function MultiStepSalesForm() {
         
         if (response.ok) {
           const result = await response.json()
+          
+          // Store results for inline display
           setAiResponse(result)
+          setIsProcessing(false)
+        } else {
+          throw new Error('AI workflow failed')
         }
       } catch (error) {
         console.error("AI workflow error:", error)
-      } finally {
         setIsProcessing(false)
+        // TODO: Show error state
       }
     }
   }
 
   if (isSubmitted) {
     return (
-      <div className="min-h-[600px] flex flex-col">
-        <div className="flex flex-col items-center justify-center text-center mb-8">
-          <CheckCircle2 className="w-16 h-16 text-green-500 mb-6"/>
+      <div className="min-h-[600px] w-full max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4"/>
           <h2 className="text-3xl font-semibold text-foreground mb-3">Thank you!</h2>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
+          <p className="text-lg text-muted-foreground leading-relaxed">
             We've received your submission and will be in touch shortly.
           </p>
         </div>
-
+        
         {isProcessing && (
           <div className="flex flex-col items-center justify-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
@@ -225,12 +230,12 @@ export function MultiStepSalesForm() {
         )}
 
         {aiResponse && (
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="space-y-6">
             <div className="bg-card border rounded-lg p-6">
               <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <span>🔍</span> Company Research Summary
               </h3>
-              <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap">
+              <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap bg-muted/30 rounded-lg p-4 border">
                 {aiResponse.research}
               </div>
             </div>
@@ -239,7 +244,7 @@ export function MultiStepSalesForm() {
               <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <span>✉️</span> Personalized Email Draft
               </h3>
-              <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap">
+              <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap bg-muted/30 rounded-lg p-4 border">
                 {aiResponse.response}
               </div>
             </div>
