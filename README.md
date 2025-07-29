@@ -27,18 +27,14 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
 
 2. **Configure environment variables**
    
-   **Option A: Set up Upstash through Vercel (Recommended)**
-   - In your Vercel dashboard, go to Settings → Environment Variables
-   - Add your `SLACK_WEBHOOK_URL`
-   - For Upstash Search, you can create a new Upstash account directly through Vercel's integration
-   - Vercel will automatically populate `UPSTASH_SEARCH_REST_URL` and `UPSTASH_SEARCH_REST_TOKEN`
+   **Required:**
+   - `OPENAI_API_KEY`: Get from [OpenAI Platform](https://platform.openai.com/api-keys)
    
-   **Option B: Manual Upstash setup**
-   ```bash
-   UPSTASH_SEARCH_REST_URL=your_upstash_search_url
-   UPSTASH_SEARCH_REST_TOKEN=your_upstash_search_token
-   SLACK_WEBHOOK_URL=your_slack_webhook_url
-   ```
+   **Upstash Integration (Recommended):**
+   - Vercel will automatically populate `UPSTASH_SEARCH_REST_URL` and `UPSTASH_SEARCH_REST_TOKEN` through the integration
+   
+   **Optional:**
+   - `SLACK_WEBHOOK_URL`: For Slack notifications (can be added later)
 
 3. **Set up Slack webhook**
    - In your Slack workspace, create an incoming webhook for your desired channel
@@ -192,9 +188,10 @@ The template uses Tailwind CSS with custom components. Modify `tailwind.config.t
 
 ```bash
 # .env.local
+OPENAI_API_KEY=
 UPSTASH_SEARCH_REST_URL=
 UPSTASH_SEARCH_REST_TOKEN=
-SLACK_WEBHOOK_URL=
+SLACK_WEBHOOK_URL=  # Optional - for Slack notifications
 ```
 
 ### Setting Up Upstash Search
