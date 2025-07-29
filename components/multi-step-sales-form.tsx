@@ -97,6 +97,8 @@ export function MultiStepSalesForm() {
   })
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [aiResponse, setAiResponse] = useState<{response: string, research: string} | null>(null)
+  const [isProcessing, setIsProcessing] = useState(false)
 
   const totalSteps = 5
 
@@ -179,30 +181,98 @@ export function MultiStepSalesForm() {
       }
       
       console.log("Form submitted:", enhancedFormData)
-      
-      // Fire-and-forget AI workflow
-      fetch('/api/ai-workflow', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ formData: enhancedFormData }),
-      }).catch(error => {
-        console.error("AI workflow error (non-blocking):", error)
-      })
-      
       setIsSubmitted(true)
+      setIsProcessing(true)
+      
+      // Process AI workflow and capture results
+      try {
+        const response = await fetch('/api/ai-workflow', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ formData: enhancedFormData }),
+        })
+        
+        if (response.ok) {
+          const result = await response.json()
+          setAiResponse(result)
+        }
+      } catch (error) {
+        console.error("AI workflow error:", error)
+      } finally {
+        setIsProcessing(false)
+      }
     }
   }
 
   if (isSubmitted) {
     return (
-      <div className="min-h-[600px] flex flex-col items-center justify-center text-center">
-        <CheckCircle2 className="w-16 h-16 text-green-500 mb-6"/>
-        <h2 className="text-3xl font-semibold text-foreground mb-3">Thank you!</h2>
-        <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
-          We've received your submission and will be in touch shortly.
-        </p>
+      <div className="min-h-[600px] flex flex-col">
+        <div className="flex flex-col items-center justify-center text-center mb-8">
+          <CheckCircle2 className="w-16 h-16 text-green-500 mb-6"/>
+          <h2 className="text-3xl font-semibold text-foreground mb-3">Thank you!</h2>
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
+            We've received your submission and will be in touch shortly.
+          </p>
+        </div>
+
+        {isProcessing && (
+          <div className="flex flex-col items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
+            <p className="text-muted-foreground">Researching your company and preparing a personalized response...</p>
+          </div>
+        )}
+
+        {aiResponse && (
+          <div className="max-w-4xl mx-auto space-y-6">
+            <div className="bg-card border rounded-lg p-6">
+              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <span>🔍</span> Company Research Summary
+              </h3>
+              <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap">
+                {aiResponse.research}
+              </div>
+            </div>
+
+            <div className="bg-card border rounded-lg p-6">
+              <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <span>✉️</span> Personalized Email Draft
+              </h3>
+              <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap">
+                {aiResponse.response}
+              </div>
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-blue-900">
+                <span>📢</span> Want Slack Notifications?
+              </h3>
+              <p className="text-blue-800 mb-4">
+                Get notified in Slack whenever someone submits this form, complete with AI research and email drafts.
+              </p>
+              <div className="space-y-2 text-sm text-blue-700">
+                <p><strong>Setup steps:</strong></p>
+                <ol className="list-decimal list-inside space-y-1 ml-4">
+                  <li>Go to your Vercel dashboard → Settings → Environment Variables</li>
+                  <li>Add <code className="bg-blue-100 px-1 rounded">SLACK_WEBHOOK_URL</code></li>
+                  <li>Create a Slack webhook in your workspace and paste the URL</li>
+                  <li>Redeploy your app</li>
+                </ol>
+                <p className="mt-3">
+                  <a 
+                    href="https://api.slack.com/messaging/webhooks" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline hover:text-blue-800"
+                  >
+                    Learn how to create Slack webhooks →
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     )
   }
