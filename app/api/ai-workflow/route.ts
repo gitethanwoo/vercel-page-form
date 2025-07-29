@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     }
 
     const researchResult = await generateText({
-      model: openai('gpt-4.1'),
+      model: openai('o3'),
       tools: {
         searchVercel: searchVercel,
         web_search_preview: openai.tools.webSearchPreview({
