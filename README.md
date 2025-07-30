@@ -40,35 +40,6 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
    - Submit the form with company information
    - Check your Slack channel for the research results and email draft
 
-## Running Locally
-
-```bash
-git clone https://github.com/gitethanwoo/vercel-page-form
-cd vercel-page-form
-pnpm install
-cp .env.example .env.local
-pnpm dev
-```
-
-## Project Structure
-
-```
-├── app/
-│   ├── api/
-│   │   ├── ai-workflow/     # AI research and email generation
-│   │   ├── search/          # Upstash Search integration
-│   │   └── slack/webhook/   # Slack webhook handler
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── multi-step-sales-form.tsx  # Main multi-step form
-│   ├── sales-form.tsx             # Simple one-page form
-│   └── ui/                        # Reusable UI components
-├── lib/
-│   └── utils.ts                   # Utility functions
-└── public/                        # Static assets
-```
 
 ## How It Works
 
@@ -167,7 +138,6 @@ The crawler automatically:
 You can combine the Documentation Crawler with [Qstash Schedule](https://upstash.com/docs/qstash) to keep your knowledge base up to date automatically. Deploy the crawler on a server and call it on a schedule to fetch updates in your documentation.
 
 
-
 ### Modifying Organizational Needs
 
 Update the `organizationNeedsOptions` array in `components/multi-step-sales-form.tsx`:
@@ -186,10 +156,6 @@ const organizationNeedsOptions = [
 
 Modify the research and email generation prompts in `app/api/ai-workflow/route.ts` to match your sales tone and requirements.
 
-### Styling
-
-The template uses Tailwind CSS with custom components. Modify `tailwind.config.ts` and component styles to match your brand.
-
 ## Required Env Vars
 
 ```bash
@@ -200,46 +166,6 @@ UPSTASH_SEARCH_REST_TOKEN=
 SLACK_WEBHOOK_URL=  # Optional - for Slack notifications
 ```
 
-### Setting Up Upstash Search
-
-The easiest way to set up Upstash Search is through Vercel's native integration:
-
-1. **Deploy your template to Vercel**
-2. **Go to your Vercel dashboard** → Settings → Environment Variables
-3. **Click "Add Integration"** and search for "Upstash"
-4. **Create a new Upstash account** or connect an existing one
-5. **Vercel will automatically populate** the required environment variables:
-   - `UPSTASH_SEARCH_REST_URL`
-   - `UPSTASH_SEARCH_REST_TOKEN`
-
-This integration eliminates the need to manually copy credentials and ensures secure credential management.
-
-**Benefits of Vercel Integration:**
-- ✅ **One-click setup** - No manual credential copying
-- ✅ **Automatic updates** - Credentials stay in sync
-- ✅ **Enhanced security** - Credentials managed by Vercel
-- ✅ **Zero configuration** - Works out of the box
-- ✅ **Free tier included** - Upstash offers generous free tier
-
-
-## Technologies Used
-
-- **Framework**: Next.js 15 with App Router
-- **AI**: Vercel AI SDK with OpenAI
-- **Search**: Upstash Search for documentation indexing
-- **Styling**: Tailwind CSS with Radix UI components
-- **Validation**: Zod schema validation
-- **Deployment**: Vercel
-
-
-## Contributing
-
-This template is designed to be easily customizable and extensible. Feel free to:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
 
 ## License
 
