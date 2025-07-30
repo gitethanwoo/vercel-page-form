@@ -139,20 +139,6 @@ const organizationNeedsOptions = [
 
 Modify the research and email generation prompts in `app/api/ai-workflow/route.ts` to match your sales tone and requirements.
 
-## Required Env Vars
-
-```bash
-# .env.local
-OPENAI_API_KEY=
-UPSTASH_SEARCH_REST_URL=
-UPSTASH_SEARCH_REST_TOKEN=
-SLACK_WEBHOOK_URL=  # Optional - for Slack notifications
-```
-
-
-## License
-
-MIT License - feel free to use this template for your own projects.
 
 ## Support
 
