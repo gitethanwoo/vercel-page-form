@@ -6,15 +6,6 @@ A Next.js template that demonstrates how to build an intelligent sales workflow 
 
 [Read Docs](#how-it-works) • [Features](#features) • [Deploy Your Own](#quick-start) • [Running Locally](#running-locally)
 
-## Features
-
-- **Multi-step Sales Form**: Collect company information with validation and progress tracking
-- **AI-Powered Research**: Automatically research companies using Vercel's AI SDK and Upstash Search
-- **Personalized Email Generation**: Create tailored sales emails based on research findings
-- **Slack Integration**: Post research results and email drafts directly to Slack channels
-- **Seamless Setup**: Native Vercel-Upstash integration for one-click credential management
-- **Modern UI**: Built with Next.js 15, Radix UI + Tailwind CSS
-- **Type Safety**: Full TypeScript support with Zod validation
 
 ## Quick Start
 
