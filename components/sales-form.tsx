@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
 
-export function SalesForm() {
+export function SalesForm({ onSubmit }: { onSubmit: (data: any) => void }) {
   const [country, setCountry] = useState("")
   const [interest, setInterest] = useState("")
   const [email, setEmail] = useState("")
@@ -50,17 +50,7 @@ export function SalesForm() {
     }
     
     console.log("Form submitted:", submissionData)
-    
-    // Fire-and-forget AI workflow
-    fetch('/api/ai-workflow', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ formData: submissionData }),
-    }).catch(error => {
-      console.error("AI workflow error (non-blocking):", error)
-    })
+    onSubmit(submissionData)
   }
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {

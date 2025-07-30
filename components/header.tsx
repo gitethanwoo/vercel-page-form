@@ -19,9 +19,6 @@ export function Header({ useMultiStep = false, onToggleForm }: HeaderProps) {
           <Link href="/ethanwoo-solution-overview.pdf" className="text-sm hover:text-gray-800">
             Solution Overview
           </Link>
-          <Link href="/?test=true" className="text-sm hover:text-gray-800">
-            Test Demo
-          </Link>
         </nav>
       </div>
       <div className="flex items-center gap-2">

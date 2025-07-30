@@ -12,6 +12,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
+// Define the structure for AI response
+interface AIResponse {
+  research: string;
+  response: string;
+}
+
 // Test scenarios from the standalone page
 const testScenarios = [
   {
@@ -81,6 +87,9 @@ export default function SalesPage() {
   const [showTesting, setShowTesting] = useState(false)
   const [loading, setLoading] = useState<string | null>(null)
   const [results, setResults] = useState<Record<string, { success: boolean; response?: string; error?: string }>>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [aiResponse, setAiResponse] = useState<AIResponse | null>(null)
+  const [submissionError, setSubmissionError] = useState<string | null>(null)
 
   // Check for test parameter on mount
   useEffect(() => {
@@ -90,45 +99,44 @@ export default function SalesPage() {
     }
   }, [])
 
+  const handleFormSubmit = async (formData: any) => {
+    setIsSubmitting(true)
+    setAiResponse(null)
+    setSubmissionError(null)
+
+    // The multi-step form already enhances the data, but the single-step one doesn't.
+    // We'll check if enhancement is needed.
+    const needsEnhancement = !formData.organizationNeedsDetails || !formData.countryLabel;
+
+    const payload = needsEnhancement ? enhanceFormData(formData) : formData;
+
+    try {
+      const response = await fetch('/api/ai-workflow', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ formData: payload }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setAiResponse(result)
+      } else {
+        setSubmissionError(result.error || 'An unexpected error occurred.')
+      }
+    } catch (error) {
+      setSubmissionError('Failed to connect to the AI workflow. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   const testAIWorkflow = async (scenarioName: string, formData: any) => {
     setLoading(scenarioName)
 
-    // Enhance test data with same format as real form submission
-    const organizationNeedsOptions = [
-      { id: "vercel_hosting", label: "Global CDN & Edge Deployment", description: "Push to git, deploy everywhere. Lightning-fast loading from 100+ edge locations worldwide." },
-      { id: "preview_deployments", label: "Staging Environments", description: "Every pull request gets a live URL. Ship with confidence after stakeholders review real deploys." },
-      { id: "nextjs_platform", label: "Zero-Config Infrastructure", description: "The creators of Next.js host it best. Automatic optimizations, ISR, and framework-native features." },
-      { id: "enterprise_security", label: "SOC 2 & HIPAA Compliance", description: "SOC 2, HIPAA, SSO, advanced RBAC, isolated builds, and 99.99% SLA for mission-critical apps." },
-      { id: "performance_scale", label: "Auto-Scaling Infrastructure", description: "Handle millions of users without config. Automatic scaling, DDoS protection, and global CDN included." },
-      { id: "v0_personal", label: "AI Code Generation", description: "Turn ideas into React code instantly. Build UIs, components, and features with natural language." },
-      { id: "v0_teams", label: "Team Collaboration Tools", description: "Collaborate with shared Projects, custom instructions, higher rate limits, and centralized billing." },
-      { id: "v0_enterprise", label: "Enterprise AI Features", description: "SSO, data training opt-out, priority access, and higher rate limits for security-conscious organizations." },
-      { id: "custom_needs", label: "Custom Requirements", description: "I have specific requirements not listed here." }
-    ]
-    
-    const countries = [
-      { value: "us", label: "United States" },
-      { value: "ca", label: "Canada" },
-      { value: "gb", label: "United Kingdom" },
-      { value: "au", label: "Australia" },
-      { value: "de", label: "Germany" },
-      { value: "fr", label: "France" },
-      { value: "jp", label: "Japan" },
-      { value: "other", label: "Other" }
-    ]
-
-    const enhancedFormData = {
-      ...formData,
-      organizationNeedsDetails: formData.organizationNeeds.map((needId: string) => {
-        const option = organizationNeedsOptions.find(opt => opt.id === needId)
-        return option ? {
-          id: option.id,
-          label: option.label,
-          description: option.description
-        } : { id: needId, label: needId, description: '' }
-      }),
-      countryLabel: countries.find(c => c.value === formData.country)?.label || formData.country
-    }
+    const enhancedFormData = enhanceFormData(formData)
 
     try {
       const response = await fetch('/api/ai-workflow', {
@@ -146,19 +154,61 @@ export default function SalesPage() {
           ...prev,
           [scenarioName]: { success: true, response: result.response }
         }))
+        
+        // Show the same modal as manual form submission
+        setAiResponse(result)
+        setShowTesting(false) // Close testing panel
       } else {
         setResults(prev => ({
           ...prev,
           [scenarioName]: { success: false, error: result.error || 'Request failed' }
         }))
+        setSubmissionError(result.error || 'Request failed')
+        setShowTesting(false) // Close testing panel
       }
     } catch (error) {
       setResults(prev => ({
         ...prev,
         [scenarioName]: { success: false, error: 'Network error' }
       }))
+      setSubmissionError('Network error')
+      setShowTesting(false) // Close testing panel
     } finally {
       setLoading(null)
+    }
+  }
+
+  const enhanceFormData = (formData: any) => {
+    // Data needed for enhancement
+    const organizationNeedsOptions = [
+      { id: "vercel_hosting", label: "Global CDN & Edge Deployment", description: "Push to git, deploy everywhere. Lightning-fast loading from 100+ edge locations worldwide." },
+      { id: "preview_deployments", label: "Staging Environments", description: "Every pull request gets a live URL. Ship with confidence after stakeholders review real deploys." },
+      { id: "nextjs_platform", label: "Zero-Config Infrastructure", description: "The creators of Next.js host it best. Automatic optimizations, ISR, and framework-native features." },
+      { id: "enterprise_security", label: "SOC 2 & HIPAA Compliance", description: "SOC 2, HIPAA, SSO, advanced RBAC, isolated builds, and 99.99% SLA for mission-critical apps." },
+      { id: "performance_scale", label: "Auto-Scaling Infrastructure", description: "Handle millions of users without config. Automatic scaling, DDoS protection, and global CDN included." },
+      { id: "v0_personal", label: "AI Code Generation", description: "Turn ideas into React code instantly. Build UIs, components, and features with natural language." },
+      { id: "v0_teams", label: "Team Collaboration Tools", description: "Collaborate with shared Projects, custom instructions, higher rate limits, and centralized billing." },
+      { id: "v0_enterprise", label: "Enterprise AI Features", description: "SSO, data training opt-out, priority access, and higher rate limits for security-conscious organizations." },
+      { id: "custom_needs", label: "Custom Requirements", description: "I have specific requirements not listed here." }
+    ]
+    const countries = [
+      { value: "us", label: "United States" },
+      { value: "ca", label: "Canada" },
+      { value: "gb", label: "United Kingdom" },
+      { value: "au", label: "Australia" },
+      { value: "de", label: "Germany" },
+      { value: "fr", label: "France" },
+      { value: "jp", label: "Japan" },
+      { value: "other", label: "Other" }
+    ]
+
+    return {
+      ...formData,
+      organizationNeedsDetails: formData.organizationNeeds?.map((needId: string) => {
+        const option = organizationNeedsOptions.find(opt => opt.id === needId)
+        return option || { id: needId, label: needId, description: '' }
+      }),
+      countryLabel: countries.find(c => c.value === formData.country)?.label || formData.country
     }
   }
 
@@ -170,6 +220,80 @@ export default function SalesPage() {
       </div>
       <Header useMultiStep={useMultiStep} onToggleForm={() => setUseMultiStep(!useMultiStep)} />
       
+      {/* Results Modal */}
+      {(isSubmitting || aiResponse || submissionError) && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 animate-in fade-in-20">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <div className="p-4 border-b border-gray-200 flex justify-between items-center flex-none">
+              <h2 className="text-xl font-bold text-foreground">AI Sales Assistant</h2>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  setAiResponse(null)
+                  setSubmissionError(null)
+                }}
+                className="text-gray-500 hover:text-gray-900 rounded-full"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+            
+            <div className="p-6 overflow-y-auto">
+              {isSubmitting && (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <Loader2 className="w-12 h-12 text-primary animate-spin mb-6" />
+                  <h3 className="text-2xl font-semibold text-foreground mb-2">Analyzing Request...</h3>
+                  <p className="text-muted-foreground max-w-md">
+                    Our AI is researching the company and crafting a personalized email. This might take up to 30 seconds.
+                  </p>
+                </div>
+              )}
+
+              {submissionError && (
+                 <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <AlertCircle className="w-12 h-12 text-destructive mb-6" />
+                  <h3 className="text-2xl font-semibold text-destructive mb-2">An Error Occurred</h3>
+                  <p className="text-muted-foreground max-w-md bg-destructive/10 p-4 rounded-lg">
+                    {submissionError}
+                  </p>
+                </div>
+              )}
+
+              {aiResponse && (
+                <div className="space-y-8 animate-in fade-in-50">
+                  <div>
+                    <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-foreground">
+                      <span className="bg-blue-100 p-2 rounded-lg">🔍</span>
+                      <span>Company Research Summary</span>
+                    </h3>
+                    <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap bg-muted/30 rounded-lg p-4 border">
+                      {aiResponse.research}
+                    </div>
+                  </div>
+
+                  <div>
+                     <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3 text-foreground">
+                      <span className="bg-green-100 p-2 rounded-lg">✉️</span>
+                      <span>Personalized Email Draft</span>
+                    </h3>
+                    <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap bg-muted/30 rounded-lg p-4 border">
+                      {aiResponse.response}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+             <div className="p-4 bg-muted/50 border-t flex-none">
+              <p className="text-xs text-center text-muted-foreground">
+                This is an AI-generated response. Review for accuracy before sending.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hidden Testing Panel */}
       {showTesting && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
@@ -216,7 +340,7 @@ export default function SalesPage() {
                         <div><strong>Email:</strong> {scenario.data.email}</div>
                         <div><strong>Country:</strong> {scenario.data.country}</div>
                         <div><strong>Needs:</strong> {scenario.data.organizationNeeds.join(', ')}</div>
-                        <div><strong>Help:</strong> {scenario.data.help.substring(0, 80)}...</div>
+                        <div><strong>Help:</strong> {scenario.data.help}</div>
                       </div>
                       
                       <Button 
@@ -316,7 +440,7 @@ export default function SalesPage() {
 
               {/* Mobile only: Form goes here */}
               <div className="lg:hidden order-2 p-12 bg-white border-b border-gray-200">
-                {useMultiStep ? <MultiStepSalesForm /> : <SalesForm />}
+                {useMultiStep ? <MultiStepSalesForm onSubmit={handleFormSubmit} /> : <SalesForm onSubmit={handleFormSubmit} />}
               </div>
 
               {/* Stats and testimonials - shows after form on mobile, stays in left column on desktop */}
@@ -348,7 +472,7 @@ export default function SalesPage() {
 
           {/* Desktop only: Form in right column */}
           <div className="hidden lg:block col-span-12 bg-white lg:col-span-6 p-12">
-            {useMultiStep ? <MultiStepSalesForm /> : <SalesForm />}
+            {useMultiStep ? <MultiStepSalesForm onSubmit={handleFormSubmit} /> : <SalesForm onSubmit={handleFormSubmit} />}
           </div>
         </div>
         <div className="grid grid-cols-12 gap-0 border border-gray-200 relative">
@@ -369,7 +493,7 @@ export default function SalesPage() {
       {process.env.NODE_ENV === 'development' && (
         <button
           onClick={() => setShowTesting(true)}
-          className="fixed bottom-4 left-4 flex items-center gap-1 px-2 py-1 text-xs text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded transition-colors opacity-10 hover:opacity-100 z-10"
+          className="fixed bottom-4 left-4 flex items-center gap-1 px-2 py-1 text-xs text-black rounded transition-colors  z-10"
           title="Open AI Workflow Testing"
         >
           <CheckCircle className="w-3 h-3" />
