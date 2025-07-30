@@ -83,7 +83,7 @@ const testScenarios = [
 ]
 
 export default function SalesPage() {
-  const [useMultiStep, setUseMultiStep] = useState(false)
+  const [useMultiStep, setUseMultiStep] = useState(true)
   const [showTesting, setShowTesting] = useState(false)
   const [loading, setLoading] = useState<string | null>(null)
   const [results, setResults] = useState<Record<string, { success: boolean; response?: string; error?: string }>>({})
