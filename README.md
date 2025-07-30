@@ -109,14 +109,6 @@ The crawler automatically:
 - **Tracks** new or obsolete data
 - **Upserts** the new records into your Upstash Search index
 
-#### What the Documentation Crawler Does
-
-The crawler automatically:
-- **Discovers** all internal documentation links
-- **Crawls** each page and extracts content
-- **Tracks** new or obsolete data
-- **Upserts** the new records into your Upstash Search index
-
 #### Use Cases for Custom Knowledge Bases
 
 - **Company Documentation**: Crawl your internal docs, product guides, or knowledge base
