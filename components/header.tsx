@@ -16,7 +16,7 @@ export function Header({ useMultiStep = false, onToggleForm }: HeaderProps) {
           <VercelLogo className="h-4" />
         </Link>
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="/blog/solution-overview" className="text-sm hover:text-gray-800">
+          <Link href="/ethanwoo-solution-overview.pdf" className="text-sm hover:text-gray-800">
             Solution Overview
           </Link>
           <Link href="/?test=true" className="text-sm hover:text-gray-800">
@@ -37,12 +37,11 @@ export function Header({ useMultiStep = false, onToggleForm }: HeaderProps) {
             {useMultiStep ? 'Single Step' : 'Multi Step'}
           </Button>
         )}
-        <Button variant="ghost" className="hidden sm:inline-flex">
-          Contact
-        </Button>
-        <Button variant="outline" className="hidden sm:inline-flex bg-transparent">
-          Dashboard
-        </Button>
+        <Link href="https://x.com/EthanWoo" target="_blank" rel="noopener noreferrer">
+          <Button variant="ghost" className="hidden sm:inline-flex">
+            Reach me on X
+          </Button>
+        </Link>
         <div className="w-8 h-8 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500" />
       </div>
     </header>
